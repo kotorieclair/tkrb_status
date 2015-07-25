@@ -1,0 +1,12 @@
+font-size(_val)
+  if unit(_val) == 'rem'
+    font-size: unit(_val * 10, 'px')
+    font-size: _val
+  else if unit(_val) == 'px'
+    font-size: _val
+    font-size: unit((_val / 10), 'rem')
+  else
+    font-size: _val
+
+quote(_str)
+  s('"%s"', _str)
