@@ -20,7 +20,7 @@ module.exports = React.createClass({
   },
   getInitialState: function() {
     return {
-      "activeField": "statusType"
+      "activeField": "status"
     };
   },
   // set status type
@@ -73,7 +73,12 @@ module.exports = React.createClass({
   },
   // active input field
   changeField: function(e) {
-    this.setState({"activeField": e.target.getAttribute("data-field")});
+    var _field = e.currentTarget.getAttribute("data-field");
+    if (_field == this.state.activeField) {
+      this.setState({"activeField": null});
+    } else {
+      this.setState({"activeField": _field});
+    }
   },
   render: function() {
     var _statusTypeInput = Object.keys(this.props.config.labels.statusType).map(function(item) {
@@ -112,38 +117,37 @@ module.exports = React.createClass({
       <form id="status-form" className={"active-" + this.state.activeField}>
         <h2>表示条件を変更</h2>
         <fieldset>
-          <legend onClick={this.changeField} data-field="statusType">表示ステータス</legend>
-          <div className="input-box">
+          <legend onClick={this.changeField} data-field="status">表示ステータス<i className="fa fa-caret-down"></i></legend>
+          <div className="fieldset-item">
             {_statusTypeInput}
           </div>
         </fieldset>
         <fieldset>
-          <legend onClick={this.changeField} data-field="type">刀種</legend>
-          <div className="input-box">
-            {_typeInput}
-            <button value="type" className="btn-all" onClick={this.selectAll}>全選択</button>
-            <button value="type" className="btn-none" onClick={this.selectNone}>全解除</button>
+          <legend onClick={this.changeField} data-field="narrowing">絞り込み<i className="fa fa-caret-down"></i></legend>
+          <div className="fieldset-item">
+            <div className="input-group">
+              <h3>刀種</h3>
+              {_typeInput}
+              <button value="type" className="btn-all" onClick={this.selectAll}>全選択</button>
+              <button value="type" className="btn-none" onClick={this.selectNone}>全解除</button>
+            </div>
+            <div className="input-group">
+              <h3>刀派</h3>
+              {_familyInput}
+              <button value="family" className="btn-all" onClick={this.selectAll}>全選択</button>
+              <button value="family" className="btn-none" onClick={this.selectNone}>全解除</button>
+            </div>
+            <div className="input-group">
+              <h3>レアリティ</h3>
+              {_rareInput}
+              <button value="rare" className="btn-all" onClick={this.selectAll}>全選択</button>
+              <button value="rare" className="btn-none" onClick={this.selectNone}>全解除</button>
+            </div>
           </div>
         </fieldset>
         <fieldset>
-          <legend onClick={this.changeField} data-field="family">刀派</legend>
-          <div className="input-box">
-            {_familyInput}
-            <button value="family" className="btn-all" onClick={this.selectAll}>全選択</button>
-            <button value="family" className="btn-none" onClick={this.selectNone}>全解除</button>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend onClick={this.changeField} data-field="rare">レアリティ</legend>
-          <div className="input-box">
-            {_rareInput}
-            <button value="rare" className="btn-all" onClick={this.selectAll}>全選択</button>
-            <button value="rare" className="btn-none" onClick={this.selectNone}>全解除</button>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend onClick={this.changeField} data-field="names">刀剣名</legend>
-          <div className="input-box">
+          <legend onClick={this.changeField} data-field="names">刀剣名指定<i className="fa fa-caret-down"></i></legend>
+          <div className="fieldset-item">
             <input type="text" ref="names" value={this.props.condition.names.join(',')} placeholder="半角カンマ区切り（空白なし）" onChange={this.setNamesFilter} />
             <button value="names" className="btn-none" onClick={this.selectNone}>解除</button>
           </div>
