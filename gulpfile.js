@@ -1,6 +1,7 @@
 var fs = require('fs');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var rename = require('gulp-rename');
 var plumber = require('gulp-plumber');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -12,6 +13,7 @@ var babelify = require('babelify');
 var markdown = require('browserify-markdown');
 var cheerio = require('cheerio-httpcli');
 var _ = require('lodash');
+var ghPages = require('gulp-gh-pages');
 
 var dataUrls = {
   "initial": "http://wikiwiki.jp/toulove/?%C5%E1%B7%F5%C3%CB%BB%CE%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB",
@@ -27,7 +29,7 @@ gulp.task('stylus', function() {
       use: nib(),
       import: 'nib'
     }))
-    .pipe(gulp.dest('./dest'))
+    .pipe(gulp.dest('./build'))
 });
 
 gulp.task('browserify', function() {
@@ -49,12 +51,18 @@ gulp.task('browserify', function() {
     .pipe(source('script.js'))
     .pipe(buffer())
     .pipe(compress ? uglify() : gutil.noop())
-    .pipe(gulp.dest('./dest'))
+    .pipe(gulp.dest('./build'))
 });
 
 gulp.task('moveIndex', function() {
   return gulp.src('./src/index.html')
-    .pipe(gulp.dest('./dest'));
+    .pipe(gulp.dest('./build'));
+});
+
+gulp.task('moveMd', function() {
+  return gulp.src('./src/data/help.md')
+    .pipe(rename('README.md'))
+    .pipe(gulp.dest('./build'));
 });
 
 gulp.task('fetchData', function() {
@@ -135,7 +143,12 @@ gulp.task('fetchData', function() {
   });
 });
 
-gulp.task('build', ['moveIndex', 'stylus', 'browserify']);
+gulp.task('build', ['moveIndex', 'moveMd', 'stylus', 'browserify']);
+
+gulp.task('deploy', function() {
+  return gulp.src('./build/**/*')
+    .pipe(ghPages());
+});
 
 gulp.task('watch', ['build'], function() {
   gulp.watch('./src/styles/**/*.styl', ['stylus']);
