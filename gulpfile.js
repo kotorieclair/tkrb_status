@@ -27,7 +27,8 @@ gulp.task('stylus', function() {
     .pipe(plumber())
     .pipe(stylus({
       use: nib(),
-      import: 'nib'
+      import: 'nib',
+      compress: compress
     }))
     .pipe(gulp.dest('./build'))
 });
