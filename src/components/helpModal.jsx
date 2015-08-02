@@ -1,5 +1,6 @@
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var helpMd = require('../data/help');
+var md2react = require('md2react');
+var helpMd = md2react(require('../data/help'), {gfm: true, breaks: true});
 
 module.exports = React.createClass({
   closeHelp: function(e) {
@@ -9,21 +10,15 @@ module.exports = React.createClass({
   render: function() {
     var _help = null;
 
-    if (this.props.show) {
-      _help = (
-        <div id="status-help">
-          <div className="help-body" dangerouslySetInnerHTML={{__html: helpMd}} />
-          <div className="help-close">
-            <a onClick={this.closeHelp}>ヘルプをとじる</a>
-          </div>
-        </div>
-      );
-    }
+    var _md = React.createElement('div', {className: 'help-body'}, [helpMd]);
 
     return (
-      <ReactCSSTransitionGroup transitionName="status-help">
-        {_help}
-      </ReactCSSTransitionGroup>
+      <div id="status-help" className={this.props.show ? 'help-show' : 'help-hide'}>
+        {_md}
+        <div className="help-close">
+          <a onClick={this.closeHelp}>ヘルプをとじる</a>
+        </div>
+      </div>
     );
   }
 });

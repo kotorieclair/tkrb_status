@@ -10,7 +10,8 @@ var nib = require('nib');
 var uglify = require('gulp-uglify');
 var browserify = require('browserify');
 var babelify = require('babelify');
-var markdown = require('browserify-markdown');
+// var markdown = require('browserify-markdown');
+var stringify = require('stringify');
 var cheerio = require('cheerio-httpcli');
 var _ = require('lodash');
 var ghPages = require('gulp-gh-pages');
@@ -41,9 +42,13 @@ gulp.task('browserify', function() {
     .transform(babelify.configure({
       optional: ['es7.objectRestSpread']
     }))
-    .transform(markdown({
-      breaks: true
-    }))
+    // .transform(markdown({
+    //   breaks: true
+    // }))
+    .transform(stringify({
+        extensions: ['.md']
+      })
+    )
     .bundle()
     .on('error', function(err) {
       gutil.log(err);

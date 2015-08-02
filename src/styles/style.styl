@@ -136,7 +136,7 @@ header
       margin-right: 0
 
   .fieldset-item
-    background-color: rgba($form-background-color, 85%)  
+    background-color: rgba($form-background-color, 85%)
     border-top: 1px dotted rgba(#fff, 0.3)
     bottom: 0
     box-sizing: border-box
@@ -426,7 +426,16 @@ header
   right: 0
   top: 0
   transition: $transition-help
-  z-index: 10
+
+  &.help-show
+    opacity: 1
+    transform: translateY(0)
+    z-index: 10
+
+  &.help-hide
+    opacity: 0
+    transform: translateY(-2em)
+    z-index: -1
 
   a
     color: #fff
@@ -543,20 +552,20 @@ header
     opacity: 0
     width: 0 !important
 
-.status-help-enter
-  opacity: 0
-
-  .help-body
-    transform: translateY(-2em)
-
-  &.status-help-enter-active
-    opacity: 1
-
-    .help-body
-      transform: translateY(0)
-
-.status-help-leave
-  opacity: 1
-
-  &.status-help-leave-active
-    opacity: 0
+// .status-help-enter
+//   opacity: 0
+//
+//   .help-body
+//     transform: translateY(-2em)
+//
+//   &.status-help-enter-active
+//     opacity: 1
+//
+//     .help-body
+//       transform: translateY(0)
+//
+// .status-help-leave
+//   opacity: 1
+//
+//   &.status-help-leave-active
+//     opacity: 0
