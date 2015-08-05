@@ -155,4 +155,5 @@ gulp.task('watch', ['build'], function() {
   gulp.watch('./src/styles/**/*.styl', ['stylus']);
   gulp.watch(['./src/components/**/*.jsx', './src/data/**/*'], ['browserify']);
   gulp.watch('./src/index.html', ['moveIndex']);
+  gulp.watch('./src/data/help.md', ['moveMd']);
 });
