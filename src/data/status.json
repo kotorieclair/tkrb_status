@@ -475,7 +475,7 @@
       "speed": 64,
       "push": 31,
       "critical": 33,
-      "search": 51,
+      "search": null,
       "hide": 38
     }
   },
@@ -1437,6 +1437,38 @@
       "critical": 23,
       "search": 18,
       "hide": 35
+    }
+  },
+  {
+    "id": 136,
+    "name": "日本号",
+    "url1": "http://wikiwiki.jp/toulove/?%C6%FC%CB%DC%B9%E6",
+    "url2": "http://wikiwiki.jp/toulove/?%C6%FC%CB%DC%B9%E6%20%C6%C3",
+    "rare": 4,
+    "type": "槍",
+    "family": "-",
+    "slot": 3,
+    "rankup": 25,
+    "wideness": "縦",
+    "initial": {
+      "life": 56,
+      "attack": 52,
+      "defence": 39,
+      "speed": 36,
+      "push": 49,
+      "critical": 34,
+      "search": 11,
+      "hide": 28
+    },
+    "rankupMax": {
+      "life": null,
+      "attack": 72,
+      "defence": 50,
+      "speed": 51,
+      "push": 64,
+      "critical": 34,
+      "search": null,
+      "hide": 33
     }
   },
   {

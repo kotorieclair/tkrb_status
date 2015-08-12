@@ -1,32 +1,27 @@
 var fs = require('fs');
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var rename = require('gulp-rename');
-var plumber = require('gulp-plumber');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var stylus = require('gulp-stylus');
-var nib = require('nib');
-var uglify = require('gulp-uglify');
-var browserify = require('browserify');
-var babelify = require('babelify');
-var markdown = require('browserify-markdown');
-var cheerio = require('cheerio-httpcli');
 var _ = require('lodash');
-var ghPages = require('gulp-gh-pages');
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')();
+$.nib = require('nib');
+$.browserify = require('browserify');
+$.babelify = require('babelify');
+$.mdify = require('browserify-markdown');
+$.cheerio = require('cheerio-httpcli');
+$.source = require('vinyl-source-stream');
+$.buffer = require('vinyl-buffer');
 
 var dataUrls = {
   "initial": "http://wikiwiki.jp/toulove/?%C5%E1%B7%F5%C3%CB%BB%CE%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB",
   "rankupMax": "http://wikiwiki.jp/toulove/?%C6%C3%20%BA%C7%C2%E7%C3%CD%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB"
 };
 
-var compress = gutil.env.compress || false
+var compress = $.util.env.compress || false;
 
 gulp.task('stylus', function() {
   return gulp.src('./src/styles/style.styl')
-    .pipe(plumber())
-    .pipe(stylus({
-      use: nib(),
+    .pipe($.plumber())
+    .pipe($.stylus({
+      use: $.nib(),
       import: 'nib',
       compress: compress
     }))
@@ -34,24 +29,24 @@ gulp.task('stylus', function() {
 });
 
 gulp.task('browserify', function() {
-  return browserify({
+  return $.browserify({
     entries: './src/components/index.jsx',
     extensions: ['.jsx', '.json', '.md']
   })
-    .transform(babelify.configure({
+    .transform($.babelify.configure({
       optional: ['es7.objectRestSpread']
     }))
-    .transform(markdown({
+    .transform($.mdify({
       breaks: true
     }))
     .bundle()
     .on('error', function(err) {
-      gutil.log(err);
+      $.util.log(err);
       this.emit('end');
     })
-    .pipe(source('script.js'))
-    .pipe(buffer())
-    .pipe(compress ? uglify() : gutil.noop())
+    .pipe($.source('script.js'))
+    .pipe($.buffer())
+    .pipe(compress ? $.uglify() : $.util.noop())
     .pipe(gulp.dest('./build'))
 });
 
@@ -62,14 +57,14 @@ gulp.task('moveIndex', function() {
 
 gulp.task('moveMd', function() {
   return gulp.src('./src/data/help.md')
-    .pipe(rename('README.md'))
+    .pipe($.rename('README.md'))
     .pipe(gulp.dest('./build'));
 });
 
 gulp.task('fetchData', function() {
   var statusArray = [];
 
-  cheerio.fetch(dataUrls.rankupMax)
+  $.cheerio.fetch(dataUrls.rankupMax)
   .then(function(result) {
     result.$('.style_table tbody tr').each(function() {
       var $td = result.$(this).children('td');
@@ -105,7 +100,7 @@ gulp.task('fetchData', function() {
       statusArray.push(tmp);
     });
 
-    return cheerio.fetch(dataUrls['initial'])
+    return $.cheerio.fetch(dataUrls['initial'])
   })
   .then(function(result) {
     result.$('.style_table tbody tr').each(function() {
@@ -136,11 +131,11 @@ gulp.task('fetchData', function() {
 
     fs.writeFile('./src/data/status.json', JSON.stringify(statusArray, null, '  '), function(err) {
       if (err) throw err;
-      gutil.log("status data written!");
+      $.util.log("status data written!");
     });
   })
   .catch(function(err) {
-    gutil.log(err);
+    $.util.log(err);
   });
 });
 
@@ -148,7 +143,7 @@ gulp.task('build', ['moveIndex', 'moveMd', 'stylus', 'browserify']);
 
 gulp.task('deploy', function() {
   return gulp.src('./build/**/*')
-    .pipe(ghPages());
+    .pipe($.ghPages());
 });
 
 gulp.task('watch', ['build'], function() {
