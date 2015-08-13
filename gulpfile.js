@@ -10,8 +10,6 @@ $.cheerio = require('cheerio-httpcli');
 $.source = require('vinyl-source-stream');
 $.buffer = require('vinyl-buffer');
 
-var sourcemaps = require('gulp-sourcemaps');
-
 var dataUrls = {
   "initial": "http://wikiwiki.jp/toulove/?%C5%E1%B7%F5%C3%CB%BB%CE%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB",
   "rankupMax": "http://wikiwiki.jp/toulove/?%C6%C3%20%BA%C7%C2%E7%C3%CD%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB"
@@ -49,11 +47,11 @@ gulp.task('browserify', function() {
     })
     .pipe($.source('script.js'))
     .pipe($.buffer())
-    .pipe(sourcemaps.init({
+    .pipe($.sourcemaps.init({
       loadMaps: true
     }))
     .pipe(compress ? $.uglify() : $.util.noop())
-    .pipe(sourcemaps.write('./'))
+    .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('./build'))
 });
 
