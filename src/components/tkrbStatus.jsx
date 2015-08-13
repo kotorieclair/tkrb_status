@@ -16,10 +16,12 @@ class TkrbStatus extends React.Component {
       rare: config.labels.rare,
       names: config.labels.names,
       status: Object.keys(config.labels.status),
+      isOldStatus: false,
     };
 
     this.handleStatusType = this.handleStatusType.bind(this);
     this.handleCondition = this.handleCondition.bind(this);
+    this.toggleStatusMode = this.toggleStatusMode.bind(this);
     this.toggleHelp = this.toggleHelp.bind(this);
   }
 
@@ -31,6 +33,12 @@ class TkrbStatus extends React.Component {
 
   handleCondition(condition) {
     this.setState(condition);
+  }
+
+  toggleStatusMode() {
+    this.setState({
+      isOldStatus: !this.state.isOldStatus,
+    });
   }
 
   toggleHelp(e) {
@@ -62,6 +70,7 @@ class TkrbStatus extends React.Component {
         </header>
         <ConditionalForm
           onStatusTypeChange={this.handleStatusType}
+          onStatusModeChange={this.toggleStatusMode}
           onConditionChange={this.handleCondition}
           condition={this.state}
           data={this.props.data}

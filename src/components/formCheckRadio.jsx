@@ -10,9 +10,9 @@ class FormCheckRadio extends React.Component {
   }
 
   render() {
-    const {change, children, ...others} = this.props;
+    const {change, children, className, ...others} = this.props;
     return (
-      <label>
+      <label className={className}>
         <input {...others} onChange={this.handleChange} />
         <span>
           <i className="fa fa-check"></i>

@@ -13,6 +13,7 @@ class ConditionalForm extends React.Component {
 
     this._checkboxFilter = this._checkboxFilter.bind(this);
     this.setStatusType = this.setStatusType.bind(this);
+    this.setStatusMode = this.setStatusMode.bind(this);
     this.setTypeFilter = this.setTypeFilter.bind(this);
     this.setFamilyFilter = this.setFamilyFilter.bind(this);
     this.setRareFilter = this.setRareFilter.bind(this);
@@ -37,6 +38,10 @@ class ConditionalForm extends React.Component {
 
   setStatusType(e) {
     this.props.onStatusTypeChange(e.currentTarget.value);
+  }
+
+  setStatusMode() {
+    this.props.onStatusModeChange();
   }
 
   setTypeFilter() {
@@ -118,6 +123,17 @@ class ConditionalForm extends React.Component {
       );
     });
 
+    const statusModeInput = (
+      <FormCheckRadio
+        type="radio"
+        name="statusMode"
+        checked={this.props.condition.isOldStatus}
+        onChange={this.setStatusMode}
+      >
+        旧ステータス表示
+      </FormCheckRadio>
+    );
+
     const typeInput = config.labels.type.map((item) => {
       return (
         <FormCheckRadio
@@ -171,15 +187,20 @@ class ConditionalForm extends React.Component {
             表示ステータス<i className="fa fa-caret-down"></i>
           </legend>
           <div className="fieldset-item">
-            {statusTypeInput}
+            <div className="input-group cols">
+              {statusTypeInput}
+            </div>
+            <div className="input-group cols">
+              {statusModeInput}
+            </div>
           </div>
         </fieldset>
         <fieldset>
           <legend onClick={this.changeField} data-field="narrowing">
-            絞り込み<i className="fa fa-caret-down"></i>
+            条件で絞り込み<i className="fa fa-caret-down"></i>
           </legend>
           <div className="fieldset-item">
-            <div className="input-group">
+            <div className="input-group rows">
               <h3>刀種</h3>
               {typeInput}
               <button value="type" className="btn-all" onClick={this.selectAll}>
@@ -189,7 +210,7 @@ class ConditionalForm extends React.Component {
                 全解除
               </button>
             </div>
-            <div className="input-group">
+            <div className="input-group rows">
               <h3>刀派</h3>
               {familyInput}
               <button value="family" className="btn-all" onClick={this.selectAll}>
@@ -199,7 +220,7 @@ class ConditionalForm extends React.Component {
                 全解除
               </button>
             </div>
-            <div className="input-group">
+            <div className="input-group rows">
               <h3>レアリティ</h3>
               {rareInput}
               <button value="rare" className="btn-all" onClick={this.selectAll}>

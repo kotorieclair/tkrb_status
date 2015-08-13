@@ -301,11 +301,18 @@ header nav li a .fa {
 #status-form .fieldset-item:first-child {
   display: block;
 }
-#status-form .input-group {
+#status-form .input-group.rows {
   margin-top: 1em;
 }
-#status-form .input-group:first-child {
+#status-form .input-group.rows:first-child {
   margin-top: 0;
+}
+#status-form .input-group.cols {
+  display: inline-block;
+  margin-left: 1.5em;
+}
+#status-form .input-group.cols:first-child {
+  margin-left: 0;
 }
 #status-form h3 {
   color: #fff;

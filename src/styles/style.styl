@@ -154,10 +154,18 @@ header
       display: block
 
   .input-group
-    margin-top: $form-fieldset-padding
+    &.rows
+      margin-top: $form-fieldset-padding
 
-    &:first-child
-      margin-top: 0
+      &:first-child
+        margin-top: 0
+
+    &.cols
+      display: inline-block
+      margin-left: $form-fieldset-padding * 1.5
+
+      &:first-child
+        margin-left: 0
 
   h3
     color: #fff

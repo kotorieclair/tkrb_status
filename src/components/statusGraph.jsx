@@ -1,7 +1,9 @@
 import _includes from 'lodash/collection/includes';
+import _filter from 'lodash/collection/find';
 import BaseComponent from './baseComponent';
 import StatusBar from './statusBar';
 import GraphBack from './graphBack';
+import oldStatus from '../data/status_old';
 const TransitionGroup = React.addons.CSSTransitionGroup;
 
 class StatusGraph extends BaseComponent {
@@ -11,7 +13,9 @@ class StatusGraph extends BaseComponent {
 
   render() {
     const _condition = this.props.condition;
-    const status = this.props.data.map((item) => {
+    const status = this.props.data.map((_item) => {
+      let item = _item;
+
       if (_condition.names.length) {
         if (!this._namesFilter(item)) {
           return false;
@@ -20,6 +24,12 @@ class StatusGraph extends BaseComponent {
         if (!this._typeFilter(item) || !this._familyFilter(item) || !this._rareFilter(item)) {
           return false;
         }
+      }
+
+      if (this.props.condition.isOldStatus) {
+        item = _filter(oldStatus, (_old) => {
+          return _old.id === item.id;
+        }) || item;
       }
 
       let total = 0;
