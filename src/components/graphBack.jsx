@@ -8,7 +8,7 @@ class GraphBack extends React.Component {
     const lines = [];
 
     for (let i = 100; i > 0; i -= 5) {
-      lines.push(<div className="graph-back" key={i} data-line={i}></div>);
+      lines.push(<div className="graph-back" key={i} data-line={i} />);
     }
 
     return (

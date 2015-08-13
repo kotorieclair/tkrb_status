@@ -1,3 +1,5 @@
+import config from '../config';
+
 class StatusBar extends React.Component {
   constructor(props) {
     super(props);
@@ -5,17 +7,23 @@ class StatusBar extends React.Component {
 
   render() {
     // create graph bars
-    const val = this.props.item[this.props.statusType][this.props.name];
-    let _height = "";
+    const _item = this.props.item;
+    const _name = this.props.name;
+    const val = _item[this.props.statusType][_name];
+    let _height = '';
 
     if (val) {
-      _height = val / this.props.maxStatus * 100 + '%';
+      _height = val / config.maxStatus * 100;
     } else {
-      _height = this.props.item.initial[this.props.name] / this.props.maxStatus * 100 + '%';
+      _height = _item.initial[_name] / config.maxStatus * 100;
     }
 
     return (
-      <div className={`status-bar ${this.props.name}`} style={{height: _height}} data-status={val}></div>
+      <div
+        className={`status-bar ${this.props.name}`}
+        style={{height: `${_height}%`}}
+        data-status={val}
+      />
     );
   }
 }

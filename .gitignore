@@ -2,3 +2,4 @@
 node_modules
 .publish
 src/data/_status.json
+build/script.js.map

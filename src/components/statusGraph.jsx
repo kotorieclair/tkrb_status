@@ -1,4 +1,3 @@
-import config from '../config';
 import _includes from 'lodash/collection/includes';
 import BaseComponent from './baseComponent';
 import StatusBar from './statusBar';
@@ -11,34 +10,34 @@ class StatusGraph extends BaseComponent {
   }
 
   render() {
+    const _condition = this.props.condition;
     const status = this.props.data.map((item) => {
-      if (this.props.condition.names.length) {
+      if (_condition.names.length) {
         if (!this._namesFilter(item)) {
           return false;
         }
       } else {
-        if(!this._typeFilter(item) || !this._familyFilter(item) || !this._rareFilter(item)) {
+        if (!this._typeFilter(item) || !this._familyFilter(item) || !this._rareFilter(item)) {
           return false;
         }
       }
 
       let total = 0;
-      var bars = Object.keys(item[this.props.condition.statusType]).map((key) => {
+      const bars = Object.keys(item[_condition.statusType]).map((key) => {
         // filter by status
-        if (!_includes(this.props.condition.status, key)) {
+        if (!_includes(_condition.status, key)) {
           return false;
         }
 
-        total += item[this.props.condition.statusType][key];
+        total += item[_condition.statusType][key];
 
         return (
           <StatusBar
-            maxStatus={config.maxStatus}
-            statusType={this.props.condition.statusType}
+            statusType={_condition.statusType}
             item={item}
             name={key}
             key={key}
-           />
+          />
         );
       });
 

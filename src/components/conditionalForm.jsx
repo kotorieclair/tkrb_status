@@ -12,6 +12,7 @@ class ConditionalForm extends React.Component {
     };
 
     this._checkboxFilter = this._checkboxFilter.bind(this);
+    this.setStatusType = this.setStatusType.bind(this);
     this.setTypeFilter = this.setTypeFilter.bind(this);
     this.setFamilyFilter = this.setFamilyFilter.bind(this);
     this.setRareFilter = this.setRareFilter.bind(this);
@@ -22,25 +23,20 @@ class ConditionalForm extends React.Component {
   }
 
   _checkboxFilter(cond) {
-    const _chbx = React.findDOMNode(this).querySelectorAll(`[name='${cond}']`);
-    // const _arr = [];
+    const _chbxs = React.findDOMNode(this).querySelectorAll(`[name='${cond}']`);
+    const _arr = [];
 
-    const _arr = Array.prototype.map.call(_chbx, (item) => {
-      if (item.checked) {
-        return item;
+    Array.prototype.forEach.call(_chbxs, (_chbx) => {
+      if (_chbx.checked) {
+        _arr.push(_chbx.value);
       }
     });
-    // for (let i = 0; i < _chbx.length; i++) {
-    //   if (_chbx[i].checked) {
-    //     _arr.push(_chbx[i].value);
-    //   }
-    // }
 
     return _arr;
   }
 
   setStatusType(e) {
-    this.props.onStatusTypeChange(e.target.value);
+    this.props.onStatusTypeChange(e.currentTarget.value);
   }
 
   setTypeFilter() {
@@ -60,7 +56,7 @@ class ConditionalForm extends React.Component {
   setRareFilter() {
     let _rare = this._checkboxFilter('rare');
     _rare = _rare.map((rare) => {
-      return paseInt(rare, 10);
+      return parseInt(rare, 10);
     });
     this.props.onConditionChange({
       rare: _rare,
@@ -106,7 +102,8 @@ class ConditionalForm extends React.Component {
   }
 
   render() {
-    const _statusTypeInput = Object.keys(config.labels.statusType).map((item) => {
+    const _st = Object.keys(config.labels.statusType);
+    const statusTypeInput = _st.map((item) => {
       return (
         <FormCheckRadio
           key={item}
@@ -114,14 +111,14 @@ class ConditionalForm extends React.Component {
           name="statusType"
           value={item}
           checked={this.props.condition.statusType === item}
-          change={this.setStatusType}
+          onChange={this.setStatusType}
         >
           {config.labels.statusType[item]}
         </FormCheckRadio>
       );
     });
 
-    const _typeInput = config.labels.type.map((item) => {
+    const typeInput = config.labels.type.map((item) => {
       return (
         <FormCheckRadio
           key={item}
@@ -129,14 +126,14 @@ class ConditionalForm extends React.Component {
           name="type"
           value={item}
           checked={_includes(this.props.condition.type, item)}
-          change={this.setTypeFilter}
+          onChange={this.setTypeFilter}
         >
           {item}
         </FormCheckRadio>
       );
     });
 
-    const _familyInput = config.labels.family.map((item) => {
+    const familyInput = config.labels.family.map((item) => {
       return (
         <FormCheckRadio
           key={item}
@@ -144,14 +141,14 @@ class ConditionalForm extends React.Component {
           name="family"
           value={item}
           checked={_includes(this.props.condition.family, item)}
-          change={this.setFamilyFilter}
+          onChange={this.setFamilyFilter}
         >
           {item}
         </FormCheckRadio>
       );
     });
 
-    const _rareInput = config.labels.rare.map((item) => {
+    const rareInput = config.labels.rare.map((item) => {
       return (
         <FormCheckRadio
           key={item}
@@ -159,7 +156,7 @@ class ConditionalForm extends React.Component {
           name="rare"
           value={item}
           checked={_includes(this.props.condition.rare, item)}
-          change={this.setRareFilter}
+          onChange={this.setRareFilter}
         >
           レア{item}
         </FormCheckRadio>
@@ -174,7 +171,7 @@ class ConditionalForm extends React.Component {
             表示ステータス<i className="fa fa-caret-down"></i>
           </legend>
           <div className="fieldset-item">
-            {_statusTypeInput}
+            {statusTypeInput}
           </div>
         </fieldset>
         <fieldset>
@@ -184,21 +181,33 @@ class ConditionalForm extends React.Component {
           <div className="fieldset-item">
             <div className="input-group">
               <h3>刀種</h3>
-              {_typeInput}
-              <button value="type" className="btn-all" onClick={this.selectAll}>全選択</button>
-              <button value="type" className="btn-none" onClick={this.selectNone}>全解除</button>
+              {typeInput}
+              <button value="type" className="btn-all" onClick={this.selectAll}>
+                全選択
+              </button>
+              <button value="type" className="btn-none" onClick={this.selectNone}>
+                全解除
+              </button>
             </div>
             <div className="input-group">
               <h3>刀派</h3>
-              {_familyInput}
-              <button value="family" className="btn-all" onClick={this.selectAll}>全選択</button>
-              <button value="family" className="btn-none" onClick={this.selectNone}>全解除</button>
+              {familyInput}
+              <button value="family" className="btn-all" onClick={this.selectAll}>
+                全選択
+              </button>
+              <button value="family" className="btn-none" onClick={this.selectNone}>
+                全解除
+              </button>
             </div>
             <div className="input-group">
               <h3>レアリティ</h3>
-              {_rareInput}
-              <button value="rare" className="btn-all" onClick={this.selectAll}>全選択</button>
-              <button value="rare" className="btn-none" onClick={this.selectNone}>全解除</button>
+              {rareInput}
+              <button value="rare" className="btn-all" onClick={this.selectAll}>
+                全選択
+              </button>
+              <button value="rare" className="btn-none" onClick={this.selectNone}>
+                全解除
+              </button>
             </div>
           </div>
         </fieldset>
@@ -207,8 +216,16 @@ class ConditionalForm extends React.Component {
             刀剣名指定<i className="fa fa-caret-down"></i>
           </legend>
           <div className="fieldset-item">
-            <input type="text" ref="names" value={this.props.condition.names.join(',')} placeholder="半角カンマ区切り（空白なし）" onChange={this.setNamesFilter} />
-            <button value="names" className="btn-none" onClick={this.selectNone}>解除</button>
+            <input
+              type="text"
+              ref="names"
+              value={this.props.condition.names.join(',')}
+              placeholder="半角カンマ区切り（空白なし）"
+              onChange={this.setNamesFilter}
+            />
+            <button value="names" className="btn-none" onClick={this.selectNone}>
+              解除
+            </button>
           </div>
         </fieldset>
       </form>

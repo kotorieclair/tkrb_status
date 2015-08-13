@@ -13,8 +13,9 @@ class HelpModal extends React.Component {
   }
 
   render() {
+    const _className = this.props.show ? 'help-show' : 'help-hide';
     return (
-      <div id="status-help" className={this.props.show ? 'help-show' : 'help-hide'}>
+      <div id="status-help" className={_className}>
         <div className="help-body" dangerouslySetInnerHTML={{__html: helpMd}} />
         <div className="help-close">
           <a onClick={this.closeHelp}>ヘルプをとじる</a>

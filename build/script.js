@@ -842,6 +842,7 @@ var ConditionalForm = (function (_React$Component) {
     };
 
     this._checkboxFilter = this._checkboxFilter.bind(this);
+    this.setStatusType = this.setStatusType.bind(this);
     this.setTypeFilter = this.setTypeFilter.bind(this);
     this.setFamilyFilter = this.setFamilyFilter.bind(this);
     this.setRareFilter = this.setRareFilter.bind(this);
@@ -854,26 +855,21 @@ var ConditionalForm = (function (_React$Component) {
   _createClass(ConditionalForm, [{
     key: '_checkboxFilter',
     value: function _checkboxFilter(cond) {
-      var _chbx = React.findDOMNode(this).querySelectorAll('[name=\'' + cond + '\']');
-      // const _arr = [];
+      var _chbxs = React.findDOMNode(this).querySelectorAll('[name=\'' + cond + '\']');
+      var _arr = [];
 
-      var _arr = Array.prototype.map.call(_chbx, function (item) {
-        if (item.checked) {
-          return item;
+      Array.prototype.forEach.call(_chbxs, function (_chbx) {
+        if (_chbx.checked) {
+          _arr.push(_chbx.value);
         }
       });
-      // for (let i = 0; i < _chbx.length; i++) {
-      //   if (_chbx[i].checked) {
-      //     _arr.push(_chbx[i].value);
-      //   }
-      // }
 
       return _arr;
     }
   }, {
     key: 'setStatusType',
     value: function setStatusType(e) {
-      this.props.onStatusTypeChange(e.target.value);
+      this.props.onStatusTypeChange(e.currentTarget.value);
     }
   }, {
     key: 'setTypeFilter',
@@ -896,7 +892,7 @@ var ConditionalForm = (function (_React$Component) {
     value: function setRareFilter() {
       var _rare = this._checkboxFilter('rare');
       _rare = _rare.map(function (rare) {
-        return paseInt(rare, 10);
+        return parseInt(rare, 10);
       });
       this.props.onConditionChange({
         rare: _rare
@@ -949,7 +945,8 @@ var ConditionalForm = (function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      var _statusTypeInput = Object.keys(_config2['default'].labels.statusType).map(function (item) {
+      var _st = Object.keys(_config2['default'].labels.statusType);
+      var statusTypeInput = _st.map(function (item) {
         return React.createElement(
           _formCheckRadio2['default'],
           {
@@ -958,13 +955,13 @@ var ConditionalForm = (function (_React$Component) {
             name: "statusType",
             value: item,
             checked: _this.props.condition.statusType === item,
-            change: _this.setStatusType
+            onChange: _this.setStatusType
           },
           _config2['default'].labels.statusType[item]
         );
       });
 
-      var _typeInput = _config2['default'].labels.type.map(function (item) {
+      var typeInput = _config2['default'].labels.type.map(function (item) {
         return React.createElement(
           _formCheckRadio2['default'],
           {
@@ -973,13 +970,13 @@ var ConditionalForm = (function (_React$Component) {
             name: "type",
             value: item,
             checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.type, item),
-            change: _this.setTypeFilter
+            onChange: _this.setTypeFilter
           },
           item
         );
       });
 
-      var _familyInput = _config2['default'].labels.family.map(function (item) {
+      var familyInput = _config2['default'].labels.family.map(function (item) {
         return React.createElement(
           _formCheckRadio2['default'],
           {
@@ -988,13 +985,13 @@ var ConditionalForm = (function (_React$Component) {
             name: "family",
             value: item,
             checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.family, item),
-            change: _this.setFamilyFilter
+            onChange: _this.setFamilyFilter
           },
           item
         );
       });
 
-      var _rareInput = _config2['default'].labels.rare.map(function (item) {
+      var rareInput = _config2['default'].labels.rare.map(function (item) {
         return React.createElement(
           _formCheckRadio2['default'],
           {
@@ -1003,7 +1000,7 @@ var ConditionalForm = (function (_React$Component) {
             name: "rare",
             value: item,
             checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.rare, item),
-            change: _this.setRareFilter
+            onChange: _this.setRareFilter
           },
           'レア',
           item
@@ -1030,7 +1027,7 @@ var ConditionalForm = (function (_React$Component) {
           React.createElement(
             'div',
             { className: "fieldset-item" },
-            _statusTypeInput
+            statusTypeInput
           )
         ),
         React.createElement(
@@ -1053,7 +1050,7 @@ var ConditionalForm = (function (_React$Component) {
                 null,
                 '刀種'
               ),
-              _typeInput,
+              typeInput,
               React.createElement(
                 'button',
                 { value: "type", className: "btn-all", onClick: this.selectAll },
@@ -1073,7 +1070,7 @@ var ConditionalForm = (function (_React$Component) {
                 null,
                 '刀派'
               ),
-              _familyInput,
+              familyInput,
               React.createElement(
                 'button',
                 { value: "family", className: "btn-all", onClick: this.selectAll },
@@ -1093,7 +1090,7 @@ var ConditionalForm = (function (_React$Component) {
                 null,
                 'レアリティ'
               ),
-              _rareInput,
+              rareInput,
               React.createElement(
                 'button',
                 { value: "rare", className: "btn-all", onClick: this.selectAll },
@@ -1119,7 +1116,13 @@ var ConditionalForm = (function (_React$Component) {
           React.createElement(
             'div',
             { className: "fieldset-item" },
-            React.createElement('input', { type: "text", ref: "names", value: this.props.condition.names.join(','), placeholder: "半角カンマ区切り（空白なし）", onChange: this.setNamesFilter }),
+            React.createElement('input', {
+              type: "text",
+              ref: "names",
+              value: this.props.condition.names.join(','),
+              placeholder: "半角カンマ区切り（空白なし）",
+              onChange: this.setNamesFilter
+            }),
             React.createElement(
               'button',
               { value: "names", className: "btn-none", onClick: this.selectNone },
@@ -1170,7 +1173,7 @@ var FormCheckRadio = (function (_React$Component) {
   _createClass(FormCheckRadio, [{
     key: "handleChange",
     value: function handleChange(e) {
-      this.props.change(e);
+      this.props.onChange(e);
     }
   }, {
     key: "render",
@@ -1189,7 +1192,7 @@ var FormCheckRadio = (function (_React$Component) {
           "span",
           null,
           React.createElement("i", { className: "fa fa-check" }),
-          this.props.children
+          children
         )
       );
     }
@@ -1290,9 +1293,10 @@ var HelpModal = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _className = this.props.show ? 'help-show' : 'help-hide';
       return React.createElement(
         'div',
-        { id: "status-help", className: this.props.show ? 'help-show' : 'help-hide' },
+        { id: "status-help", className: _className },
         React.createElement('div', { className: "help-body", dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } }),
         React.createElement(
           'div',
@@ -1324,9 +1328,15 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _config = require('../config');
+
+var _config2 = _interopRequireDefault(_config);
 
 var StatusBar = (function (_React$Component) {
   _inherits(StatusBar, _React$Component);
@@ -1341,16 +1351,22 @@ var StatusBar = (function (_React$Component) {
     key: 'render',
     value: function render() {
       // create graph bars
-      var val = this.props.item[this.props.statusType][this.props.name];
-      var _height = "";
+      var _item = this.props.item;
+      var _name = this.props.name;
+      var val = _item[this.props.statusType][_name];
+      var _height = '';
 
       if (val) {
-        _height = val / this.props.maxStatus * 100 + '%';
+        _height = val / _config2['default'].maxStatus * 100;
       } else {
-        _height = this.props.item.initial[this.props.name] / this.props.maxStatus * 100 + '%';
+        _height = _item.initial[_name] / _config2['default'].maxStatus * 100;
       }
 
-      return React.createElement('div', { className: 'status-bar ' + this.props.name, style: { height: _height }, 'data-status': val });
+      return React.createElement('div', {
+        className: 'status-bar ' + this.props.name,
+        style: { height: _height + '%' },
+        'data-status': val
+      });
     }
   }]);
 
@@ -1360,7 +1376,7 @@ var StatusBar = (function (_React$Component) {
 exports['default'] = StatusBar;
 module.exports = exports['default'];
 
-},{}],29:[function(require,module,exports){
+},{"../config":31}],29:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1376,10 +1392,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _config = require('../config');
-
-var _config2 = _interopRequireDefault(_config);
 
 var _lodashCollectionIncludes = require('lodash/collection/includes');
 
@@ -1413,8 +1425,9 @@ var StatusGraph = (function (_BaseComponent) {
     value: function render() {
       var _this = this;
 
+      var _condition = this.props.condition;
       var status = this.props.data.map(function (item) {
-        if (_this.props.condition.names.length) {
+        if (_condition.names.length) {
           if (!_this._namesFilter(item)) {
             return false;
           }
@@ -1425,17 +1438,16 @@ var StatusGraph = (function (_BaseComponent) {
         }
 
         var total = 0;
-        var bars = Object.keys(item[_this.props.condition.statusType]).map(function (key) {
+        var bars = Object.keys(item[_condition.statusType]).map(function (key) {
           // filter by status
-          if (!(0, _lodashCollectionIncludes2['default'])(_this.props.condition.status, key)) {
+          if (!(0, _lodashCollectionIncludes2['default'])(_condition.status, key)) {
             return false;
           }
 
-          total += item[_this.props.condition.statusType][key];
+          total += item[_condition.statusType][key];
 
           return React.createElement(_statusBar2['default'], {
-            maxStatus: _config2['default'].maxStatus,
-            statusType: _this.props.condition.statusType,
+            statusType: _condition.statusType,
             item: item,
             name: key,
             key: key
@@ -1512,7 +1524,7 @@ var StatusGraph = (function (_BaseComponent) {
 exports['default'] = StatusGraph;
 module.exports = exports['default'];
 
-},{"../config":31,"./baseComponent":23,"./graphBack":26,"./statusBar":28,"lodash/collection/includes":1}],30:[function(require,module,exports){
+},{"./baseComponent":23,"./graphBack":26,"./statusBar":28,"lodash/collection/includes":1}],30:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
