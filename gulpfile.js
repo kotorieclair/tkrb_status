@@ -52,8 +52,8 @@ gulp.task('browserify', function() {
     .pipe(sourcemaps.init({
       loadMaps: true
     }))
-    .pipe(sourcemaps.write('./'))
     .pipe(compress ? $.uglify() : $.util.noop())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./build'))
 });
 
@@ -149,7 +149,7 @@ gulp.task('fetchData', function() {
 gulp.task('build', ['moveIndex', 'moveMd', 'stylus', 'browserify']);
 
 gulp.task('deploy', function() {
-  return gulp.src('./build/**/*')
+  return gulp.src('./build/**/!(*.map)')
     .pipe($.ghPages());
 });
 
