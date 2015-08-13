@@ -19,7 +19,7 @@ class FormCheckRadio extends React.Component {
           {children}
         </span>
       </label>
-    )
+    );
   }
 }
 

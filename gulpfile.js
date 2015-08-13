@@ -53,7 +53,6 @@ gulp.task('browserify', function() {
       loadMaps: true
     }))
     .pipe(sourcemaps.write('./'))
-    // .pipe($.uglify())
     .pipe(compress ? $.uglify() : $.util.noop())
     .pipe(gulp.dest('./build'))
 });
