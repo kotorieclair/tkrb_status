@@ -265,6 +265,9 @@ header
     padding: $form-item-padding
     transition: $transition-form
 
+    &:hover
+      cursor: pointer
+
     &.btn-all
       background-color: $btn-color-all
       border: 1px solid @background-color
@@ -278,6 +281,24 @@ header
 
       &:hover
         background-color: lighten(@background-color, 10%)
+
+  .names-suggested
+    background-color: $btn-color-off
+    position: absolute
+
+    li
+      border-radius: $border-radius
+      border-top: 1px dotted rgba(#000, 0.3)
+      margin: ($form-item-padding / 2)
+      padding: @margin
+      width: 400px
+
+      &:hover
+        background-color: rgba($btn-color-on, 0.3)
+        cursor: pointer
+
+      &:first-child
+        border-top: none
 
 // -----------------------------
 // graph base

@@ -20,11 +20,13 @@ function last(array) {
 module.exports = last;
 
 },{}],2:[function(require,module,exports){
-var baseEach = require('../internal/baseEach'),
-    createFind = require('../internal/createFind');
+var arrayFilter = require('../internal/arrayFilter'),
+    baseCallback = require('../internal/baseCallback'),
+    baseFilter = require('../internal/baseFilter'),
+    isArray = require('../lang/isArray');
 
 /**
- * Iterates over elements of `collection`, returning the first element
+ * Iterates over elements of `collection`, returning an array of all elements
  * `predicate` returns truthy for. The predicate is bound to `thisArg` and
  * invoked with three arguments: (value, index|key, collection).
  *
@@ -41,43 +43,46 @@ var baseEach = require('../internal/baseEach'),
  *
  * @static
  * @memberOf _
- * @alias detect
+ * @alias select
  * @category Collection
- * @param {Array|Object|string} collection The collection to search.
+ * @param {Array|Object|string} collection The collection to iterate over.
  * @param {Function|Object|string} [predicate=_.identity] The function invoked
  *  per iteration.
  * @param {*} [thisArg] The `this` binding of `predicate`.
- * @returns {*} Returns the matched element, else `undefined`.
+ * @returns {Array} Returns the new filtered array.
  * @example
  *
+ * _.filter([4, 5, 6], function(n) {
+ *   return n % 2 == 0;
+ * });
+ * // => [4, 6]
+ *
  * var users = [
- *   { 'user': 'barney',  'age': 36, 'active': true },
- *   { 'user': 'fred',    'age': 40, 'active': false },
- *   { 'user': 'pebbles', 'age': 1,  'active': true }
+ *   { 'user': 'barney', 'age': 36, 'active': true },
+ *   { 'user': 'fred',   'age': 40, 'active': false }
  * ];
  *
- * _.result(_.find(users, function(chr) {
- *   return chr.age < 40;
- * }), 'user');
- * // => 'barney'
- *
  * // using the `_.matches` callback shorthand
- * _.result(_.find(users, { 'age': 1, 'active': true }), 'user');
- * // => 'pebbles'
+ * _.pluck(_.filter(users, { 'age': 36, 'active': true }), 'user');
+ * // => ['barney']
  *
  * // using the `_.matchesProperty` callback shorthand
- * _.result(_.find(users, 'active', false), 'user');
- * // => 'fred'
+ * _.pluck(_.filter(users, 'active', false), 'user');
+ * // => ['fred']
  *
  * // using the `_.property` callback shorthand
- * _.result(_.find(users, 'active'), 'user');
- * // => 'barney'
+ * _.pluck(_.filter(users, 'active'), 'user');
+ * // => ['barney']
  */
-var find = createFind(baseEach);
+function filter(collection, predicate, thisArg) {
+  var func = isArray(collection) ? arrayFilter : baseFilter;
+  predicate = baseCallback(predicate, thisArg, 3);
+  return func(collection, predicate);
+}
 
-module.exports = find;
+module.exports = filter;
 
-},{"../internal/baseEach":6,"../internal/createFind":26}],3:[function(require,module,exports){
+},{"../internal/arrayFilter":4,"../internal/baseCallback":6,"../internal/baseFilter":8,"../lang/isArray":44}],3:[function(require,module,exports){
 var baseIndexOf = require('../internal/baseIndexOf'),
     getLength = require('../internal/getLength'),
     isArray = require('../lang/isArray'),
@@ -136,7 +141,34 @@ function includes(collection, target, fromIndex, guard) {
 
 module.exports = includes;
 
-},{"../internal/baseIndexOf":12,"../internal/getLength":30,"../internal/isIterateeCall":36,"../internal/isLength":38,"../lang/isArray":45,"../lang/isString":49,"../object/values":54}],4:[function(require,module,exports){
+},{"../internal/baseIndexOf":12,"../internal/getLength":29,"../internal/isIterateeCall":35,"../internal/isLength":37,"../lang/isArray":44,"../lang/isString":48,"../object/values":53}],4:[function(require,module,exports){
+/**
+ * A specialized version of `_.filter` for arrays without support for callback
+ * shorthands and `this` binding.
+ *
+ * @private
+ * @param {Array} array The array to iterate over.
+ * @param {Function} predicate The function invoked per iteration.
+ * @returns {Array} Returns the new filtered array.
+ */
+function arrayFilter(array, predicate) {
+  var index = -1,
+      length = array.length,
+      resIndex = -1,
+      result = [];
+
+  while (++index < length) {
+    var value = array[index];
+    if (predicate(value, index, array)) {
+      result[++resIndex] = value;
+    }
+  }
+  return result;
+}
+
+module.exports = arrayFilter;
+
+},{}],5:[function(require,module,exports){
 /**
  * A specialized version of `_.some` for arrays without support for callback
  * shorthands and `this` binding.
@@ -161,7 +193,7 @@ function arraySome(array, predicate) {
 
 module.exports = arraySome;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var baseMatches = require('./baseMatches'),
     baseMatchesProperty = require('./baseMatchesProperty'),
     bindCallback = require('./bindCallback'),
@@ -198,7 +230,7 @@ function baseCallback(func, thisArg, argCount) {
 
 module.exports = baseCallback;
 
-},{"../utility/identity":55,"../utility/property":56,"./baseMatches":16,"./baseMatchesProperty":17,"./bindCallback":23}],6:[function(require,module,exports){
+},{"../utility/identity":54,"../utility/property":55,"./baseMatches":16,"./baseMatchesProperty":17,"./bindCallback":23}],7:[function(require,module,exports){
 var baseForOwn = require('./baseForOwn'),
     createBaseEach = require('./createBaseEach');
 
@@ -215,59 +247,31 @@ var baseEach = createBaseEach(baseForOwn);
 
 module.exports = baseEach;
 
-},{"./baseForOwn":10,"./createBaseEach":24}],7:[function(require,module,exports){
+},{"./baseForOwn":10,"./createBaseEach":24}],8:[function(require,module,exports){
+var baseEach = require('./baseEach');
+
 /**
- * The base implementation of `_.find`, `_.findLast`, `_.findKey`, and `_.findLastKey`,
- * without support for callback shorthands and `this` binding, which iterates
- * over `collection` using the provided `eachFunc`.
+ * The base implementation of `_.filter` without support for callback
+ * shorthands and `this` binding.
  *
  * @private
- * @param {Array|Object|string} collection The collection to search.
+ * @param {Array|Object|string} collection The collection to iterate over.
  * @param {Function} predicate The function invoked per iteration.
- * @param {Function} eachFunc The function to iterate over `collection`.
- * @param {boolean} [retKey] Specify returning the key of the found element
- *  instead of the element itself.
- * @returns {*} Returns the found element or its key, else `undefined`.
+ * @returns {Array} Returns the new filtered array.
  */
-function baseFind(collection, predicate, eachFunc, retKey) {
-  var result;
-  eachFunc(collection, function(value, key, collection) {
-    if (predicate(value, key, collection)) {
-      result = retKey ? key : value;
-      return false;
+function baseFilter(collection, predicate) {
+  var result = [];
+  baseEach(collection, function(value, index, collection) {
+    if (predicate(value, index, collection)) {
+      result.push(value);
     }
   });
   return result;
 }
 
-module.exports = baseFind;
+module.exports = baseFilter;
 
-},{}],8:[function(require,module,exports){
-/**
- * The base implementation of `_.findIndex` and `_.findLastIndex` without
- * support for callback shorthands and `this` binding.
- *
- * @private
- * @param {Array} array The array to search.
- * @param {Function} predicate The function invoked per iteration.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function baseFindIndex(array, predicate, fromRight) {
-  var length = array.length,
-      index = fromRight ? length : -1;
-
-  while ((fromRight ? index-- : ++index < length)) {
-    if (predicate(array[index], index, array)) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-module.exports = baseFindIndex;
-
-},{}],9:[function(require,module,exports){
+},{"./baseEach":7}],9:[function(require,module,exports){
 var createBaseFor = require('./createBaseFor');
 
 /**
@@ -305,7 +309,7 @@ function baseForOwn(object, iteratee) {
 
 module.exports = baseForOwn;
 
-},{"../object/keys":51,"./baseFor":9}],11:[function(require,module,exports){
+},{"../object/keys":50,"./baseFor":9}],11:[function(require,module,exports){
 var toObject = require('./toObject');
 
 /**
@@ -336,7 +340,7 @@ function baseGet(object, path, pathKey) {
 
 module.exports = baseGet;
 
-},{"./toObject":42}],12:[function(require,module,exports){
+},{"./toObject":41}],12:[function(require,module,exports){
 var indexOfNaN = require('./indexOfNaN');
 
 /**
@@ -365,7 +369,7 @@ function baseIndexOf(array, value, fromIndex) {
 
 module.exports = baseIndexOf;
 
-},{"./indexOfNaN":33}],13:[function(require,module,exports){
+},{"./indexOfNaN":32}],13:[function(require,module,exports){
 var baseIsEqualDeep = require('./baseIsEqualDeep'),
     isObject = require('../lang/isObject'),
     isObjectLike = require('./isObjectLike');
@@ -395,7 +399,7 @@ function baseIsEqual(value, other, customizer, isLoose, stackA, stackB) {
 
 module.exports = baseIsEqual;
 
-},{"../lang/isObject":48,"./baseIsEqualDeep":14,"./isObjectLike":39}],14:[function(require,module,exports){
+},{"../lang/isObject":47,"./baseIsEqualDeep":14,"./isObjectLike":38}],14:[function(require,module,exports){
 var equalArrays = require('./equalArrays'),
     equalByTag = require('./equalByTag'),
     equalObjects = require('./equalObjects'),
@@ -499,7 +503,7 @@ function baseIsEqualDeep(object, other, equalFunc, customizer, isLoose, stackA, 
 
 module.exports = baseIsEqualDeep;
 
-},{"../lang/isArray":45,"../lang/isTypedArray":50,"./equalArrays":27,"./equalByTag":28,"./equalObjects":29}],15:[function(require,module,exports){
+},{"../lang/isArray":44,"../lang/isTypedArray":49,"./equalArrays":26,"./equalByTag":27,"./equalObjects":28}],15:[function(require,module,exports){
 var baseIsEqual = require('./baseIsEqual'),
     toObject = require('./toObject');
 
@@ -553,7 +557,7 @@ function baseIsMatch(object, matchData, customizer) {
 
 module.exports = baseIsMatch;
 
-},{"./baseIsEqual":13,"./toObject":42}],16:[function(require,module,exports){
+},{"./baseIsEqual":13,"./toObject":41}],16:[function(require,module,exports){
 var baseIsMatch = require('./baseIsMatch'),
     getMatchData = require('./getMatchData'),
     toObject = require('./toObject');
@@ -585,7 +589,7 @@ function baseMatches(source) {
 
 module.exports = baseMatches;
 
-},{"./baseIsMatch":15,"./getMatchData":31,"./toObject":42}],17:[function(require,module,exports){
+},{"./baseIsMatch":15,"./getMatchData":30,"./toObject":41}],17:[function(require,module,exports){
 var baseGet = require('./baseGet'),
     baseIsEqual = require('./baseIsEqual'),
     baseSlice = require('./baseSlice'),
@@ -632,7 +636,7 @@ function baseMatchesProperty(path, srcValue) {
 
 module.exports = baseMatchesProperty;
 
-},{"../array/last":1,"../lang/isArray":45,"./baseGet":11,"./baseIsEqual":13,"./baseSlice":20,"./isKey":37,"./isStrictComparable":40,"./toObject":42,"./toPath":43}],18:[function(require,module,exports){
+},{"../array/last":1,"../lang/isArray":44,"./baseGet":11,"./baseIsEqual":13,"./baseSlice":20,"./isKey":36,"./isStrictComparable":39,"./toObject":41,"./toPath":42}],18:[function(require,module,exports){
 /**
  * The base implementation of `_.property` without support for deep paths.
  *
@@ -669,7 +673,7 @@ function basePropertyDeep(path) {
 
 module.exports = basePropertyDeep;
 
-},{"./baseGet":11,"./toPath":43}],20:[function(require,module,exports){
+},{"./baseGet":11,"./toPath":42}],20:[function(require,module,exports){
 /**
  * The base implementation of `_.slice` without an iteratee call guard.
  *
@@ -783,7 +787,7 @@ function bindCallback(func, thisArg, argCount) {
 
 module.exports = bindCallback;
 
-},{"../utility/identity":55}],24:[function(require,module,exports){
+},{"../utility/identity":54}],24:[function(require,module,exports){
 var getLength = require('./getLength'),
     isLength = require('./isLength'),
     toObject = require('./toObject');
@@ -816,7 +820,7 @@ function createBaseEach(eachFunc, fromRight) {
 
 module.exports = createBaseEach;
 
-},{"./getLength":30,"./isLength":38,"./toObject":42}],25:[function(require,module,exports){
+},{"./getLength":29,"./isLength":37,"./toObject":41}],25:[function(require,module,exports){
 var toObject = require('./toObject');
 
 /**
@@ -845,34 +849,7 @@ function createBaseFor(fromRight) {
 
 module.exports = createBaseFor;
 
-},{"./toObject":42}],26:[function(require,module,exports){
-var baseCallback = require('./baseCallback'),
-    baseFind = require('./baseFind'),
-    baseFindIndex = require('./baseFindIndex'),
-    isArray = require('../lang/isArray');
-
-/**
- * Creates a `_.find` or `_.findLast` function.
- *
- * @private
- * @param {Function} eachFunc The function to iterate over a collection.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {Function} Returns the new find function.
- */
-function createFind(eachFunc, fromRight) {
-  return function(collection, predicate, thisArg) {
-    predicate = baseCallback(predicate, thisArg, 3);
-    if (isArray(collection)) {
-      var index = baseFindIndex(collection, predicate, fromRight);
-      return index > -1 ? collection[index] : undefined;
-    }
-    return baseFind(collection, predicate, eachFunc);
-  };
-}
-
-module.exports = createFind;
-
-},{"../lang/isArray":45,"./baseCallback":5,"./baseFind":7,"./baseFindIndex":8}],27:[function(require,module,exports){
+},{"./toObject":41}],26:[function(require,module,exports){
 var arraySome = require('./arraySome');
 
 /**
@@ -925,7 +902,7 @@ function equalArrays(array, other, equalFunc, customizer, isLoose, stackA, stack
 
 module.exports = equalArrays;
 
-},{"./arraySome":4}],28:[function(require,module,exports){
+},{"./arraySome":5}],27:[function(require,module,exports){
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
     dateTag = '[object Date]',
@@ -975,7 +952,7 @@ function equalByTag(object, other, tag) {
 
 module.exports = equalByTag;
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 var keys = require('../object/keys');
 
 /** Used for native method references. */
@@ -1044,7 +1021,7 @@ function equalObjects(object, other, equalFunc, customizer, isLoose, stackA, sta
 
 module.exports = equalObjects;
 
-},{"../object/keys":51}],30:[function(require,module,exports){
+},{"../object/keys":50}],29:[function(require,module,exports){
 var baseProperty = require('./baseProperty');
 
 /**
@@ -1061,7 +1038,7 @@ var getLength = baseProperty('length');
 
 module.exports = getLength;
 
-},{"./baseProperty":18}],31:[function(require,module,exports){
+},{"./baseProperty":18}],30:[function(require,module,exports){
 var isStrictComparable = require('./isStrictComparable'),
     pairs = require('../object/pairs');
 
@@ -1084,7 +1061,7 @@ function getMatchData(object) {
 
 module.exports = getMatchData;
 
-},{"../object/pairs":53,"./isStrictComparable":40}],32:[function(require,module,exports){
+},{"../object/pairs":52,"./isStrictComparable":39}],31:[function(require,module,exports){
 var isNative = require('../lang/isNative');
 
 /**
@@ -1102,7 +1079,7 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-},{"../lang/isNative":47}],33:[function(require,module,exports){
+},{"../lang/isNative":46}],32:[function(require,module,exports){
 /**
  * Gets the index at which the first occurrence of `NaN` is found in `array`.
  *
@@ -1127,7 +1104,7 @@ function indexOfNaN(array, fromIndex, fromRight) {
 
 module.exports = indexOfNaN;
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 var getLength = require('./getLength'),
     isLength = require('./isLength');
 
@@ -1144,7 +1121,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"./getLength":30,"./isLength":38}],35:[function(require,module,exports){
+},{"./getLength":29,"./isLength":37}],34:[function(require,module,exports){
 /** Used to detect unsigned integer values. */
 var reIsUint = /^\d+$/;
 
@@ -1170,7 +1147,7 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 var isArrayLike = require('./isArrayLike'),
     isIndex = require('./isIndex'),
     isObject = require('../lang/isObject');
@@ -1200,7 +1177,7 @@ function isIterateeCall(value, index, object) {
 
 module.exports = isIterateeCall;
 
-},{"../lang/isObject":48,"./isArrayLike":34,"./isIndex":35}],37:[function(require,module,exports){
+},{"../lang/isObject":47,"./isArrayLike":33,"./isIndex":34}],36:[function(require,module,exports){
 var isArray = require('../lang/isArray'),
     toObject = require('./toObject');
 
@@ -1230,7 +1207,7 @@ function isKey(value, object) {
 
 module.exports = isKey;
 
-},{"../lang/isArray":45,"./toObject":42}],38:[function(require,module,exports){
+},{"../lang/isArray":44,"./toObject":41}],37:[function(require,module,exports){
 /**
  * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
@@ -1252,7 +1229,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /**
  * Checks if `value` is object-like.
  *
@@ -1266,7 +1243,7 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 var isObject = require('../lang/isObject');
 
 /**
@@ -1283,7 +1260,7 @@ function isStrictComparable(value) {
 
 module.exports = isStrictComparable;
 
-},{"../lang/isObject":48}],41:[function(require,module,exports){
+},{"../lang/isObject":47}],40:[function(require,module,exports){
 var isArguments = require('../lang/isArguments'),
     isArray = require('../lang/isArray'),
     isIndex = require('./isIndex'),
@@ -1326,7 +1303,7 @@ function shimKeys(object) {
 
 module.exports = shimKeys;
 
-},{"../lang/isArguments":44,"../lang/isArray":45,"../object/keysIn":52,"./isIndex":35,"./isLength":38}],42:[function(require,module,exports){
+},{"../lang/isArguments":43,"../lang/isArray":44,"../object/keysIn":51,"./isIndex":34,"./isLength":37}],41:[function(require,module,exports){
 var isObject = require('../lang/isObject');
 
 /**
@@ -1342,7 +1319,7 @@ function toObject(value) {
 
 module.exports = toObject;
 
-},{"../lang/isObject":48}],43:[function(require,module,exports){
+},{"../lang/isObject":47}],42:[function(require,module,exports){
 var baseToString = require('./baseToString'),
     isArray = require('../lang/isArray');
 
@@ -1372,7 +1349,7 @@ function toPath(value) {
 
 module.exports = toPath;
 
-},{"../lang/isArray":45,"./baseToString":21}],44:[function(require,module,exports){
+},{"../lang/isArray":44,"./baseToString":21}],43:[function(require,module,exports){
 var isArrayLike = require('../internal/isArrayLike'),
     isObjectLike = require('../internal/isObjectLike');
 
@@ -1408,7 +1385,7 @@ function isArguments(value) {
 
 module.exports = isArguments;
 
-},{"../internal/isArrayLike":34,"../internal/isObjectLike":39}],45:[function(require,module,exports){
+},{"../internal/isArrayLike":33,"../internal/isObjectLike":38}],44:[function(require,module,exports){
 var getNative = require('../internal/getNative'),
     isLength = require('../internal/isLength'),
     isObjectLike = require('../internal/isObjectLike');
@@ -1450,7 +1427,7 @@ var isArray = nativeIsArray || function(value) {
 
 module.exports = isArray;
 
-},{"../internal/getNative":32,"../internal/isLength":38,"../internal/isObjectLike":39}],46:[function(require,module,exports){
+},{"../internal/getNative":31,"../internal/isLength":37,"../internal/isObjectLike":38}],45:[function(require,module,exports){
 var isObject = require('./isObject');
 
 /** `Object#toString` result references. */
@@ -1490,7 +1467,7 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{"./isObject":48}],47:[function(require,module,exports){
+},{"./isObject":47}],46:[function(require,module,exports){
 var isFunction = require('./isFunction'),
     isObjectLike = require('../internal/isObjectLike');
 
@@ -1540,7 +1517,7 @@ function isNative(value) {
 
 module.exports = isNative;
 
-},{"../internal/isObjectLike":39,"./isFunction":46}],48:[function(require,module,exports){
+},{"../internal/isObjectLike":38,"./isFunction":45}],47:[function(require,module,exports){
 /**
  * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
  * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
@@ -1570,7 +1547,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],49:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var isObjectLike = require('../internal/isObjectLike');
 
 /** `Object#toString` result references. */
@@ -1607,7 +1584,7 @@ function isString(value) {
 
 module.exports = isString;
 
-},{"../internal/isObjectLike":39}],50:[function(require,module,exports){
+},{"../internal/isObjectLike":38}],49:[function(require,module,exports){
 var isLength = require('../internal/isLength'),
     isObjectLike = require('../internal/isObjectLike');
 
@@ -1683,7 +1660,7 @@ function isTypedArray(value) {
 
 module.exports = isTypedArray;
 
-},{"../internal/isLength":38,"../internal/isObjectLike":39}],51:[function(require,module,exports){
+},{"../internal/isLength":37,"../internal/isObjectLike":38}],50:[function(require,module,exports){
 var getNative = require('../internal/getNative'),
     isArrayLike = require('../internal/isArrayLike'),
     isObject = require('../lang/isObject'),
@@ -1730,7 +1707,7 @@ var keys = !nativeKeys ? shimKeys : function(object) {
 
 module.exports = keys;
 
-},{"../internal/getNative":32,"../internal/isArrayLike":34,"../internal/shimKeys":41,"../lang/isObject":48}],52:[function(require,module,exports){
+},{"../internal/getNative":31,"../internal/isArrayLike":33,"../internal/shimKeys":40,"../lang/isObject":47}],51:[function(require,module,exports){
 var isArguments = require('../lang/isArguments'),
     isArray = require('../lang/isArray'),
     isIndex = require('../internal/isIndex'),
@@ -1796,7 +1773,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"../internal/isIndex":35,"../internal/isLength":38,"../lang/isArguments":44,"../lang/isArray":45,"../lang/isObject":48}],53:[function(require,module,exports){
+},{"../internal/isIndex":34,"../internal/isLength":37,"../lang/isArguments":43,"../lang/isArray":44,"../lang/isObject":47}],52:[function(require,module,exports){
 var keys = require('./keys'),
     toObject = require('../internal/toObject');
 
@@ -1831,7 +1808,7 @@ function pairs(object) {
 
 module.exports = pairs;
 
-},{"../internal/toObject":42,"./keys":51}],54:[function(require,module,exports){
+},{"../internal/toObject":41,"./keys":50}],53:[function(require,module,exports){
 var baseValues = require('../internal/baseValues'),
     keys = require('./keys');
 
@@ -1866,7 +1843,7 @@ function values(object) {
 
 module.exports = values;
 
-},{"../internal/baseValues":22,"./keys":51}],55:[function(require,module,exports){
+},{"../internal/baseValues":22,"./keys":50}],54:[function(require,module,exports){
 /**
  * This method returns the first argument provided to it.
  *
@@ -1888,7 +1865,7 @@ function identity(value) {
 
 module.exports = identity;
 
-},{}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var baseProperty = require('../internal/baseProperty'),
     basePropertyDeep = require('../internal/basePropertyDeep'),
     isKey = require('../internal/isKey');
@@ -1921,7 +1898,7 @@ function property(path) {
 
 module.exports = property;
 
-},{"../internal/baseProperty":18,"../internal/basePropertyDeep":19,"../internal/isKey":37}],57:[function(require,module,exports){
+},{"../internal/baseProperty":18,"../internal/basePropertyDeep":19,"../internal/isKey":36}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1998,7 +1975,7 @@ var BaseComponent = (function (_React$Component) {
 exports['default'] = BaseComponent;
 module.exports = exports['default'];
 
-},{"lodash/collection/includes":3}],58:[function(require,module,exports){
+},{"lodash/collection/includes":3}],57:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2023,14 +2000,22 @@ var _lodashCollectionIncludes = require('lodash/collection/includes');
 
 var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionIncludes);
 
+var _lodashCollectionFilter = require('lodash/collection/filter');
+
+var _lodashCollectionFilter2 = _interopRequireDefault(_lodashCollectionFilter);
+
+var _baseComponent = require('./baseComponent');
+
+var _baseComponent2 = _interopRequireDefault(_baseComponent);
+
 var _formCheckRadio = require('./formCheckRadio');
 
 // form: setting conditions
 
 var _formCheckRadio2 = _interopRequireDefault(_formCheckRadio);
 
-var ConditionalForm = (function (_React$Component) {
-  _inherits(ConditionalForm, _React$Component);
+var ConditionalForm = (function (_BaseComponent) {
+  _inherits(ConditionalForm, _BaseComponent);
 
   function ConditionalForm(props) {
     _classCallCheck(this, ConditionalForm);
@@ -2038,7 +2023,8 @@ var ConditionalForm = (function (_React$Component) {
     _get(Object.getPrototypeOf(ConditionalForm.prototype), 'constructor', this).call(this, props);
 
     this.state = {
-      activeField: 'status'
+      activeField: 'status',
+      suggests: []
     };
 
     this._checkboxFilter = this._checkboxFilter.bind(this);
@@ -2051,6 +2037,7 @@ var ConditionalForm = (function (_React$Component) {
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
     this.changeField = this.changeField.bind(this);
+    this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
   _createClass(ConditionalForm, [{
@@ -2107,11 +2094,32 @@ var ConditionalForm = (function (_React$Component) {
   }, {
     key: 'setNamesFilter',
     value: function setNamesFilter() {
+      var _this = this;
+
       var _input = React.findDOMNode(this.refs.names).value;
       var _names = [];
       if (_input.length) {
         _names = _input.split(',');
       }
+
+      var _last = _names[_names.length - 1];
+      var _suggests = [];
+      if (_last) {
+        _suggests = (0, _lodashCollectionFilter2['default'])(this.props.data, function (item) {
+          if (!(0, _lodashCollectionIncludes2['default'])(_this.props.condition.names, item.name)) {
+            if (item.name.includes(_last)) {
+              if (item.name !== _last) {
+                return true;
+              }
+            }
+          }
+        });
+      }
+
+      this.setState({
+        suggests: _suggests
+      });
+
       this.props.onConditionChange({
         names: _names
       });
@@ -2142,14 +2150,31 @@ var ConditionalForm = (function (_React$Component) {
         });
       } else {
         this.setState({
-          activeField: _field
+          activeField: _field,
+          suggests: []
         });
       }
     }
   }, {
+    key: 'addSuggestedName',
+    value: function addSuggestedName(e) {
+      var _name = e.currentTarget.getAttribute('data-name');
+
+      var _names = this.props.condition.names;
+      _names[_names.length - 1] = _name;
+
+      this.props.onConditionChange({
+        names: _names
+      });
+
+      this.setState({
+        suggests: []
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       var _st = Object.keys(_config2['default'].labels.statusType);
       var statusTypeInput = _st.map(function (item) {
@@ -2160,8 +2185,8 @@ var ConditionalForm = (function (_React$Component) {
             type: "radio",
             name: "statusType",
             value: item,
-            checked: _this.props.condition.statusType === item,
-            onChange: _this.setStatusType
+            checked: _this2.props.condition.statusType === item,
+            onChange: _this2.setStatusType
           },
           _config2['default'].labels.statusType[item]
         );
@@ -2186,8 +2211,8 @@ var ConditionalForm = (function (_React$Component) {
             type: "checkbox",
             name: "type",
             value: item,
-            checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.type, item),
-            onChange: _this.setTypeFilter
+            checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.type, item),
+            onChange: _this2.setTypeFilter
           },
           item
         );
@@ -2201,8 +2226,8 @@ var ConditionalForm = (function (_React$Component) {
             type: "checkbox",
             name: "family",
             value: item,
-            checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.family, item),
-            onChange: _this.setFamilyFilter
+            checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.family, item),
+            onChange: _this2.setFamilyFilter
           },
           item
         );
@@ -2216,11 +2241,19 @@ var ConditionalForm = (function (_React$Component) {
             type: "checkbox",
             name: "rare",
             value: item,
-            checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.rare, item),
-            onChange: _this.setRareFilter
+            checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.rare, item),
+            onChange: _this2.setRareFilter
           },
           'レア',
           item
+        );
+      });
+
+      var suggestedNames = this.state.suggests.map(function (item) {
+        return React.createElement(
+          'li',
+          { key: item.name, 'data-name': item.name, onClick: _this2.addSuggestedName },
+          item.name
         );
       });
 
@@ -2347,8 +2380,12 @@ var ConditionalForm = (function (_React$Component) {
               ref: "names",
               value: this.props.condition.names.join(','),
               placeholder: "半角カンマ区切り（空白なし）",
-              onChange: this.setNamesFilter
-            }),
+              onChange: this.setNamesFilter }),
+            React.createElement(
+              'ul',
+              { className: "names-suggested" },
+              suggestedNames
+            ),
             React.createElement(
               'button',
               { value: "names", className: "btn-none", onClick: this.selectNone },
@@ -2361,12 +2398,12 @@ var ConditionalForm = (function (_React$Component) {
   }]);
 
   return ConditionalForm;
-})(React.Component);
+})(_baseComponent2['default']);
 
 exports['default'] = ConditionalForm;
 module.exports = exports['default'];
 
-},{"../config":65,"./formCheckRadio":59,"lodash/collection/includes":3}],59:[function(require,module,exports){
+},{"../config":64,"./baseComponent":56,"./formCheckRadio":58,"lodash/collection/filter":2,"lodash/collection/includes":3}],58:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2431,7 +2468,7 @@ var FormCheckRadio = (function (_React$Component) {
 exports["default"] = FormCheckRadio;
 module.exports = exports["default"];
 
-},{}],60:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2479,7 +2516,7 @@ var GraphBack = (function (_React$Component) {
 exports["default"] = GraphBack;
 module.exports = exports["default"];
 
-},{}],61:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2544,7 +2581,7 @@ var HelpModal = (function (_React$Component) {
 exports['default'] = HelpModal;
 module.exports = exports['default'];
 
-},{"../data/help":66}],62:[function(require,module,exports){
+},{"../data/help":65}],61:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2603,7 +2640,7 @@ var StatusBar = (function (_React$Component) {
 exports['default'] = StatusBar;
 module.exports = exports['default'];
 
-},{"../config":65}],63:[function(require,module,exports){
+},{"../config":64}],62:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2624,9 +2661,9 @@ var _lodashCollectionIncludes = require('lodash/collection/includes');
 
 var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionIncludes);
 
-var _lodashCollectionFind = require('lodash/collection/find');
+var _lodashCollectionFilter = require('lodash/collection/filter');
 
-var _lodashCollectionFind2 = _interopRequireDefault(_lodashCollectionFind);
+var _lodashCollectionFilter2 = _interopRequireDefault(_lodashCollectionFilter);
 
 var _baseComponent = require('./baseComponent');
 
@@ -2675,9 +2712,9 @@ var StatusGraph = (function (_BaseComponent) {
         }
 
         if (_this.props.condition.isOldStatus) {
-          item = (0, _lodashCollectionFind2['default'])(_dataStatus_old2['default'], function (_old) {
+          item = (0, _lodashCollectionFilter2['default'])(_dataStatus_old2['default'], function (_old) {
             return _old.id === item.id;
-          }) || item;
+          })[0] || item;
         }
 
         var total = 0;
@@ -2767,7 +2804,7 @@ var StatusGraph = (function (_BaseComponent) {
 exports['default'] = StatusGraph;
 module.exports = exports['default'];
 
-},{"../data/status_old":68,"./baseComponent":57,"./graphBack":60,"./statusBar":62,"lodash/collection/find":2,"lodash/collection/includes":3}],64:[function(require,module,exports){
+},{"../data/status_old":67,"./baseComponent":56,"./graphBack":59,"./statusBar":61,"lodash/collection/filter":2,"lodash/collection/includes":3}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2921,7 +2958,7 @@ var TkrbStatus = (function (_React$Component) {
 exports['default'] = TkrbStatus;
 module.exports = exports['default'];
 
-},{"../config":65,"./conditionalForm":58,"./helpModal":61,"./statusGraph":63}],65:[function(require,module,exports){
+},{"../config":64,"./conditionalForm":57,"./helpModal":60,"./statusGraph":62}],64:[function(require,module,exports){
 module.exports={
   "maxStatus": 100,
   "labels": {
@@ -2946,9 +2983,9 @@ module.exports={
   }
 }
 
+},{}],65:[function(require,module,exports){
+module.exports = '<h2>【刀剣乱舞ぬるぬる動くステータス】の使い方</h2>\n<h3>注意！</h3>\n<ul>\n<li>各刀剣のステータス差をグラフにしてにらにら眺めようという邪な動機の元、作成しております。</li>\n<li>したがって攻略用には向きません。</li>\n<li>データは<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様を参照いたしております。</li>\n<li>言うほどぬるぬるしてませんすみません…</li>\n<li>なにかございましたら、Twitterにて@kotorieclairまでリプお願いします。</li>\n</ul>\n<h3>グラフ</h3>\n<p>それぞれのバーにオンマウスすると、ステータス名と数値が表示されます。<br>\n左から 生存、打撃、統率、機動、衝力、必殺、偵察、隠蔽 です。<br>\n判明していないステータスに関しては、バーが半透明になります（2015年8月現在、日本号(特MAX)の生存・偵察のみ）<br>\n刀剣名は<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様の各刀剣個別ページにリンクされております。</p>\n<h3>表示ステータス</h3>\n<p>表示するステータスがどの時点のものかを選択できます。デフォルトでは初期値を表示。</p>\n<ul>\n<li>初期値…ドロップないしは鍛刀したばかりの初々しい頃のステータス</li>\n<li>特MAX…限界までバッキバキに上がった頼もしいステータス</li>\n<li>旧ステータス表示…2015年7月22日メンテ以前のステータスを表示します（刀種、レアリティはそのまま）</li>\n</ul>\n<h3>絞り込み</h3>\n<p>刀剣男士を各種条件で絞り込み表示します。</p>\n<h4>刀種</h4>\n<p>刀剣男士を刀種で絞り込みます。デフォルトでは全刀種を表示。<br>\n選択可能な刀種…短刀、脇差、打刀、太刀、大太刀、槍、薙刀</p>\n<h4>刀派</h4>\n<p>刀剣男士を刀派で絞り込みます。デフォルトでは全刀派を表示。<br>\n選択可能な刀派…三条、青江、粟田口、古備前、来、長船、左文字、兼定、堀川、虎徹、村正、その他（＝刀派なし）</p>\n<h4>レアリティ</h4>\n<p>刀剣男士をレアリティで絞り込みます。デフォルトでは全レアリティを表示。<br>\n選択可能なレアリティ…レア1、レア2、レア3、レア4、レア5</p>\n<h3>刀剣名</h3>\n<p>刀剣男士を刀剣名で絞り込みます。絞り込みとの併用は不可。刀剣名への入力が優先されます。<br>\n刀剣名は、入力した文字が含まれていれば候補がでます。例）「山」で山姥切国広と山伏国広が候補に出る<br>\n複数の刀剣名を入力する際には、刀剣名を半角カンマ(,)で区切ってください。例）三日月宗近,御手杵,へし切長谷部</p>\n<h3>予定している追加機能</h3>\n<ul>\n<li><del>刀剣名入力サジェスト</del> 完了！</li>\n<li>現在の表示状態を刀剣名欄に反映するボタン</li>\n<li>ステータス値選択</li>\n<li>刀帳No.でソート</li>\n<li>ステータス値でソート</li>\n<li>特初期値モード</li>\n</ul>\n';
 },{}],66:[function(require,module,exports){
-module.exports = '<h2>【刀剣乱舞ぬるぬる動くステータス】の使い方</h2>\n<h3>注意！</h3>\n<ul>\n<li>各刀剣のステータス差をグラフにしてにらにら眺めようという邪な動機の元、作成しております。</li>\n<li>したがって攻略用には向きません。</li>\n<li>データは<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様を参照いたしております。</li>\n<li>言うほどぬるぬるしてませんすみません…</li>\n<li>なにかございましたら、Twitterにて@kotorieclairまでリプお願いします。</li>\n</ul>\n<h3>グラフ</h3>\n<p>それぞれのバーにオンマウスすると、ステータス名と数値が表示されます。<br>\n左から 生存、打撃、統率、機動、衝力、必殺、偵察、隠蔽 です。<br>\n判明していないステータスに関しては、バーが半透明になります（2015年8月現在、日本号(特MAX)の生存・偵察のみ）<br>\n刀剣名は<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様の各刀剣個別ページにリンクされております。</p>\n<h3>表示ステータス</h3>\n<p>表示するステータスがどの時点のものかを選択できます。デフォルトでは初期値を表示。</p>\n<ul>\n<li>初期値…ドロップないしは鍛刀したばかりの初々しい頃のステータス</li>\n<li>特MAX…限界までバッキバキに上がった頼もしいステータス</li>\n<li>旧ステータス表示…2015年7月22日メンテ以前のステータスを表示します（刀種、レアリティはそのまま）</li>\n</ul>\n<h3>絞り込み</h3>\n<p>刀剣男士を各種条件で絞り込み表示します。</p>\n<h4>刀種</h4>\n<p>刀剣男士を刀種で絞り込みます。デフォルトでは全刀種を表示。<br>\n選択可能な刀種…短刀、脇差、打刀、太刀、大太刀、槍、薙刀</p>\n<h4>刀派</h4>\n<p>刀剣男士を刀派で絞り込みます。デフォルトでは全刀派を表示。<br>\n選択可能な刀派…三条、青江、粟田口、古備前、来、長船、左文字、兼定、堀川、虎徹、村正、その他（＝刀派なし）</p>\n<h4>レアリティ</h4>\n<p>刀剣男士をレアリティで絞り込みます。デフォルトでは全レアリティを表示。<br>\n選択可能なレアリティ…レア1、レア2、レア3、レア4、レア5</p>\n<h3>刀剣名</h3>\n<p>刀剣男士を刀剣名で絞り込みます。絞り込みとの併用は不可。刀剣名への入力が優先されます。<br>\n刀剣名はフルネームで入力してください。一部ヒットはいたしません。<br>\n複数の刀剣名を入力する際には、刀剣名を半角カンマ(,)で区切ってください。例）三日月宗近,御手杵,へし切長谷部</p>\n<h3>予定している追加機能</h3>\n<ul>\n<li>刀剣名入力サジェスト</li>\n<li>現在の表示状態を刀剣名欄に反映するボタン</li>\n<li>ステータス値選択</li>\n<li>刀帳No.でソート</li>\n<li>ステータス値でソート</li>\n<li>特初期値モード</li>\n</ul>\n';
-},{}],67:[function(require,module,exports){
 module.exports=[
   {
     "id": 3,
@@ -4456,7 +4493,7 @@ module.exports=[
   }
 ]
 
-},{}],68:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 module.exports=[
   {
     "id": 91,
@@ -4556,7 +4593,7 @@ module.exports=[
   }
 ]
 
-},{}],69:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -4575,7 +4612,7 @@ var _componentsTkrbStatus2 = _interopRequireDefault(_componentsTkrbStatus);
 
 React.render(React.createElement(_componentsTkrbStatus2['default'], { data: _dataStatus2['default'], config: _config2['default'] }), document.getElementById('tkrb-status'));
 
-},{"./components/tkrbStatus":64,"./config":65,"./data/status":67}]},{},[69])
+},{"./components/tkrbStatus":63,"./config":64,"./data/status":66}]},{},[68])
 
 
 //# sourceMappingURL=script.js.map

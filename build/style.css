@@ -447,6 +447,9 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
+#status-form button:hover {
+  cursor: pointer;
+}
 #status-form button.btn-all {
   background-color: #3a7b44;
   border: 1px solid #3a7b44;
@@ -460,6 +463,25 @@ header nav li a .fa {
 }
 #status-form button.btn-none:hover {
   background-color: #cc3240;
+}
+#status-form .names-suggested {
+  background-color: #e0e8ed;
+  position: absolute;
+}
+#status-form .names-suggested li {
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  border-top: 1px dotted rgba(0,0,0,0.3);
+  margin: 0.3em;
+  padding: 0.3em;
+  width: 400px;
+}
+#status-form .names-suggested li:hover {
+  background-color: rgba(32,114,144,0.3);
+  cursor: pointer;
+}
+#status-form .names-suggested li:first-child {
+  border-top: none;
 }
 #status-graph {
   margin: 2em 1.5em 1.5em 3em;

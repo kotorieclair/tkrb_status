@@ -1,5 +1,5 @@
 import _includes from 'lodash/collection/includes';
-import _filter from 'lodash/collection/find';
+import _filter from 'lodash/collection/filter';
 import BaseComponent from './baseComponent';
 import StatusBar from './statusBar';
 import GraphBack from './graphBack';
@@ -29,7 +29,7 @@ class StatusGraph extends BaseComponent {
       if (this.props.condition.isOldStatus) {
         item = _filter(oldStatus, (_old) => {
           return _old.id === item.id;
-        }) || item;
+        })[0] || item;
       }
 
       let total = 0;

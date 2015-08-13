@@ -1,14 +1,17 @@
 import config from '../config';
 import _includes from 'lodash/collection/includes';
+import _filter from 'lodash/collection/filter';
+import BaseComponent from './baseComponent';
 import FormCheckRadio from './formCheckRadio';
 
 // form: setting conditions
-class ConditionalForm extends React.Component {
+class ConditionalForm extends BaseComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       activeField: 'status',
+      suggests: [],
     };
 
     this._checkboxFilter = this._checkboxFilter.bind(this);
@@ -21,6 +24,7 @@ class ConditionalForm extends React.Component {
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
     this.changeField = this.changeField.bind(this);
+    this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
   _checkboxFilter(cond) {
@@ -74,6 +78,25 @@ class ConditionalForm extends React.Component {
     if (_input.length) {
       _names = _input.split(',');
     }
+
+    const _last = _names[_names.length - 1];
+    let _suggests = [];
+    if (_last) {
+      _suggests = _filter(this.props.data, (item) => {
+        if (!_includes(this.props.condition.names, item.name)) {
+          if (item.name.includes(_last)) {
+            if (item.name !== _last) {
+              return true;
+            }
+          }
+        }
+      });
+    }
+
+    this.setState({
+      suggests: _suggests,
+    });
+
     this.props.onConditionChange({
       names: _names,
     });
@@ -102,8 +125,24 @@ class ConditionalForm extends React.Component {
     } else {
       this.setState({
         activeField: _field,
+        suggests: [],
       });
     }
+  }
+
+  addSuggestedName(e) {
+    const _name = e.currentTarget.getAttribute('data-name');
+
+    const _names = this.props.condition.names;
+    _names[_names.length - 1] = _name;
+
+    this.props.onConditionChange({
+      names: _names,
+    });
+
+    this.setState({
+      suggests: [],
+    });
   }
 
   render() {
@@ -179,6 +218,14 @@ class ConditionalForm extends React.Component {
       );
     });
 
+    const suggestedNames = this.state.suggests.map((item) => {
+      return (
+        <li key={item.name} data-name={item.name} onClick={this.addSuggestedName}>
+          {item.name}
+        </li>
+      );
+    });
+
     return (
       <form id="status-form" className={`active-${this.state.activeField}`}>
         <h2>表示条件を変更</h2>
@@ -242,8 +289,10 @@ class ConditionalForm extends React.Component {
               ref="names"
               value={this.props.condition.names.join(',')}
               placeholder="半角カンマ区切り（空白なし）"
-              onChange={this.setNamesFilter}
-            />
+              onChange={this.setNamesFilter}/>
+            <ul className="names-suggested">
+              {suggestedNames}
+            </ul>
             <button value="names" className="btn-none" onClick={this.selectNone}>
               解除
             </button>
