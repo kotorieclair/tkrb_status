@@ -1,12 +1,18 @@
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var helpMd = require('../data/help');
+import helpMd from '../data/help';
 
-module.exports = React.createClass({
-  closeHelp: function(e) {
+class HelpModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.closeHelp = this.closeHelp.bind(this);
+  }
+
+  closeHelp(e) {
     e.preventDefault();
     this.props.onCloseClick();
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <div id="status-help" className={this.props.show ? 'help-show' : 'help-hide'}>
         <div className="help-body" dangerouslySetInnerHTML={{__html: helpMd}} />
@@ -16,4 +22,6 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}
+
+export default HelpModal;

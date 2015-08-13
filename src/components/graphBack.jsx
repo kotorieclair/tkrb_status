@@ -1,9 +1,13 @@
-module.exports = React.createClass({
-  render: function() {
-    // create background lines
-    var lines = [];
+class GraphBack extends React.Component {
+  constructor() {
+    super();
+  }
 
-    for (var i = 100 ; i > 0 ; i -= 5) {
+  render() {
+    // create background lines
+    const lines = [];
+
+    for (let i = 100; i > 0; i -= 5) {
       lines.push(<div className="graph-back" key={i} data-line={i}></div>);
     }
 
@@ -13,4 +17,6 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}
+
+export default GraphBack;

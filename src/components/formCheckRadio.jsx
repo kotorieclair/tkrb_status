@@ -1,9 +1,16 @@
-module.exports = React.createClass({
-  handleChange: function(e) {
+class FormCheckRadio extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
     this.props.change(e);
-  },
-  render: function() {
-    var {change, children, ...others} = this.props;
+  }
+
+  render() {
+    const {change, children, ...others} = this.props;
     return (
       <label>
         <input {...others} onChange={this.handleChange} />
@@ -14,4 +21,6 @@ module.exports = React.createClass({
       </label>
     )
   }
-});
+}
+
+export default FormCheckRadio;

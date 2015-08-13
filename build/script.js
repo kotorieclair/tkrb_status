@@ -722,593 +722,941 @@ function values(object) {
 module.exports = values;
 
 },{"../internal/baseValues":4,"./keys":20}],23:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _lodashCollectionIncludes = require('lodash/collection/includes');
+
+var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionIncludes);
+
+var BaseComponent = (function (_React$Component) {
+  _inherits(BaseComponent, _React$Component);
+
+  function BaseComponent(props) {
+    _classCallCheck(this, BaseComponent);
+
+    _get(Object.getPrototypeOf(BaseComponent.prototype), 'constructor', this).call(this, props);
+  }
+
+  _createClass(BaseComponent, [{
+    key: '_typeFilter',
+    value: function _typeFilter(item) {
+      if (!(0, _lodashCollectionIncludes2['default'])(this.props.condition.type, item.type)) {
+        return false;
+      }
+      return true;
+    }
+  }, {
+    key: '_familyFilter',
+    value: function _familyFilter(item) {
+      if (item.family.includes('虎徹')) {
+        item.family = '虎徹';
+      }
+      if (item.family === '-') {
+        item.family = 'その他';
+      }
+
+      if (!(0, _lodashCollectionIncludes2['default'])(this.props.condition.family, item.family)) {
+        return false;
+      }
+      return true;
+    }
+  }, {
+    key: '_rareFilter',
+    value: function _rareFilter(item) {
+      if (!(0, _lodashCollectionIncludes2['default'])(this.props.condition.rare, item.rare)) {
+        return false;
+      }
+      return true;
+    }
+  }, {
+    key: '_namesFilter',
+    value: function _namesFilter(item) {
+      if (!(0, _lodashCollectionIncludes2['default'])(this.props.condition.names, item.name)) {
+        return false;
+      }
+      return true;
+    }
+  }]);
+
+  return BaseComponent;
+})(React.Component);
+
+exports['default'] = BaseComponent;
+module.exports = exports['default'];
+
+},{"lodash/collection/includes":1}],24:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _config = require('../config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _lodashCollectionIncludes = require('lodash/collection/includes');
+
+var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionIncludes);
+
+var _formCheckRadio = require('./formCheckRadio');
+
+// form: setting conditions
+
+var _formCheckRadio2 = _interopRequireDefault(_formCheckRadio);
+
+var ConditionalForm = (function (_React$Component) {
+  _inherits(ConditionalForm, _React$Component);
+
+  function ConditionalForm(props) {
+    _classCallCheck(this, ConditionalForm);
+
+    _get(Object.getPrototypeOf(ConditionalForm.prototype), 'constructor', this).call(this, props);
+
+    this.state = {
+      activeField: 'status'
+    };
+
+    this._checkboxFilter = this._checkboxFilter.bind(this);
+    this.setTypeFilter = this.setTypeFilter.bind(this);
+    this.setFamilyFilter = this.setFamilyFilter.bind(this);
+    this.setRareFilter = this.setRareFilter.bind(this);
+    this.setNamesFilter = this.setNamesFilter.bind(this);
+    this.selectAll = this.selectAll.bind(this);
+    this.selectNone = this.selectNone.bind(this);
+    this.changeField = this.changeField.bind(this);
+  }
+
+  _createClass(ConditionalForm, [{
+    key: '_checkboxFilter',
+    value: function _checkboxFilter(cond) {
+      var _chbx = React.findDOMNode(this).querySelectorAll('[name=\'' + cond + '\']');
+      // const _arr = [];
+
+      var _arr = Array.prototype.map.call(_chbx, function (item) {
+        if (item.checked) {
+          return item;
+        }
+      });
+      // for (let i = 0; i < _chbx.length; i++) {
+      //   if (_chbx[i].checked) {
+      //     _arr.push(_chbx[i].value);
+      //   }
+      // }
+
+      return _arr;
+    }
+  }, {
+    key: 'setStatusType',
+    value: function setStatusType(e) {
+      this.props.onStatusTypeChange(e.target.value);
+    }
+  }, {
+    key: 'setTypeFilter',
+    value: function setTypeFilter() {
+      var _type = this._checkboxFilter('type');
+      this.props.onConditionChange({
+        type: _type
+      });
+    }
+  }, {
+    key: 'setFamilyFilter',
+    value: function setFamilyFilter() {
+      var _family = this._checkboxFilter('family');
+      this.props.onConditionChange({
+        family: _family
+      });
+    }
+  }, {
+    key: 'setRareFilter',
+    value: function setRareFilter() {
+      var _rare = this._checkboxFilter('rare');
+      _rare = _rare.map(function (rare) {
+        return paseInt(rare, 10);
+      });
+      this.props.onConditionChange({
+        rare: _rare
+      });
+    }
+  }, {
+    key: 'setNamesFilter',
+    value: function setNamesFilter() {
+      var _input = React.findDOMNode(this.refs.names).value;
+      var _names = [];
+      if (_input.length) {
+        _names = _input.split(',');
+      }
+      this.props.onConditionChange({
+        names: _names
+      });
+    }
+  }, {
+    key: 'selectAll',
+    value: function selectAll(e) {
+      e.preventDefault();
+      var _tmp = {};
+      _tmp[e.target.value] = _config2['default'].labels[e.target.value];
+      this.props.onConditionChange(_tmp);
+    }
+  }, {
+    key: 'selectNone',
+    value: function selectNone(e) {
+      e.preventDefault();
+      var _tmp = {};
+      _tmp[e.target.value] = [];
+      this.props.onConditionChange(_tmp);
+    }
+  }, {
+    key: 'changeField',
+    value: function changeField(e) {
+      var _field = e.currentTarget.getAttribute('data-field');
+      if (_field === this.state.activeField) {
+        this.setState({
+          activeField: null
+        });
+      } else {
+        this.setState({
+          activeField: _field
+        });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this = this;
+
+      var _statusTypeInput = Object.keys(_config2['default'].labels.statusType).map(function (item) {
+        return React.createElement(
+          _formCheckRadio2['default'],
+          {
+            key: item,
+            type: "radio",
+            name: "statusType",
+            value: item,
+            checked: _this.props.condition.statusType === item,
+            change: _this.setStatusType
+          },
+          _config2['default'].labels.statusType[item]
+        );
+      });
+
+      var _typeInput = _config2['default'].labels.type.map(function (item) {
+        return React.createElement(
+          _formCheckRadio2['default'],
+          {
+            key: item,
+            type: "checkbox",
+            name: "type",
+            value: item,
+            checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.type, item),
+            change: _this.setTypeFilter
+          },
+          item
+        );
+      });
+
+      var _familyInput = _config2['default'].labels.family.map(function (item) {
+        return React.createElement(
+          _formCheckRadio2['default'],
+          {
+            key: item,
+            type: "checkbox",
+            name: "family",
+            value: item,
+            checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.family, item),
+            change: _this.setFamilyFilter
+          },
+          item
+        );
+      });
+
+      var _rareInput = _config2['default'].labels.rare.map(function (item) {
+        return React.createElement(
+          _formCheckRadio2['default'],
+          {
+            key: item,
+            type: "checkbox",
+            name: "rare",
+            value: item,
+            checked: (0, _lodashCollectionIncludes2['default'])(_this.props.condition.rare, item),
+            change: _this.setRareFilter
+          },
+          'レア',
+          item
+        );
+      });
+
+      return React.createElement(
+        'form',
+        { id: "status-form", className: 'active-' + this.state.activeField },
+        React.createElement(
+          'h2',
+          null,
+          '表示条件を変更'
+        ),
+        React.createElement(
+          'fieldset',
+          null,
+          React.createElement(
+            'legend',
+            { onClick: this.changeField, 'data-field': "status" },
+            '表示ステータス',
+            React.createElement('i', { className: "fa fa-caret-down" })
+          ),
+          React.createElement(
+            'div',
+            { className: "fieldset-item" },
+            _statusTypeInput
+          )
+        ),
+        React.createElement(
+          'fieldset',
+          null,
+          React.createElement(
+            'legend',
+            { onClick: this.changeField, 'data-field': "narrowing" },
+            '絞り込み',
+            React.createElement('i', { className: "fa fa-caret-down" })
+          ),
+          React.createElement(
+            'div',
+            { className: "fieldset-item" },
+            React.createElement(
+              'div',
+              { className: "input-group" },
+              React.createElement(
+                'h3',
+                null,
+                '刀種'
+              ),
+              _typeInput,
+              React.createElement(
+                'button',
+                { value: "type", className: "btn-all", onClick: this.selectAll },
+                '全選択'
+              ),
+              React.createElement(
+                'button',
+                { value: "type", className: "btn-none", onClick: this.selectNone },
+                '全解除'
+              )
+            ),
+            React.createElement(
+              'div',
+              { className: "input-group" },
+              React.createElement(
+                'h3',
+                null,
+                '刀派'
+              ),
+              _familyInput,
+              React.createElement(
+                'button',
+                { value: "family", className: "btn-all", onClick: this.selectAll },
+                '全選択'
+              ),
+              React.createElement(
+                'button',
+                { value: "family", className: "btn-none", onClick: this.selectNone },
+                '全解除'
+              )
+            ),
+            React.createElement(
+              'div',
+              { className: "input-group" },
+              React.createElement(
+                'h3',
+                null,
+                'レアリティ'
+              ),
+              _rareInput,
+              React.createElement(
+                'button',
+                { value: "rare", className: "btn-all", onClick: this.selectAll },
+                '全選択'
+              ),
+              React.createElement(
+                'button',
+                { value: "rare", className: "btn-none", onClick: this.selectNone },
+                '全解除'
+              )
+            )
+          )
+        ),
+        React.createElement(
+          'fieldset',
+          null,
+          React.createElement(
+            'legend',
+            { onClick: this.changeField, 'data-field': "names" },
+            '刀剣名指定',
+            React.createElement('i', { className: "fa fa-caret-down" })
+          ),
+          React.createElement(
+            'div',
+            { className: "fieldset-item" },
+            React.createElement('input', { type: "text", ref: "names", value: this.props.condition.names.join(','), placeholder: "半角カンマ区切り（空白なし）", onChange: this.setNamesFilter }),
+            React.createElement(
+              'button',
+              { value: "names", className: "btn-none", onClick: this.selectNone },
+              '解除'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return ConditionalForm;
+})(React.Component);
+
+exports['default'] = ConditionalForm;
+module.exports = exports['default'];
+
+},{"../config":31,"./formCheckRadio":25,"lodash/collection/includes":1}],25:[function(require,module,exports){
 "use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-module.exports = React.createClass({
-  displayName: "exports",
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  handleChange: function handleChange(e) {
-    this.props.change(e);
-  },
-  render: function render() {
-    var _props = this.props;
-    var change = _props.change;
-    var children = _props.children;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-    var others = _objectWithoutProperties(_props, ["change", "children"]);
+var FormCheckRadio = (function (_React$Component) {
+  _inherits(FormCheckRadio, _React$Component);
 
-    return React.createElement(
-      "label",
-      null,
-      React.createElement("input", _extends({}, others, { onChange: this.handleChange })),
-      React.createElement(
-        "span",
-        null,
-        React.createElement("i", { className: "fa fa-check" }),
-        this.props.children
-      )
-    );
+  function FormCheckRadio(props) {
+    _classCallCheck(this, FormCheckRadio);
+
+    _get(Object.getPrototypeOf(FormCheckRadio.prototype), "constructor", this).call(this, props);
+
+    this.handleChange = this.handleChange.bind(this);
   }
-});
 
-},{}],24:[function(require,module,exports){
-'use strict';
-
-var _ = {
-  includes: require('lodash/collection/includes')
-  // escape: require('lodash/string/escape')
-};
-
-var FormCheckRadio = require('./FormCheckRadio');
-
-// form: setting conditions
-module.exports = React.createClass({
-  displayName: 'exports',
-
-  // get all checked checkboxes
-  _checkboxFilter: function _checkboxFilter(cond) {
-    var _chbx = React.findDOMNode(this).querySelectorAll('[name="' + cond + '"]');
-    var _arr = [];
-    for (var i = 0; i < _chbx.length; i++) {
-      if (_chbx[i].checked) {
-        _arr.push(_chbx[i].value);
-      }
+  _createClass(FormCheckRadio, [{
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.props.change(e);
     }
-    return _arr;
-  },
-  getInitialState: function getInitialState() {
-    return {
-      "activeField": "status"
-    };
-  },
-  // set status type
-  setStatusType: function setStatusType(e) {
-    this.props.onStatusTypeChange(e.target.value);
-  },
-  // set checked type filter
-  setTypeFilter: function setTypeFilter(e) {
-    var _type = this._checkboxFilter('type');
-    this.props.onConditionChange({ "type": _type });
-  },
-  // set checked family filter
-  setFamilyFilter: function setFamilyFilter(e) {
-    var _family = this._checkboxFilter('family');
-    this.props.onConditionChange({ "family": _family });
-  },
-  // set checked family filter
-  setRareFilter: function setRareFilter(e) {
-    var _rare = this._checkboxFilter('rare');
-    _rare = _rare.map(function (n) {
-      return parseInt(n);
-    });
-    this.props.onConditionChange({ "rare": _rare });
-  },
-  // set inputted names filter
-  setNamesFilter: function setNamesFilter(e) {
-    // var _input = _.escape(React.findDOMNode(this.refs.names).value);
-    var _input = React.findDOMNode(this.refs.names).value;
-    var _names = [];
-    if (_input.length > 0) {
-      _names = _input.split(',');
-    } else {
-      _names = [];
-    }
-    this.props.onConditionChange({ "names": _names });
-  },
-  // select all items
-  selectAll: function selectAll(e) {
-    e.preventDefault();
-    var _tmp = {};
-    _tmp[e.target.value] = this.props.config.labels[e.target.value];
-    this.props.onConditionChange(_tmp);
-  },
-  // deselect
-  selectNone: function selectNone(e) {
-    e.preventDefault();
-    var _tmp = {};
-    _tmp[e.target.value] = [];
-    this.props.onConditionChange(_tmp);
-  },
-  // active input field
-  changeField: function changeField(e) {
-    var _field = e.currentTarget.getAttribute("data-field");
-    if (_field == this.state.activeField) {
-      this.setState({ "activeField": null });
-    } else {
-      this.setState({ "activeField": _field });
-    }
-  },
-  render: function render() {
-    var _statusTypeInput = Object.keys(this.props.config.labels.statusType).map((function (item) {
-      return React.createElement(
-        FormCheckRadio,
-        { key: item, type: "radio", name: "statusType", value: item, checked: this.props.condition.statusType == item, change: this.setStatusType },
-        this.props.config.labels.statusType[item]
-      );
-    }).bind(this));
+  }, {
+    key: "render",
+    value: function render() {
+      var _props = this.props;
+      var change = _props.change;
+      var children = _props.children;
 
-    var _typeInput = this.props.config.labels.type.map((function (item) {
-      return React.createElement(
-        FormCheckRadio,
-        { key: item, type: "checkbox", name: "type", value: item, checked: _.includes(this.props.condition.type, item), change: this.setTypeFilter },
-        item
-      );
-    }).bind(this));
+      var others = _objectWithoutProperties(_props, ["change", "children"]);
 
-    var _familyInput = this.props.config.labels.family.map((function (item) {
       return React.createElement(
-        FormCheckRadio,
-        { key: item, type: "checkbox", name: "family", value: item, checked: _.includes(this.props.condition.family, item), change: this.setFamilyFilter },
-        item
-      );
-    }).bind(this));
-
-    var _rareInput = this.props.config.labels.rare.map((function (item) {
-      return React.createElement(
-        FormCheckRadio,
-        { key: item, type: "checkbox", name: "rare", value: item, checked: _.includes(this.props.condition.rare, item), change: this.setRareFilter },
-        'レア',
-        item
-      );
-    }).bind(this));
-
-    return React.createElement(
-      'form',
-      { id: "status-form", className: "active-" + this.state.activeField },
-      React.createElement(
-        'h2',
+        "label",
         null,
-        '表示条件を変更'
-      ),
-      React.createElement(
-        'fieldset',
-        null,
+        React.createElement("input", _extends({}, others, { onChange: this.handleChange })),
         React.createElement(
-          'legend',
-          { onClick: this.changeField, 'data-field': "status" },
-          '表示ステータス',
-          React.createElement('i', { className: "fa fa-caret-down" })
-        ),
-        React.createElement(
-          'div',
-          { className: "fieldset-item" },
-          _statusTypeInput
+          "span",
+          null,
+          React.createElement("i", { className: "fa fa-check" }),
+          this.props.children
         )
-      ),
-      React.createElement(
-        'fieldset',
-        null,
-        React.createElement(
-          'legend',
-          { onClick: this.changeField, 'data-field': "narrowing" },
-          '絞り込み',
-          React.createElement('i', { className: "fa fa-caret-down" })
-        ),
-        React.createElement(
-          'div',
-          { className: "fieldset-item" },
-          React.createElement(
-            'div',
-            { className: "input-group" },
-            React.createElement(
-              'h3',
-              null,
-              '刀種'
-            ),
-            _typeInput,
-            React.createElement(
-              'button',
-              { value: "type", className: "btn-all", onClick: this.selectAll },
-              '全選択'
-            ),
-            React.createElement(
-              'button',
-              { value: "type", className: "btn-none", onClick: this.selectNone },
-              '全解除'
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: "input-group" },
-            React.createElement(
-              'h3',
-              null,
-              '刀派'
-            ),
-            _familyInput,
-            React.createElement(
-              'button',
-              { value: "family", className: "btn-all", onClick: this.selectAll },
-              '全選択'
-            ),
-            React.createElement(
-              'button',
-              { value: "family", className: "btn-none", onClick: this.selectNone },
-              '全解除'
-            )
-          ),
-          React.createElement(
-            'div',
-            { className: "input-group" },
-            React.createElement(
-              'h3',
-              null,
-              'レアリティ'
-            ),
-            _rareInput,
-            React.createElement(
-              'button',
-              { value: "rare", className: "btn-all", onClick: this.selectAll },
-              '全選択'
-            ),
-            React.createElement(
-              'button',
-              { value: "rare", className: "btn-none", onClick: this.selectNone },
-              '全解除'
-            )
-          )
-        )
-      ),
-      React.createElement(
-        'fieldset',
-        null,
-        React.createElement(
-          'legend',
-          { onClick: this.changeField, 'data-field': "names" },
-          '刀剣名指定',
-          React.createElement('i', { className: "fa fa-caret-down" })
-        ),
-        React.createElement(
-          'div',
-          { className: "fieldset-item" },
-          React.createElement('input', { type: "text", ref: "names", value: this.props.condition.names.join(','), placeholder: "半角カンマ区切り（空白なし）", onChange: this.setNamesFilter }),
-          React.createElement(
-            'button',
-            { value: "names", className: "btn-none", onClick: this.selectNone },
-            '解除'
-          )
-        )
-      )
-    );
-  }
-});
-
-},{"./FormCheckRadio":23,"lodash/collection/includes":1}],25:[function(require,module,exports){
-"use strict";
-
-module.exports = React.createClass({
-  displayName: "exports",
-
-  render: function render() {
-    // create background lines
-    var lines = [];
-
-    for (var i = 100; i > 0; i -= 5) {
-      lines.push(React.createElement("div", { className: "graph-back", key: i, "data-line": i }));
+      );
     }
+  }]);
 
-    return React.createElement(
-      "div",
-      { id: "status-graph-back" },
-      lines
-    );
-  }
-});
+  return FormCheckRadio;
+})(React.Component);
+
+exports["default"] = FormCheckRadio;
+module.exports = exports["default"];
 
 },{}],26:[function(require,module,exports){
-'use strict';
-
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var helpMd = require('../data/help');
-
-module.exports = React.createClass({
-  displayName: 'exports',
-
-  closeHelp: function closeHelp(e) {
-    e.preventDefault();
-    this.props.onCloseClick();
-  },
-  render: function render() {
-    return React.createElement(
-      'div',
-      { id: "status-help", className: this.props.show ? 'help-show' : 'help-hide' },
-      React.createElement('div', { className: "help-body", dangerouslySetInnerHTML: { __html: helpMd } }),
-      React.createElement(
-        'div',
-        { className: "help-close" },
-        React.createElement(
-          'a',
-          { onClick: this.closeHelp },
-          'ヘルプをとじる'
-        )
-      )
-    );
-  }
-});
-
-},{"../data/help":33}],27:[function(require,module,exports){
-'use strict';
-
-var data = require('../data/status');
-var config = require('../config');
-var TkrbStatus = require('./tkrbStatus');
-
-React.render(React.createElement(TkrbStatus, { data: data, config: config }), document.getElementById('tkrb-status'));
-
-},{"../config":32,"../data/status":34,"./tkrbStatus":31}],28:[function(require,module,exports){
 "use strict";
 
-var _ = {
-  includes: require('lodash/collection/includes')
-};
-
-module.exports = {
-  FiltersMixin: {
-    _typeFilter: function _typeFilter(item) {
-      if (!_.includes(this.props.condition.type, item.type)) {
-        return false;
-      }
-      return true;
-    },
-    _familyFilter: function _familyFilter(item) {
-      if (item.family.indexOf("虎徹") > -1) {
-        item.family = "虎徹";
-      }
-      if (item.family == "-") {
-        item.family = "その他";
-      }
-      if (!_.includes(this.props.condition.family, item.family)) {
-        return false;
-      }
-      return true;
-    },
-    _rareFilter: function _rareFilter(item) {
-      if (!_.includes(this.props.condition.rare, item.rare)) {
-        return false;
-      }
-      return true;
-    },
-    _namesFilter: function _namesFilter(item) {
-      if (!_.includes(this.props.condition.names, item.name)) {
-        return false;
-      }
-      return true;
-    }
-  }
-};
-
-},{"lodash/collection/includes":1}],29:[function(require,module,exports){
-"use strict";
-
-module.exports = React.createClass({
-  displayName: "exports",
-
-  render: function render() {
-    // create graph bars
-    var val = this.props.item[this.props.statusType][this.props.name];
-    var _height = "";
-
-    if (val) {
-      _height = val / this.props.maxStatus * 100 + "%";
-    } else {
-      _height = this.props.item.initial[this.props.name] / this.props.maxStatus * 100 + "%";
-    }
-
-    return React.createElement("div", { className: "status-bar " + this.props.name, style: { height: _height }, "data-status": val });
-  }
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
-},{}],30:[function(require,module,exports){
-'use strict';
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var _ = {
-  includes: require('lodash/collection/includes')
-};
-var StatusBar = require('./statusBar');
-var GraphBack = require('./graphBack');
-var FiltersMixin = require('./mixins').FiltersMixin;
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-// filter data and create graph
-module.exports = React.createClass({
-  displayName: 'exports',
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  mixins: [FiltersMixin],
-  render: function render() {
-    var status = this.props.data.map((function (item) {
-      if (this.props.condition.names.length > 0) {
-        if (!this._namesFilter(item)) {
-          return false;
-        }
-      } else {
-        if (!this._typeFilter(item) || !this._familyFilter(item) || !this._rareFilter(item)) {
-          return false;
-        }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GraphBack = (function (_React$Component) {
+  _inherits(GraphBack, _React$Component);
+
+  function GraphBack() {
+    _classCallCheck(this, GraphBack);
+
+    _get(Object.getPrototypeOf(GraphBack.prototype), "constructor", this).call(this);
+  }
+
+  _createClass(GraphBack, [{
+    key: "render",
+    value: function render() {
+      // create background lines
+      var lines = [];
+
+      for (var i = 100; i > 0; i -= 5) {
+        lines.push(React.createElement("div", { className: "graph-back", key: i, "data-line": i }));
       }
 
-      var n = 0;
-      var bars = Object.keys(item[this.props.condition.statusType]).map((function (key) {
-        // filter by status
-        if (!_.includes(this.props.condition.status, key)) {
-          return false;
-        }
+      return React.createElement(
+        "div",
+        { id: "status-graph-back" },
+        lines
+      );
+    }
+  }]);
 
-        n += item[this.props.condition.statusType][key];
+  return GraphBack;
+})(React.Component);
 
-        return React.createElement(StatusBar, { maxStatus: this.props.config.maxStatus, statusType: this.props.condition.statusType, item: item, name: key, key: key });
-      }).bind(this));
+exports["default"] = GraphBack;
+module.exports = exports["default"];
 
-      // create graphs for each character
+},{}],27:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _dataHelp = require('../data/help');
+
+var _dataHelp2 = _interopRequireDefault(_dataHelp);
+
+var HelpModal = (function (_React$Component) {
+  _inherits(HelpModal, _React$Component);
+
+  function HelpModal(props) {
+    _classCallCheck(this, HelpModal);
+
+    _get(Object.getPrototypeOf(HelpModal.prototype), 'constructor', this).call(this, props);
+
+    this.closeHelp = this.closeHelp.bind(this);
+  }
+
+  _createClass(HelpModal, [{
+    key: 'closeHelp',
+    value: function closeHelp(e) {
+      e.preventDefault();
+      this.props.onCloseClick();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
       return React.createElement(
         'div',
-        { className: "status-graph-item bars-" + bars.length, key: item.id },
+        { id: "status-help", className: this.props.show ? 'help-show' : 'help-hide' },
+        React.createElement('div', { className: "help-body", dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } }),
         React.createElement(
           'div',
-          { className: "status-bar-box" },
+          { className: "help-close" },
           React.createElement(
-            ReactCSSTransitionGroup,
-            { transitionName: "status-bar", transitionAppear: true },
-            bars
-          )
-        ),
-        React.createElement(
-          'div',
-          { className: "status-info-box" },
-          React.createElement(
-            'p',
-            { className: "info-name" },
-            React.createElement(
-              'a',
-              { href: item.url1, target: "_new" },
-              item.name
-            )
-          ),
-          React.createElement(
-            'p',
-            { className: "info-id" },
-            'No. ',
-            item.id
-          ),
-          React.createElement(
-            'p',
-            { className: "info-total" },
-            '合計：',
-            n
+            'a',
+            { onClick: this.closeHelp },
+            'ヘルプをとじる'
           )
         )
       );
-    }).bind(this));
+    }
+  }]);
 
-    return React.createElement(
-      'div',
-      { id: "status-graph" },
-      React.createElement(
-        'div',
-        { id: "status-graph-box" },
-        React.createElement(
-          ReactCSSTransitionGroup,
-          { transitionName: "status-graph", transitionAppear: true },
-          status
-        )
-      ),
-      React.createElement(GraphBack, null)
-    );
-  }
-});
+  return HelpModal;
+})(React.Component);
 
-},{"./graphBack":25,"./mixins":28,"./statusBar":29,"lodash/collection/includes":1}],31:[function(require,module,exports){
+exports['default'] = HelpModal;
+module.exports = exports['default'];
+
+},{"../data/help":32}],28:[function(require,module,exports){
 'use strict';
 
-var ConditionalForm = require('./conditionalForm');
-var StatusGraph = require('./statusGraph');
-var HelpModal = require('./helpModal');
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 
-// wrapper component
-module.exports = React.createClass({
-  displayName: 'exports',
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-  getInitialState: function getInitialState() {
-    return {
-      "showHelp": false,
-      "statusType": "initial",
-      "type": this.props.config.labels.type,
-      "family": this.props.config.labels.family,
-      "rare": this.props.config.labels.rare,
-      "names": this.props.config.labels.names,
-      "status": Object.keys(this.props.config.labels.status)
-    };
-  },
-  handleStatusType: function handleStatusType(type) {
-    this.setState({ "statusType": type });
-  },
-  handleCondition: function handleCondition(condition) {
-    this.setState(condition);
-    // this.setState(_.assign({}, {
-    //   "type": this.props.config.labels.type,
-    //   "family": this.props.config.labels.family,
-    //   "rare": this.props.config.labels.rare,
-    //   "names": this.props.config.labels.names
-    // }, condition));
-  },
-  toggleHelp: function toggleHelp(e) {
-    if (e) {
-      e.preventDefault();
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StatusBar = (function (_React$Component) {
+  _inherits(StatusBar, _React$Component);
+
+  function StatusBar(props) {
+    _classCallCheck(this, StatusBar);
+
+    _get(Object.getPrototypeOf(StatusBar.prototype), 'constructor', this).call(this, props);
+  }
+
+  _createClass(StatusBar, [{
+    key: 'render',
+    value: function render() {
+      // create graph bars
+      var val = this.props.item[this.props.statusType][this.props.name];
+      var _height = "";
+
+      if (val) {
+        _height = val / this.props.maxStatus * 100 + '%';
+      } else {
+        _height = this.props.item.initial[this.props.name] / this.props.maxStatus * 100 + '%';
+      }
+
+      return React.createElement('div', { className: 'status-bar ' + this.props.name, style: { height: _height }, 'data-status': val });
     }
-    this.setState({ "showHelp": !this.state.showHelp });
-  },
-  render: function render() {
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(
-        'header',
-        null,
-        React.createElement(
-          'h1',
-          null,
-          '刀剣乱舞ぬるぬる動くステータス'
-        ),
-        React.createElement(
-          'nav',
-          null,
+  }]);
+
+  return StatusBar;
+})(React.Component);
+
+exports['default'] = StatusBar;
+module.exports = exports['default'];
+
+},{}],29:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _config = require('../config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _lodashCollectionIncludes = require('lodash/collection/includes');
+
+var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionIncludes);
+
+var _baseComponent = require('./baseComponent');
+
+var _baseComponent2 = _interopRequireDefault(_baseComponent);
+
+var _statusBar = require('./statusBar');
+
+var _statusBar2 = _interopRequireDefault(_statusBar);
+
+var _graphBack = require('./graphBack');
+
+var _graphBack2 = _interopRequireDefault(_graphBack);
+
+var TransitionGroup = React.addons.CSSTransitionGroup;
+
+var StatusGraph = (function (_BaseComponent) {
+  _inherits(StatusGraph, _BaseComponent);
+
+  function StatusGraph(props) {
+    _classCallCheck(this, StatusGraph);
+
+    _get(Object.getPrototypeOf(StatusGraph.prototype), 'constructor', this).call(this, props);
+  }
+
+  _createClass(StatusGraph, [{
+    key: 'render',
+    value: function render() {
+      var _this = this;
+
+      var status = this.props.data.map(function (item) {
+        if (_this.props.condition.names.length) {
+          if (!_this._namesFilter(item)) {
+            return false;
+          }
+        } else {
+          if (!_this._typeFilter(item) || !_this._familyFilter(item) || !_this._rareFilter(item)) {
+            return false;
+          }
+        }
+
+        var total = 0;
+        var bars = Object.keys(item[_this.props.condition.statusType]).map(function (key) {
+          // filter by status
+          if (!(0, _lodashCollectionIncludes2['default'])(_this.props.condition.status, key)) {
+            return false;
+          }
+
+          total += item[_this.props.condition.statusType][key];
+
+          return React.createElement(_statusBar2['default'], {
+            maxStatus: _config2['default'].maxStatus,
+            statusType: _this.props.condition.statusType,
+            item: item,
+            name: key,
+            key: key
+          });
+        });
+
+        // create graphs for each character
+        return React.createElement(
+          'div',
+          { className: 'status-graph-item bars-' + bars.length, key: item.id },
           React.createElement(
-            'ul',
-            null,
+            'div',
+            { className: "status-bar-box" },
             React.createElement(
-              'li',
-              null,
+              TransitionGroup,
+              {
+                transitionName: "status-bar",
+                transitionAppear: true
+              },
+              bars
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: "status-info-box" },
+            React.createElement(
+              'p',
+              { className: "info-name" },
               React.createElement(
                 'a',
-                { onClick: this.toggleHelp },
-                React.createElement('i', { className: "fa fa-question" }),
-                'ヘルプ'
+                { href: item.url1, target: "_new" },
+                item.name
               )
             ),
             React.createElement(
-              'li',
+              'p',
+              { className: "info-id" },
+              'No. ',
+              item.id
+            ),
+            React.createElement(
+              'p',
+              { className: "info-total" },
+              '合計：',
+              total
+            )
+          )
+        );
+      });
+
+      return React.createElement(
+        'div',
+        { id: "status-graph" },
+        React.createElement(
+          'div',
+          { id: "status-graph-box" },
+          React.createElement(
+            TransitionGroup,
+            {
+              transitionName: "status-graph",
+              transitionAppear: true
+            },
+            status
+          )
+        ),
+        React.createElement(_graphBack2['default'], null)
+      );
+    }
+  }]);
+
+  return StatusGraph;
+})(_baseComponent2['default']);
+
+exports['default'] = StatusGraph;
+module.exports = exports['default'];
+
+},{"../config":31,"./baseComponent":23,"./graphBack":26,"./statusBar":28,"lodash/collection/includes":1}],30:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _config = require('../config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _conditionalForm = require('./conditionalForm');
+
+var _conditionalForm2 = _interopRequireDefault(_conditionalForm);
+
+var _statusGraph = require('./statusGraph');
+
+var _statusGraph2 = _interopRequireDefault(_statusGraph);
+
+var _helpModal = require('./helpModal');
+
+// wrapper component
+
+var _helpModal2 = _interopRequireDefault(_helpModal);
+
+var TkrbStatus = (function (_React$Component) {
+  _inherits(TkrbStatus, _React$Component);
+
+  function TkrbStatus(props) {
+    _classCallCheck(this, TkrbStatus);
+
+    _get(Object.getPrototypeOf(TkrbStatus.prototype), 'constructor', this).call(this, props);
+
+    this.state = {
+      showHelp: false,
+      statusType: 'initial',
+      type: _config2['default'].labels.type,
+      family: _config2['default'].labels.family,
+      rare: _config2['default'].labels.rare,
+      names: _config2['default'].labels.names,
+      status: Object.keys(_config2['default'].labels.status)
+    };
+
+    this.handleStatusType = this.handleStatusType.bind(this);
+    this.handleCondition = this.handleCondition.bind(this);
+    this.toggleHelp = this.toggleHelp.bind(this);
+  }
+
+  _createClass(TkrbStatus, [{
+    key: 'handleStatusType',
+    value: function handleStatusType(type) {
+      this.setState({
+        statusType: type
+      });
+    }
+  }, {
+    key: 'handleCondition',
+    value: function handleCondition(condition) {
+      this.setState(condition);
+    }
+  }, {
+    key: 'toggleHelp',
+    value: function toggleHelp(e) {
+      if (e) {
+        e.preventDefault();
+      }
+      this.setState({
+        showHelp: !this.state.showHelp
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(
+          'header',
+          null,
+          React.createElement(
+            'h1',
+            null,
+            '刀剣乱舞ぬるぬる動くステータス'
+          ),
+          React.createElement(
+            'nav',
+            null,
+            React.createElement(
+              'ul',
               null,
               React.createElement(
-                's',
+                'li',
                 null,
-                React.createElement('i', { className: "fa fa-github" }),
-                'GitHub'
+                React.createElement(
+                  'a',
+                  { onClick: this.toggleHelp },
+                  React.createElement('i', { className: "fa fa-question" }),
+                  'ヘルプ'
+                )
+              ),
+              React.createElement(
+                'li',
+                null,
+                React.createElement(
+                  's',
+                  null,
+                  React.createElement('i', { className: "fa fa-github" }),
+                  'GitHub'
+                )
               )
             )
           )
-        )
-      ),
-      React.createElement(ConditionalForm, { onStatusTypeChange: this.handleStatusType, onConditionChange: this.handleCondition, onActiveFieldChange: this.handleActiveField, condition: this.state, data: this.props.data, config: this.props.config }),
-      React.createElement(StatusGraph, { condition: this.state, data: this.props.data, config: this.props.config }),
-      React.createElement(HelpModal, { show: this.state.showHelp, onCloseClick: this.toggleHelp })
-    );
-  }
-});
+        ),
+        React.createElement(_conditionalForm2['default'], {
+          onStatusTypeChange: this.handleStatusType,
+          onConditionChange: this.handleCondition,
+          condition: this.state,
+          data: this.props.data
+        }),
+        React.createElement(_statusGraph2['default'], {
+          condition: this.state,
+          data: this.props.data
+        }),
+        React.createElement(_helpModal2['default'], { show: this.state.showHelp, onCloseClick: this.toggleHelp })
+      );
+    }
+  }]);
 
-},{"./conditionalForm":24,"./helpModal":26,"./statusGraph":30}],32:[function(require,module,exports){
+  return TkrbStatus;
+})(React.Component);
+
+exports['default'] = TkrbStatus;
+module.exports = exports['default'];
+
+},{"../config":31,"./conditionalForm":24,"./helpModal":27,"./statusGraph":29}],31:[function(require,module,exports){
 module.exports={
   "maxStatus": 100,
   "labels": {
@@ -1333,9 +1681,9 @@ module.exports={
   }
 }
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 module.exports = '<h2>【刀剣乱舞ぬるぬる動くステータス】の使い方</h2>\n<h3>注意！</h3>\n<ul>\n<li>各刀剣のステータス差をグラフにしてにらにら眺めようという邪な動機の元、作成しております。</li>\n<li>したがって攻略用には向きません。</li>\n<li>データは<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様を参照いたしております。</li>\n<li>言うほどぬるぬるしてませんすみません…</li>\n<li>なにかございましたら、Twitterにて@kotorieclairまでリプお願いします。</li>\n</ul>\n<h3>グラフ</h3>\n<p>それぞれのバーにオンマウスすると、ステータス名と数値が表示されます。<br>\n左から 生存、打撃、統率、機動、衝力、必殺、偵察、隠蔽 です。<br>\n判明していないステータスに関しては、バーが半透明になります（2015年8月現在、日本号(特MAX)の生存・偵察のみ）<br>\n刀剣名は<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様の各刀剣個別ページにリンクされております。</p>\n<h3>表示ステータス</h3>\n<p>表示するステータスがどの時点のものかを選択できます。デフォルトでは初期値を表示。</p>\n<ul>\n<li>初期値…ドロップないしは鍛刀したばかりの初々しい頃のステータス</li>\n<li>特MAX…限界までバッキバキに上がった頼もしいステータス</li>\n</ul>\n<h3>絞り込み</h3>\n<p>刀剣男士を各種条件で絞り込み表示します。</p>\n<h4>刀種</h4>\n<p>刀剣男士を刀種で絞り込みます。デフォルトでは全刀種を表示。<br>\n選択可能な刀種…短刀、脇差、打刀、太刀、大太刀、槍、薙刀</p>\n<h4>刀派</h4>\n<p>刀剣男士を刀派で絞り込みます。デフォルトでは全刀派を表示。<br>\n選択可能な刀派…三条、青江、粟田口、古備前、来、長船、左文字、兼定、堀川、虎徹、村正、その他（＝刀派なし）</p>\n<h4>レアリティ</h4>\n<p>刀剣男士をレアリティで絞り込みます。デフォルトでは全レアリティを表示。<br>\n選択可能なレアリティ…レア1、レア2、レア3、レア4、レア5</p>\n<h3>刀剣名</h3>\n<p>刀剣男士を刀剣名で絞り込みます。絞り込みとの併用は不可。刀剣名への入力が優先されます。<br>\n刀剣名はフルネームで入力してください。一部ヒットはいたしません。<br>\n複数の刀剣名を入力する際には、刀剣名を半角カンマ(,)で区切ってください。例）三日月宗近,御手杵,へし切長谷部</p>\n<h3>予定している追加機能</h3>\n<ul>\n<li>刀剣名入力サジェスト</li>\n<li>現在の表示状態を刀剣名欄に反映するボタン</li>\n<li>ステータス値選択</li>\n<li>刀帳No.でソート</li>\n<li>ステータス値でソート</li>\n<li>特初期値モード</li>\n</ul>\n';
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 module.exports=[
   {
     "id": 3,
@@ -1813,7 +2161,7 @@ module.exports=[
       "speed": 64,
       "push": 31,
       "critical": 33,
-      "search": 51,
+      "search": null,
       "hide": 38
     }
   },
@@ -2843,4 +3191,26 @@ module.exports=[
   }
 ]
 
-},{}]},{},[27]);
+},{}],34:[function(require,module,exports){
+'use strict';
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _dataStatus = require('./data/status');
+
+var _dataStatus2 = _interopRequireDefault(_dataStatus);
+
+var _config = require('./config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _componentsTkrbStatus = require('./components/tkrbStatus');
+
+var _componentsTkrbStatus2 = _interopRequireDefault(_componentsTkrbStatus);
+
+React.render(React.createElement(_componentsTkrbStatus2['default'], { data: _dataStatus2['default'], config: _config2['default'] }), document.getElementById('tkrb-status'));
+
+},{"./components/tkrbStatus":30,"./config":31,"./data/status":33}]},{},[34])
+
+
+//# sourceMappingURL=script.js.map

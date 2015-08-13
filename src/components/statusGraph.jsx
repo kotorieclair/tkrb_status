@@ -1,17 +1,18 @@
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var _ = {
-  includes: require('lodash/collection/includes')
-}
-var StatusBar = require('./statusBar');
-var GraphBack = require('./graphBack');
-var FiltersMixin = require('./mixins').FiltersMixin;
+import config from '../config';
+import _includes from 'lodash/collection/includes';
+import BaseComponent from './baseComponent';
+import StatusBar from './statusBar';
+import GraphBack from './graphBack';
+const TransitionGroup = React.addons.CSSTransitionGroup;
 
-// filter data and create graph
-module.exports = React.createClass({
-  mixins: [FiltersMixin],
-  render: function() {
-    var status = this.props.data.map(function(item) {
-      if (this.props.condition.names.length > 0) {
+class StatusGraph extends BaseComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const status = this.props.data.map((item) => {
+      if (this.props.condition.names.length) {
         if (!this._namesFilter(item)) {
           return false;
         }
@@ -21,27 +22,36 @@ module.exports = React.createClass({
         }
       }
 
-      var n = 0;
-      var bars = Object.keys(item[this.props.condition.statusType]).map(function(key) {
+      let total = 0;
+      var bars = Object.keys(item[this.props.condition.statusType]).map((key) => {
         // filter by status
-        if (!_.includes(this.props.condition.status, key)) {
+        if (!_includes(this.props.condition.status, key)) {
           return false;
         }
 
-        n += item[this.props.condition.statusType][key];
+        total += item[this.props.condition.statusType][key];
 
         return (
-          <StatusBar maxStatus={this.props.config.maxStatus} statusType={this.props.condition.statusType} item={item} name={key} key={key} />
-        )
-      }.bind(this));
+          <StatusBar
+            maxStatus={config.maxStatus}
+            statusType={this.props.condition.statusType}
+            item={item}
+            name={key}
+            key={key}
+           />
+        );
+      });
 
       // create graphs for each character
       return (
-        <div className={"status-graph-item bars-" + bars.length} key={item.id}>
+        <div className={`status-graph-item bars-${bars.length}`} key={item.id}>
           <div className="status-bar-box">
-            <ReactCSSTransitionGroup transitionName="status-bar" transitionAppear={true}>
+            <TransitionGroup
+              transitionName="status-bar"
+              transitionAppear={true}
+            >
               {bars}
-            </ReactCSSTransitionGroup>
+            </TransitionGroup>
           </div>
           <div className="status-info-box">
             <p className="info-name">
@@ -51,22 +61,27 @@ module.exports = React.createClass({
               No. {item.id}
             </p>
             <p className="info-total">
-              合計：{n}
+              合計：{total}
             </p>
           </div>
         </div>
       );
-    }.bind(this));
+    });
 
     return (
       <div id="status-graph">
         <div id="status-graph-box">
-          <ReactCSSTransitionGroup transitionName="status-graph" transitionAppear={true}>
+          <TransitionGroup
+            transitionName="status-graph"
+            transitionAppear={true}
+          >
             {status}
-          </ReactCSSTransitionGroup>
+          </TransitionGroup>
         </div>
         <GraphBack />
       </div>
     );
   }
-});
+}
+
+export default StatusGraph;

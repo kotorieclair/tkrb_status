@@ -1,129 +1,186 @@
-var _ = {
-  includes: require('lodash/collection/includes')
-  // escape: require('lodash/string/escape')
-};
-
-var FormCheckRadio = require('./FormCheckRadio');
+import config from '../config';
+import _includes from 'lodash/collection/includes';
+import FormCheckRadio from './formCheckRadio';
 
 // form: setting conditions
-module.exports = React.createClass({
-  // get all checked checkboxes
-  _checkboxFilter: function(cond) {
-    var _chbx = React.findDOMNode(this).querySelectorAll('[name="' + cond + '"]');
-    var _arr = [];
-    for (var i = 0 ; i < _chbx.length ; i++) {
-      if (_chbx[i].checked) {
-        _arr.push(_chbx[i].value);
-      }
-    }
-    return _arr
-  },
-  getInitialState: function() {
-    return {
-      "activeField": "status"
+class ConditionalForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeField: 'status',
     };
-  },
-  // set status type
-  setStatusType: function(e) {
-    this.props.onStatusTypeChange(e.target.value);
-  },
-  // set checked type filter
-  setTypeFilter: function(e) {
-    var _type = this._checkboxFilter('type');
-    this.props.onConditionChange({"type": _type});
-  },
-  // set checked family filter
-  setFamilyFilter: function(e) {
-    var _family = this._checkboxFilter('family');
-    this.props.onConditionChange({"family": _family});
-  },
-  // set checked family filter
-  setRareFilter: function(e) {
-    var _rare = this._checkboxFilter('rare');
-    _rare = _rare.map(function(n) {
-      return parseInt(n)
+
+    this._checkboxFilter = this._checkboxFilter.bind(this);
+    this.setTypeFilter = this.setTypeFilter.bind(this);
+    this.setFamilyFilter = this.setFamilyFilter.bind(this);
+    this.setRareFilter = this.setRareFilter.bind(this);
+    this.setNamesFilter = this.setNamesFilter.bind(this);
+    this.selectAll = this.selectAll.bind(this);
+    this.selectNone = this.selectNone.bind(this);
+    this.changeField = this.changeField.bind(this);
+  }
+
+  _checkboxFilter(cond) {
+    const _chbx = React.findDOMNode(this).querySelectorAll(`[name='${cond}']`);
+    // const _arr = [];
+
+    const _arr = Array.prototype.map.call(_chbx, (item) => {
+      if (item.checked) {
+        return item;
+      }
     });
-    this.props.onConditionChange({"rare": _rare});
-  },
-  // set inputted names filter
-  setNamesFilter: function(e) {
-    // var _input = _.escape(React.findDOMNode(this.refs.names).value);
-    var _input = React.findDOMNode(this.refs.names).value;
-    var _names = [];
-    if (_input.length > 0) {
+    // for (let i = 0; i < _chbx.length; i++) {
+    //   if (_chbx[i].checked) {
+    //     _arr.push(_chbx[i].value);
+    //   }
+    // }
+
+    return _arr;
+  }
+
+  setStatusType(e) {
+    this.props.onStatusTypeChange(e.target.value);
+  }
+
+  setTypeFilter() {
+    const _type = this._checkboxFilter('type');
+    this.props.onConditionChange({
+      type: _type,
+    });
+  }
+
+  setFamilyFilter() {
+    const _family = this._checkboxFilter('family');
+    this.props.onConditionChange({
+      family: _family,
+    });
+  }
+
+  setRareFilter() {
+    let _rare = this._checkboxFilter('rare');
+    _rare = _rare.map((rare) => {
+      return paseInt(rare, 10);
+    });
+    this.props.onConditionChange({
+      rare: _rare,
+    });
+  }
+
+  setNamesFilter() {
+    const _input = React.findDOMNode(this.refs.names).value;
+    let _names = [];
+    if (_input.length) {
       _names = _input.split(',');
-    } else {
-      _names = []
     }
-    this.props.onConditionChange({"names": _names});
-  },
-  // select all items
-  selectAll: function(e) {
+    this.props.onConditionChange({
+      names: _names,
+    });
+  }
+
+  selectAll(e) {
     e.preventDefault();
-    var _tmp = {};
-    _tmp[e.target.value] = this.props.config.labels[e.target.value];
+    const _tmp = {};
+    _tmp[e.target.value] = config.labels[e.target.value];
     this.props.onConditionChange(_tmp);
-  },
-  // deselect
-  selectNone: function(e) {
+  }
+
+  selectNone(e) {
     e.preventDefault();
-    var _tmp = {};
+    const _tmp = {};
     _tmp[e.target.value] = [];
     this.props.onConditionChange(_tmp);
-  },
-  // active input field
-  changeField: function(e) {
-    var _field = e.currentTarget.getAttribute("data-field");
-    if (_field == this.state.activeField) {
-      this.setState({"activeField": null});
+  }
+
+  changeField(e) {
+    const _field = e.currentTarget.getAttribute('data-field');
+    if (_field === this.state.activeField) {
+      this.setState({
+        activeField: null,
+      });
     } else {
-      this.setState({"activeField": _field});
+      this.setState({
+        activeField: _field,
+      });
     }
-  },
-  render: function() {
-    var _statusTypeInput = Object.keys(this.props.config.labels.statusType).map(function(item) {
+  }
+
+  render() {
+    const _statusTypeInput = Object.keys(config.labels.statusType).map((item) => {
       return (
-        <FormCheckRadio key={item} type="radio" name="statusType" value={item} checked={this.props.condition.statusType == item} change={this.setStatusType}>
-          {this.props.config.labels.statusType[item]}
+        <FormCheckRadio
+          key={item}
+          type="radio"
+          name="statusType"
+          value={item}
+          checked={this.props.condition.statusType === item}
+          change={this.setStatusType}
+        >
+          {config.labels.statusType[item]}
         </FormCheckRadio>
       );
-    }.bind(this));
+    });
 
-    var _typeInput = this.props.config.labels.type.map(function(item) {
+    const _typeInput = config.labels.type.map((item) => {
       return (
-        <FormCheckRadio key={item} type="checkbox" name="type" value={item} checked={_.includes(this.props.condition.type, item)} change={this.setTypeFilter}>
+        <FormCheckRadio
+          key={item}
+          type="checkbox"
+          name="type"
+          value={item}
+          checked={_includes(this.props.condition.type, item)}
+          change={this.setTypeFilter}
+        >
           {item}
         </FormCheckRadio>
       );
-    }.bind(this));
+    });
 
-    var _familyInput = this.props.config.labels.family.map(function(item) {
+    const _familyInput = config.labels.family.map((item) => {
       return (
-        <FormCheckRadio key={item} type="checkbox" name="family" value={item} checked={_.includes(this.props.condition.family, item)} change={this.setFamilyFilter}>
+        <FormCheckRadio
+          key={item}
+          type="checkbox"
+          name="family"
+          value={item}
+          checked={_includes(this.props.condition.family, item)}
+          change={this.setFamilyFilter}
+        >
           {item}
         </FormCheckRadio>
       );
-    }.bind(this));
+    });
 
-    var _rareInput = this.props.config.labels.rare.map(function(item) {
+    const _rareInput = config.labels.rare.map((item) => {
       return (
-        <FormCheckRadio key={item} type="checkbox" name="rare" value={item} checked={_.includes(this.props.condition.rare, item)} change={this.setRareFilter}>
+        <FormCheckRadio
+          key={item}
+          type="checkbox"
+          name="rare"
+          value={item}
+          checked={_includes(this.props.condition.rare, item)}
+          change={this.setRareFilter}
+        >
           レア{item}
         </FormCheckRadio>
       );
-    }.bind(this));
+    });
 
     return (
-      <form id="status-form" className={"active-" + this.state.activeField}>
+      <form id="status-form" className={`active-${this.state.activeField}`}>
         <h2>表示条件を変更</h2>
         <fieldset>
-          <legend onClick={this.changeField} data-field="status">表示ステータス<i className="fa fa-caret-down"></i></legend>
+          <legend onClick={this.changeField} data-field="status">
+            表示ステータス<i className="fa fa-caret-down"></i>
+          </legend>
           <div className="fieldset-item">
             {_statusTypeInput}
           </div>
         </fieldset>
         <fieldset>
-          <legend onClick={this.changeField} data-field="narrowing">絞り込み<i className="fa fa-caret-down"></i></legend>
+          <legend onClick={this.changeField} data-field="narrowing">
+            絞り込み<i className="fa fa-caret-down"></i>
+          </legend>
           <div className="fieldset-item">
             <div className="input-group">
               <h3>刀種</h3>
@@ -146,7 +203,9 @@ module.exports = React.createClass({
           </div>
         </fieldset>
         <fieldset>
-          <legend onClick={this.changeField} data-field="names">刀剣名指定<i className="fa fa-caret-down"></i></legend>
+          <legend onClick={this.changeField} data-field="names">
+            刀剣名指定<i className="fa fa-caret-down"></i>
+          </legend>
           <div className="fieldset-item">
             <input type="text" ref="names" value={this.props.condition.names.join(',')} placeholder="半角カンマ区切り（空白なし）" onChange={this.setNamesFilter} />
             <button value="names" className="btn-none" onClick={this.selectNone}>解除</button>
@@ -155,4 +214,6 @@ module.exports = React.createClass({
       </form>
     );
   }
-});
+}
+
+export default ConditionalForm;
