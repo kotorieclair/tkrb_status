@@ -1,6 +1,7 @@
 import config from '../config';
 import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';
+// import _find from 'lodash/collection/find';
 import BaseComponent from './baseComponent';
 import FormCheckRadio from './formCheckRadio';
 
@@ -24,6 +25,7 @@ class ConditionalForm extends BaseComponent {
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
     this.changeField = this.changeField.bind(this);
+    this.searchSuggests = this.searchSuggests.bind(this);
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
@@ -79,27 +81,11 @@ class ConditionalForm extends BaseComponent {
       _names = _input.split(',');
     }
 
-    const _last = _names[_names.length - 1];
-    let _suggests = [];
-    if (_last) {
-      _suggests = _filter(this.props.data, (item) => {
-        if (!_includes(this.props.condition.names, item.name)) {
-          if (item.name.includes(_last)) {
-            if (item.name !== _last) {
-              return true;
-            }
-          }
-        }
-      });
-    }
-
-    this.setState({
-      suggests: _suggests,
-    });
-
     this.props.onConditionChange({
       names: _names,
     });
+
+    this.searchSuggests(_names);
   }
 
   selectAll(e) {
@@ -128,6 +114,26 @@ class ConditionalForm extends BaseComponent {
         suggests: [],
       });
     }
+  }
+
+  searchSuggests(_names) {
+    const _target = _names[_names.length - 1];
+    let _suggests = [];
+    if (_target) {
+      _suggests = _filter(this.props.data, (item) => {
+        if (!_includes(this.props.condition.names, item.name)) {
+          if (item.name.includes(_target)) {
+            if (item.name !== _target) {
+              return true;
+            }
+          }
+        }
+      });
+    }
+
+    this.setState({
+      suggests: _suggests,
+    });
   }
 
   addSuggestedName(e) {

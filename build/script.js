@@ -2002,6 +2002,8 @@ var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionInclude
 
 var _lodashCollectionFilter = require('lodash/collection/filter');
 
+// import _find from 'lodash/collection/find';
+
 var _lodashCollectionFilter2 = _interopRequireDefault(_lodashCollectionFilter);
 
 var _baseComponent = require('./baseComponent');
@@ -2037,6 +2039,7 @@ var ConditionalForm = (function (_BaseComponent) {
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
     this.changeField = this.changeField.bind(this);
+    this.searchSuggests = this.searchSuggests.bind(this);
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
@@ -2094,35 +2097,17 @@ var ConditionalForm = (function (_BaseComponent) {
   }, {
     key: 'setNamesFilter',
     value: function setNamesFilter() {
-      var _this = this;
-
       var _input = React.findDOMNode(this.refs.names).value;
       var _names = [];
       if (_input.length) {
         _names = _input.split(',');
       }
 
-      var _last = _names[_names.length - 1];
-      var _suggests = [];
-      if (_last) {
-        _suggests = (0, _lodashCollectionFilter2['default'])(this.props.data, function (item) {
-          if (!(0, _lodashCollectionIncludes2['default'])(_this.props.condition.names, item.name)) {
-            if (item.name.includes(_last)) {
-              if (item.name !== _last) {
-                return true;
-              }
-            }
-          }
-        });
-      }
-
-      this.setState({
-        suggests: _suggests
-      });
-
       this.props.onConditionChange({
         names: _names
       });
+
+      this.searchSuggests(_names);
     }
   }, {
     key: 'selectAll',
@@ -2154,6 +2139,29 @@ var ConditionalForm = (function (_BaseComponent) {
           suggests: []
         });
       }
+    }
+  }, {
+    key: 'searchSuggests',
+    value: function searchSuggests(_names) {
+      var _this = this;
+
+      var _target = _names[_names.length - 1];
+      var _suggests = [];
+      if (_target) {
+        _suggests = (0, _lodashCollectionFilter2['default'])(this.props.data, function (item) {
+          if (!(0, _lodashCollectionIncludes2['default'])(_this.props.condition.names, item.name)) {
+            if (item.name.includes(_target)) {
+              if (item.name !== _target) {
+                return true;
+              }
+            }
+          }
+        });
+      }
+
+      this.setState({
+        suggests: _suggests
+      });
     }
   }, {
     key: 'addSuggestedName',
