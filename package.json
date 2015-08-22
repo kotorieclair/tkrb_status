@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kotorieclair/tkrb_status#readme",
   "devDependencies": {
+    "babel": "^5.8.21",
     "babel-eslint": "^4.0.5",
     "babelify": "^6.1.3",
     "browserify": "^10.2.4",
