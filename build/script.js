@@ -2026,7 +2026,10 @@ var ConditionalForm = (function (_BaseComponent) {
 
     this.state = {
       activeField: 'status',
-      suggests: []
+      suggestedNames: {
+        index: null,
+        names: []
+      }
     };
 
     this._checkboxFilter = this._checkboxFilter.bind(this);
@@ -2039,7 +2042,7 @@ var ConditionalForm = (function (_BaseComponent) {
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
     this.changeField = this.changeField.bind(this);
-    this.searchSuggests = this.searchSuggests.bind(this);
+    this.suggestNames = this.suggestNames.bind(this);
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
@@ -2070,113 +2073,120 @@ var ConditionalForm = (function (_BaseComponent) {
   }, {
     key: 'setTypeFilter',
     value: function setTypeFilter() {
-      var _type = this._checkboxFilter('type');
-      this.props.onConditionChange({
-        type: _type
-      });
+      var type = this._checkboxFilter('type');
+      this.props.onConditionChange({ type: type });
     }
   }, {
     key: 'setFamilyFilter',
     value: function setFamilyFilter() {
-      var _family = this._checkboxFilter('family');
-      this.props.onConditionChange({
-        family: _family
-      });
+      var family = this._checkboxFilter('family');
+      this.props.onConditionChange({ family: family });
     }
   }, {
     key: 'setRareFilter',
     value: function setRareFilter() {
-      var _rare = this._checkboxFilter('rare');
-      _rare = _rare.map(function (rare) {
-        return parseInt(rare, 10);
+      var rare = this._checkboxFilter('rare');
+      rare = rare.map(function (_rare) {
+        return parseInt(_rare, 10);
       });
-      this.props.onConditionChange({
-        rare: _rare
-      });
+      this.props.onConditionChange({ rare: rare });
     }
   }, {
     key: 'setNamesFilter',
     value: function setNamesFilter() {
-      var _input = React.findDOMNode(this.refs.names).value;
-      var _names = [];
-      if (_input.length) {
-        _names = _input.split(',');
+      var input = React.findDOMNode(this.refs.names).value;
+      var names = [];
+      if (input.length) {
+        names = input.split(',');
       }
 
-      this.props.onConditionChange({
-        names: _names
-      });
+      this.props.onConditionChange({ names: names });
 
-      this.searchSuggests(_names);
+      this.suggestNames(names);
     }
   }, {
     key: 'selectAll',
     value: function selectAll(e) {
       e.preventDefault();
-      var _tmp = {};
-      _tmp[e.target.value] = _config2['default'].labels[e.target.value];
-      this.props.onConditionChange(_tmp);
+      var tmp = {};
+      tmp[e.target.value] = _config2['default'].labels[e.target.value];
+      this.props.onConditionChange(tmp);
     }
   }, {
     key: 'selectNone',
     value: function selectNone(e) {
       e.preventDefault();
-      var _tmp = {};
-      _tmp[e.target.value] = [];
-      this.props.onConditionChange(_tmp);
+      var tmp = {};
+      tmp[e.target.value] = [];
+      this.props.onConditionChange(tmp);
     }
   }, {
     key: 'changeField',
     value: function changeField(e) {
-      var _field = e.currentTarget.getAttribute('data-field');
-      if (_field === this.state.activeField) {
+      var targetField = e.currentTarget.getAttribute('data-field');
+      if (targetField === this.state.activeField) {
         this.setState({
           activeField: null
         });
       } else {
         this.setState({
-          activeField: _field,
-          suggests: []
+          activeField: targetField,
+          suggestedNames: {
+            index: null,
+            names: []
+          }
         });
       }
     }
   }, {
-    key: 'searchSuggests',
-    value: function searchSuggests(_names) {
+    key: 'suggestNames',
+    value: function suggestNames(inputs) {
       var _this = this;
 
-      var _target = _names[_names.length - 1];
-      var _suggests = [];
-      if (_target) {
-        _suggests = (0, _lodashCollectionFilter2['default'])(this.props.data, function (item) {
+      var suggestedNames = {
+        index: null,
+        names: []
+      };
+
+      inputs.some(function (input, index) {
+        if (!input) {
+          return false;
+        }
+
+        var filteredNames = (0, _lodashCollectionFilter2['default'])(_this.props.data, function (item) {
           if (!(0, _lodashCollectionIncludes2['default'])(_this.props.condition.names, item.name)) {
-            if (item.name.includes(_target)) {
-              if (item.name !== _target) {
+            if (item.name !== input) {
+              if (item.name.includes(input)) {
                 return true;
               }
             }
           }
         });
-      }
-
-      this.setState({
-        suggests: _suggests
+        if (filteredNames.length) {
+          suggestedNames.index = index;
+          suggestedNames.names = filteredNames;
+          return true;
+        }
+        return false;
       });
+
+      this.setState({ suggestedNames: suggestedNames });
     }
   }, {
     key: 'addSuggestedName',
     value: function addSuggestedName(e) {
-      var _name = e.currentTarget.getAttribute('data-name');
+      var targetName = e.currentTarget.getAttribute('data-name');
 
-      var _names = this.props.condition.names;
-      _names[_names.length - 1] = _name;
+      var names = this.props.condition.names;
+      names[this.state.suggestedNames.index] = targetName;
 
-      this.props.onConditionChange({
-        names: _names
-      });
+      this.props.onConditionChange({ names: names });
 
       this.setState({
-        suggests: []
+        suggestedNames: {
+          index: null,
+          names: []
+        }
       });
     }
   }, {
@@ -2184,86 +2194,95 @@ var ConditionalForm = (function (_BaseComponent) {
     value: function render() {
       var _this2 = this;
 
-      var _st = Object.keys(_config2['default'].labels.statusType);
-      var statusTypeInput = _st.map(function (item) {
+      var statusType = Object.keys(_config2['default'].labels.statusType);
+      var statusTypeInput = statusType.map(function (item) {
+        var props = {
+          key: item,
+          type: 'radio',
+          name: 'statusType',
+          value: item,
+          checked: _this2.props.condition.statusType === item,
+          onChange: _this2.setStatusType
+        };
         return React.createElement(
           _formCheckRadio2['default'],
-          {
-            key: item,
-            type: "radio",
-            name: "statusType",
-            value: item,
-            checked: _this2.props.condition.statusType === item,
-            onChange: _this2.setStatusType
-          },
+          props,
           _config2['default'].labels.statusType[item]
         );
       });
 
+      var _props = {
+        type: 'radio',
+        name: 'statusMode',
+        checked: this.props.condition.isOldStatus,
+        onChange: this.setStatusMode
+      };
       var statusModeInput = React.createElement(
         _formCheckRadio2['default'],
-        {
-          type: "radio",
-          name: "statusMode",
-          checked: this.props.condition.isOldStatus,
-          onChange: this.setStatusMode
-        },
+        _props,
         '旧ステータス表示'
       );
 
       var typeInput = _config2['default'].labels.type.map(function (item) {
+        var props = {
+          key: item,
+          type: 'checkbox',
+          name: 'type',
+          value: item,
+          checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.type, item),
+          onChange: _this2.setTypeFilter
+        };
         return React.createElement(
           _formCheckRadio2['default'],
-          {
-            key: item,
-            type: "checkbox",
-            name: "type",
-            value: item,
-            checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.type, item),
-            onChange: _this2.setTypeFilter
-          },
+          props,
           item
         );
       });
 
       var familyInput = _config2['default'].labels.family.map(function (item) {
+        var props = {
+          key: item,
+          type: 'checkbox',
+          name: 'family',
+          value: item,
+          checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.family, item),
+          onChange: _this2.setFamilyFilter
+        };
         return React.createElement(
           _formCheckRadio2['default'],
-          {
-            key: item,
-            type: "checkbox",
-            name: "family",
-            value: item,
-            checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.family, item),
-            onChange: _this2.setFamilyFilter
-          },
+          props,
           item
         );
       });
 
       var rareInput = _config2['default'].labels.rare.map(function (item) {
+        var props = {
+          key: item,
+          type: 'checkbox',
+          name: 'rare',
+          value: item,
+          checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.rare, item),
+          onChange: _this2.setRareFilter
+        };
         return React.createElement(
           _formCheckRadio2['default'],
-          {
-            key: item,
-            type: "checkbox",
-            name: "rare",
-            value: item,
-            checked: (0, _lodashCollectionIncludes2['default'])(_this2.props.condition.rare, item),
-            onChange: _this2.setRareFilter
-          },
+          props,
           'レア',
           item
         );
       });
 
-      var suggestedNames = this.state.suggests.map(function (item) {
+      var suggestedNames = this.state.suggestedNames.names.map(function (item) {
         return React.createElement(
           'li',
           { key: item.name, 'data-name': item.name, onClick: _this2.addSuggestedName },
           item.name
         );
       });
+
+      if (suggestedNames.length) {
+        suggestedNames = React.createElement('ul', { className: 'names-suggested' }, suggestedNames);
+      }
 
       return React.createElement(
         'form',
@@ -2389,11 +2408,7 @@ var ConditionalForm = (function (_BaseComponent) {
               value: this.props.condition.names.join(','),
               placeholder: "半角カンマ区切り（空白なし）",
               onChange: this.setNamesFilter }),
-            React.createElement(
-              'ul',
-              { className: "names-suggested" },
-              suggestedNames
-            ),
+            suggestedNames,
             React.createElement(
               'button',
               { value: "names", className: "btn-none", onClick: this.selectNone },
@@ -2565,10 +2580,10 @@ var HelpModal = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _className = this.props.show ? 'help-show' : 'help-hide';
+      var className = this.props.show ? 'help-show' : 'help-hide';
       return React.createElement(
         'div',
-        { id: "status-help", className: _className },
+        { id: "status-help", className: className },
         React.createElement('div', { className: "help-body", dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } }),
         React.createElement(
           'div',
@@ -2623,22 +2638,26 @@ var StatusBar = (function (_React$Component) {
     key: 'render',
     value: function render() {
       // create graph bars
-      var _item = this.props.item;
-      var _name = this.props.name;
-      var val = _item[this.props.statusType][_name];
-      var _height = '';
+      var item = this.props.item;
+      var name = this.props.name;
+      var val = item[this.props.statusType][name];
+      var height = '';
 
       if (val) {
-        _height = val / _config2['default'].maxStatus * 100;
+        height = val / _config2['default'].maxStatus * 100;
       } else {
-        _height = _item.initial[_name] / _config2['default'].maxStatus * 100;
+        height = item.initial[name] / _config2['default'].maxStatus * 100;
       }
 
-      return React.createElement('div', {
+      var props = {
         className: 'status-bar ' + this.props.name,
-        style: { height: _height + '%' },
+        style: {
+          height: height + '%'
+        },
         'data-status': val
-      });
+      };
+
+      return React.createElement('div', props);
     }
   }]);
 
@@ -2705,11 +2724,11 @@ var StatusGraph = (function (_BaseComponent) {
     value: function render() {
       var _this = this;
 
-      var _condition = this.props.condition;
+      var condition = this.props.condition;
       var status = this.props.data.map(function (_item) {
         var item = _item;
 
-        if (_condition.names.length) {
+        if (condition.names.length) {
           if (!_this._namesFilter(item)) {
             return false;
           }
@@ -2720,26 +2739,28 @@ var StatusGraph = (function (_BaseComponent) {
         }
 
         if (_this.props.condition.isOldStatus) {
-          item = (0, _lodashCollectionFilter2['default'])(_dataStatus_old2['default'], function (_old) {
-            return _old.id === item.id;
+          item = (0, _lodashCollectionFilter2['default'])(_dataStatus_old2['default'], function (old) {
+            return old.id === item.id;
           })[0] || item;
         }
 
         var total = 0;
-        var bars = Object.keys(item[_condition.statusType]).map(function (key) {
+        var bars = Object.keys(item[condition.statusType]).map(function (key) {
           // filter by status
-          if (!(0, _lodashCollectionIncludes2['default'])(_condition.status, key)) {
+          if (!(0, _lodashCollectionIncludes2['default'])(condition.status, key)) {
             return false;
           }
 
-          total += item[_condition.statusType][key];
+          total += item[condition.statusType][key];
 
-          return React.createElement(_statusBar2['default'], {
-            statusType: _condition.statusType,
+          var props = {
+            statusType: condition.statusType,
             item: item,
             name: key,
             key: key
-          });
+          };
+
+          return React.createElement(_statusBar2['default'], props);
         });
 
         // create graphs for each character
@@ -2751,10 +2772,7 @@ var StatusGraph = (function (_BaseComponent) {
             { className: "status-bar-box" },
             React.createElement(
               TransitionGroup,
-              {
-                transitionName: "status-bar",
-                transitionAppear: true
-              },
+              { transitionName: "status-bar", transitionAppear: true },
               bars
             )
           ),
@@ -2794,10 +2812,7 @@ var StatusGraph = (function (_BaseComponent) {
           { id: "status-graph-box" },
           React.createElement(
             TransitionGroup,
-            {
-              transitionName: "status-graph",
-              transitionAppear: true
-            },
+            { transitionName: "status-graph", transitionAppear: true },
             status
           )
         ),
@@ -2904,6 +2919,14 @@ var TkrbStatus = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var props = {
+        onStatusTypeChange: this.handleStatusType,
+        onStatusModeChange: this.toggleStatusMode,
+        onConditionChange: this.handleCondition,
+        condition: this.state,
+        data: this.props.data
+      };
+
       return React.createElement(
         'div',
         null,
@@ -2944,17 +2967,8 @@ var TkrbStatus = (function (_React$Component) {
             )
           )
         ),
-        React.createElement(_conditionalForm2['default'], {
-          onStatusTypeChange: this.handleStatusType,
-          onStatusModeChange: this.toggleStatusMode,
-          onConditionChange: this.handleCondition,
-          condition: this.state,
-          data: this.props.data
-        }),
-        React.createElement(_statusGraph2['default'], {
-          condition: this.state,
-          data: this.props.data
-        }),
+        React.createElement(_conditionalForm2['default'], props),
+        React.createElement(_statusGraph2['default'], { condition: this.state, data: this.props.data }),
         React.createElement(_helpModal2['default'], { show: this.state.showHelp, onCloseClick: this.toggleHelp })
       );
     }
@@ -4610,17 +4624,13 @@ var _dataStatus = require('./data/status');
 
 var _dataStatus2 = _interopRequireDefault(_dataStatus);
 
-var _config = require('./config');
-
-var _config2 = _interopRequireDefault(_config);
-
 var _componentsTkrbStatus = require('./components/tkrbStatus');
 
 var _componentsTkrbStatus2 = _interopRequireDefault(_componentsTkrbStatus);
 
-React.render(React.createElement(_componentsTkrbStatus2['default'], { data: _dataStatus2['default'], config: _config2['default'] }), document.getElementById('tkrb-status'));
+React.render(React.createElement(_componentsTkrbStatus2['default'], { data: _dataStatus2['default'] }), document.getElementById('tkrb-status'));
 
-},{"./components/tkrbStatus":63,"./config":64,"./data/status":66}]},{},[68])
+},{"./components/tkrbStatus":63,"./data/status":66}]},{},[68])
 
 
 //# sourceMappingURL=script.js.map

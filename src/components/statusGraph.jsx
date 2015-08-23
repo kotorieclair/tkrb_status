@@ -12,11 +12,11 @@ class StatusGraph extends BaseComponent {
   }
 
   render() {
-    const _condition = this.props.condition;
+    const condition = this.props.condition;
     const status = this.props.data.map((_item) => {
       let item = _item;
 
-      if (_condition.names.length) {
+      if (condition.names.length) {
         if (!this._namesFilter(item)) {
           return false;
         }
@@ -27,27 +27,29 @@ class StatusGraph extends BaseComponent {
       }
 
       if (this.props.condition.isOldStatus) {
-        item = _filter(oldStatus, (_old) => {
-          return _old.id === item.id;
+        item = _filter(oldStatus, (old) => {
+          return old.id === item.id;
         })[0] || item;
       }
 
       let total = 0;
-      const bars = Object.keys(item[_condition.statusType]).map((key) => {
+      const bars = Object.keys(item[condition.statusType]).map((key) => {
         // filter by status
-        if (!_includes(_condition.status, key)) {
+        if (!_includes(condition.status, key)) {
           return false;
         }
 
-        total += item[_condition.statusType][key];
+        total += item[condition.statusType][key];
+
+        const props = {
+          statusType: condition.statusType,
+          item: item,
+          name: key,
+          key: key,
+        };
 
         return (
-          <StatusBar
-            statusType={_condition.statusType}
-            item={item}
-            name={key}
-            key={key}
-          />
+          <StatusBar {...props} />
         );
       });
 
@@ -55,10 +57,7 @@ class StatusGraph extends BaseComponent {
       return (
         <div className={`status-graph-item bars-${bars.length}`} key={item.id}>
           <div className="status-bar-box">
-            <TransitionGroup
-              transitionName="status-bar"
-              transitionAppear={true}
-            >
+            <TransitionGroup transitionName="status-bar" transitionAppear={true}>
               {bars}
             </TransitionGroup>
           </div>
@@ -80,10 +79,7 @@ class StatusGraph extends BaseComponent {
     return (
       <div id="status-graph">
         <div id="status-graph-box">
-          <TransitionGroup
-            transitionName="status-graph"
-            transitionAppear={true}
-          >
+          <TransitionGroup transitionName="status-graph" transitionAppear={true}>
             {status}
           </TransitionGroup>
         </div>

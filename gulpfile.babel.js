@@ -62,11 +62,6 @@ gulp.task('stylus', () =>  {
 });
 
 gulp.task('browserify', () =>  {
-  function handleError(err) {
-    $.util.log(err);
-    this.emit('end');
-  }
-
   return $.browserify({
     entries: config.browserify.entry,
     extensions: ['.jsx', '.json', '.md'],
@@ -79,7 +74,10 @@ gulp.task('browserify', () =>  {
       breaks: true,
     }))
     .bundle()
-    .on('error', handleError)
+    .on('error', (err) => {
+      $.util.log(err);
+      err.stream.emit('end');
+    })
     .pipe($.source(config.browserify.out))
     .pipe($.buffer())
     .pipe($.sourcemaps.init({

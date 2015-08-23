@@ -7,23 +7,27 @@ class StatusBar extends React.Component {
 
   render() {
     // create graph bars
-    const _item = this.props.item;
-    const _name = this.props.name;
-    const val = _item[this.props.statusType][_name];
-    let _height = '';
+    const item = this.props.item;
+    const name = this.props.name;
+    const val = item[this.props.statusType][name];
+    let height = '';
 
     if (val) {
-      _height = val / config.maxStatus * 100;
+      height = val / config.maxStatus * 100;
     } else {
-      _height = _item.initial[_name] / config.maxStatus * 100;
+      height = item.initial[name] / config.maxStatus * 100;
     }
 
+    const props = {
+      className: `status-bar ${this.props.name}`,
+      style: {
+        height: `${height}%`,
+      },
+      'data-status': val,
+    };
+
     return (
-      <div
-        className={`status-bar ${this.props.name}`}
-        style={{height: `${_height}%`}}
-        data-status={val}
-      />
+      <div {...props} />
     );
   }
 }

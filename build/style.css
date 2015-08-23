@@ -466,13 +466,21 @@ header nav li a .fa {
 }
 #status-form .names-suggested {
   background-color: #e0e8ed;
+  border: 1px solid #e0e8ed;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  left: 1em;
+  margin-top: 1px;
   position: absolute;
+  padding: 0.3em;
+  top: 3.2em;
 }
 #status-form .names-suggested li {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   border-top: 1px dotted rgba(0,0,0,0.3);
-  margin: 0.3em;
+  display: block;
+  line-height: 1.3;
   padding: 0.3em;
   width: 400px;
 }

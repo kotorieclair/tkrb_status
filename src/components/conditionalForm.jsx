@@ -12,7 +12,10 @@ class ConditionalForm extends BaseComponent {
 
     this.state = {
       activeField: 'status',
-      suggests: [],
+      suggestedNames: {
+        index: null,
+        names: [],
+      },
     };
 
     this._checkboxFilter = this._checkboxFilter.bind(this);
@@ -25,7 +28,7 @@ class ConditionalForm extends BaseComponent {
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
     this.changeField = this.changeField.bind(this);
-    this.searchSuggests = this.searchSuggests.bind(this);
+    this.suggestNames = this.suggestNames.bind(this);
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
@@ -51,186 +54,206 @@ class ConditionalForm extends BaseComponent {
   }
 
   setTypeFilter() {
-    const _type = this._checkboxFilter('type');
-    this.props.onConditionChange({
-      type: _type,
-    });
+    const type = this._checkboxFilter('type');
+    this.props.onConditionChange({type});
   }
 
   setFamilyFilter() {
-    const _family = this._checkboxFilter('family');
-    this.props.onConditionChange({
-      family: _family,
-    });
+    const family = this._checkboxFilter('family');
+    this.props.onConditionChange({family});
   }
 
   setRareFilter() {
-    let _rare = this._checkboxFilter('rare');
-    _rare = _rare.map((rare) => {
-      return parseInt(rare, 10);
+    let rare = this._checkboxFilter('rare');
+    rare = rare.map((_rare) => {
+      return parseInt(_rare, 10);
     });
-    this.props.onConditionChange({
-      rare: _rare,
-    });
+    this.props.onConditionChange({rare});
   }
 
   setNamesFilter() {
-    const _input = React.findDOMNode(this.refs.names).value;
-    let _names = [];
-    if (_input.length) {
-      _names = _input.split(',');
+    const input = React.findDOMNode(this.refs.names).value;
+    let names = [];
+    if (input.length) {
+      names = input.split(',');
     }
 
-    this.props.onConditionChange({
-      names: _names,
-    });
+    this.props.onConditionChange({names});
 
-    this.searchSuggests(_names);
+    this.suggestNames(names);
   }
 
   selectAll(e) {
     e.preventDefault();
-    const _tmp = {};
-    _tmp[e.target.value] = config.labels[e.target.value];
-    this.props.onConditionChange(_tmp);
+    const tmp = {};
+    tmp[e.target.value] = config.labels[e.target.value];
+    this.props.onConditionChange(tmp);
   }
 
   selectNone(e) {
     e.preventDefault();
-    const _tmp = {};
-    _tmp[e.target.value] = [];
-    this.props.onConditionChange(_tmp);
+    const tmp = {};
+    tmp[e.target.value] = [];
+    this.props.onConditionChange(tmp);
   }
 
   changeField(e) {
-    const _field = e.currentTarget.getAttribute('data-field');
-    if (_field === this.state.activeField) {
+    const targetField = e.currentTarget.getAttribute('data-field');
+    if (targetField === this.state.activeField) {
       this.setState({
         activeField: null,
       });
     } else {
       this.setState({
-        activeField: _field,
-        suggests: [],
+        activeField: targetField,
+        suggestedNames: {
+          index: null,
+          names: [],
+        },
       });
     }
   }
 
-  searchSuggests(_names) {
-    const _target = _names[_names.length - 1];
-    let _suggests = [];
-    if (_target) {
-      _suggests = _filter(this.props.data, (item) => {
+  suggestNames(inputs) {
+    const suggestedNames = {
+      index: null,
+      names: [],
+    };
+
+    inputs.some((input, index) => {
+      if (!input) {
+        return false;
+      }
+
+      const filteredNames = _filter(this.props.data, (item) => {
         if (!_includes(this.props.condition.names, item.name)) {
-          if (item.name.includes(_target)) {
-            if (item.name !== _target) {
+          if (item.name !== input) {
+            if (item.name.includes(input)) {
               return true;
             }
           }
         }
       });
-    }
-
-    this.setState({
-      suggests: _suggests,
+      if (filteredNames.length) {
+        suggestedNames.index = index;
+        suggestedNames.names = filteredNames;
+        return true;
+      }
+      return false;
     });
+
+    this.setState({suggestedNames});
   }
 
   addSuggestedName(e) {
-    const _name = e.currentTarget.getAttribute('data-name');
+    const targetName = e.currentTarget.getAttribute('data-name');
 
-    const _names = this.props.condition.names;
-    _names[_names.length - 1] = _name;
+    const names = this.props.condition.names;
+    names[this.state.suggestedNames.index] = targetName;
 
-    this.props.onConditionChange({
-      names: _names,
-    });
+    this.props.onConditionChange({names});
 
     this.setState({
-      suggests: [],
+      suggestedNames: {
+        index: null,
+        names: [],
+      },
     });
   }
 
   render() {
-    const _st = Object.keys(config.labels.statusType);
-    const statusTypeInput = _st.map((item) => {
+    const statusType = Object.keys(config.labels.statusType);
+    const statusTypeInput = statusType.map((item) => {
+      const props = {
+        key: item,
+        type: 'radio',
+        name: 'statusType',
+        value: item,
+        checked: this.props.condition.statusType === item,
+        onChange: this.setStatusType,
+      };
       return (
-        <FormCheckRadio
-          key={item}
-          type="radio"
-          name="statusType"
-          value={item}
-          checked={this.props.condition.statusType === item}
-          onChange={this.setStatusType}
-        >
+        <FormCheckRadio {...props}>
           {config.labels.statusType[item]}
         </FormCheckRadio>
       );
     });
 
+    const _props = {
+      type: 'radio',
+      name: 'statusMode',
+      checked: this.props.condition.isOldStatus,
+      onChange: this.setStatusMode,
+    };
     const statusModeInput = (
-      <FormCheckRadio
-        type="radio"
-        name="statusMode"
-        checked={this.props.condition.isOldStatus}
-        onChange={this.setStatusMode}
-      >
+      <FormCheckRadio {..._props}>
         旧ステータス表示
       </FormCheckRadio>
     );
 
     const typeInput = config.labels.type.map((item) => {
+      const props = {
+        key: item,
+        type: 'checkbox',
+        name: 'type',
+        value: item,
+        checked: _includes(this.props.condition.type, item),
+        onChange: this.setTypeFilter,
+      };
       return (
-        <FormCheckRadio
-          key={item}
-          type="checkbox"
-          name="type"
-          value={item}
-          checked={_includes(this.props.condition.type, item)}
-          onChange={this.setTypeFilter}
-        >
+        <FormCheckRadio {...props}>
           {item}
         </FormCheckRadio>
       );
     });
 
     const familyInput = config.labels.family.map((item) => {
+      const props = {
+        key: item,
+        type: 'checkbox',
+        name: 'family',
+        value: item,
+        checked: _includes(this.props.condition.family, item),
+        onChange: this.setFamilyFilter,
+      };
       return (
-        <FormCheckRadio
-          key={item}
-          type="checkbox"
-          name="family"
-          value={item}
-          checked={_includes(this.props.condition.family, item)}
-          onChange={this.setFamilyFilter}
-        >
+        <FormCheckRadio {...props}>
           {item}
         </FormCheckRadio>
       );
     });
 
     const rareInput = config.labels.rare.map((item) => {
+      const props = {
+        key: item,
+        type: 'checkbox',
+        name: 'rare',
+        value: item,
+        checked: _includes(this.props.condition.rare, item),
+        onChange: this.setRareFilter,
+      };
       return (
-        <FormCheckRadio
-          key={item}
-          type="checkbox"
-          name="rare"
-          value={item}
-          checked={_includes(this.props.condition.rare, item)}
-          onChange={this.setRareFilter}
-        >
+        <FormCheckRadio {...props}>
           レア{item}
         </FormCheckRadio>
       );
     });
 
-    const suggestedNames = this.state.suggests.map((item) => {
+    let suggestedNames = this.state.suggestedNames.names.map((item) => {
       return (
         <li key={item.name} data-name={item.name} onClick={this.addSuggestedName}>
           {item.name}
         </li>
       );
     });
+
+    if (suggestedNames.length) {
+      suggestedNames = React.createElement(
+        'ul',
+        { className: 'names-suggested' },
+        suggestedNames
+      );
+    }
 
     return (
       <form id="status-form" className={`active-${this.state.activeField}`}>
@@ -295,10 +318,8 @@ class ConditionalForm extends BaseComponent {
               ref="names"
               value={this.props.condition.names.join(',')}
               placeholder="半角カンマ区切り（空白なし）"
-              onChange={this.setNamesFilter}/>
-            <ul className="names-suggested">
-              {suggestedNames}
-            </ul>
+              onChange={this.setNamesFilter} />
+            {suggestedNames}
             <button value="names" className="btn-none" onClick={this.selectNone}>
               解除
             </button>

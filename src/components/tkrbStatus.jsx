@@ -51,6 +51,14 @@ class TkrbStatus extends React.Component {
   }
 
   render() {
+    const props = {
+      onStatusTypeChange: this.handleStatusType,
+      onStatusModeChange: this.toggleStatusMode,
+      onConditionChange: this.handleCondition,
+      condition: this.state,
+      data: this.props.data,
+    };
+
     return (
       <div>
         <header>
@@ -68,17 +76,8 @@ class TkrbStatus extends React.Component {
             </ul>
           </nav>
         </header>
-        <ConditionalForm
-          onStatusTypeChange={this.handleStatusType}
-          onStatusModeChange={this.toggleStatusMode}
-          onConditionChange={this.handleCondition}
-          condition={this.state}
-          data={this.props.data}
-        />
-        <StatusGraph
-          condition={this.state}
-          data={this.props.data}
-        />
+        <ConditionalForm {...props} />
+        <StatusGraph condition={this.state} data={this.props.data} />
         <HelpModal show={this.state.showHelp} onCloseClick={this.toggleHelp} />
       </div>
     );
