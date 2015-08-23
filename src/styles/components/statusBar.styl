@@ -1,0 +1,53 @@
+.StatusBar
+  display: inline-block
+  margin: 0 $bar-margin
+  position: relative
+  transform-origin: 50% 100%
+  transition: $transition-bar
+  vertical-align: bottom
+  width: $bar-width
+
+  for _name, _color in $status-color
+    &.{_name}
+      background-color: rgba(_color, 0.5)
+
+      &:hover
+        background-color: lighten(rgba(_color, 0.5), 20%)
+
+      &[data-status]
+        background-color: _color
+
+        &:hover
+          background-color: lighten(_color, 20%)
+
+  &::after
+    background-color: rgba(#000, .7)
+    border-radius: 2px
+    box-sizing: border-box
+    color: #fff
+    display: block
+    font-size: 1.2rem
+    line-height: 1.5
+    margin-left: ($bar-width / 2)
+    opacity: 0
+    position: absolute
+    top: -3em
+    transition: $transition-label
+    visibility: hidden
+    white-space: pre
+    width: 3em
+    left: (@width / 2) * -1
+    z-index: 1
+
+  &:hover::after
+    opacity: 1
+    top: -3.5em
+    visibility: visible
+
+  for _class, _label in $config.labels.status
+    &.{_class}
+      &::after
+        content: quote(_label)"\A？"
+
+      &[data-status]::after
+        content: quote(_label)"\A"attr(data-status)

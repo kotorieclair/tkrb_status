@@ -1,0 +1,50 @@
+// -----------------------------
+// graph base
+// -----------------------------
+
+#StatusGraph
+  margin: 2em 1.5em 1.5em 3em
+  position: relative
+  white-space: nowrap
+
+  // -----------------------------
+  // graph body
+  // -----------------------------
+
+  #StatusGraph-body
+    overflow: auto
+    padding-left: 1em
+    position: relative
+    z-index: 2
+
+    .StatusGraph-item
+      display: inline-block
+      font-size: 0
+      position: relative
+      transition: $transition-graph
+      vertical-align: bottom
+
+      for _num in 0...9
+        &.bars-{_num}
+          width: ($bar-width + $bar-margin * 2) * _num + $graph-item-margin * 2
+
+      .StatusGraph-bars
+        height: $config.maxStatus * $height-scale
+        margin: 0 auto
+        text-align: center
+
+        &::after
+          content: ''
+          display: inline-block
+          height: 100%
+          vertical-align: bottom
+
+      .StatusGraph-info
+        padding-bottom: 20px
+
+        .StatusGraph-info-name,
+        .StatusGraph-info-id,
+        .StatusGraph-info-total
+          font-size: 1.2rem
+          text-align: center
+          padding-top: 7px

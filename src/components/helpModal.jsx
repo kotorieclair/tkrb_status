@@ -13,11 +13,11 @@ class HelpModal extends React.Component {
   }
 
   render() {
-    const className = this.props.show ? 'help-show' : 'help-hide';
+    const className = this.props.show ? 'show' : 'hide';
     return (
-      <div id="status-help" className={className}>
-        <div className="help-body" dangerouslySetInnerHTML={{__html: helpMd}} />
-        <div className="help-close">
+      <div id="HelpModal" className={className}>
+        <div className="HelpModal-body" dangerouslySetInnerHTML={{__html: helpMd}} />
+        <div className="HelpModal-close">
           <a onClick={this.closeHelp}>ヘルプをとじる</a>
         </div>
       </div>

@@ -55,20 +55,20 @@ class StatusGraph extends BaseComponent {
 
       // create graphs for each character
       return (
-        <div className={`status-graph-item bars-${bars.length}`} key={item.id}>
-          <div className="status-bar-box">
-            <TransitionGroup transitionName="status-bar" transitionAppear={true}>
+        <div className={`StatusGraph-item bars-${bars.length}`} key={item.id}>
+          <div className="StatusGraph-bars">
+            <TransitionGroup transitionName="StatusBar" transitionAppear={true}>
               {bars}
             </TransitionGroup>
           </div>
-          <div className="status-info-box">
-            <p className="info-name">
+          <div className="StatusGraph-info">
+            <p className="StatusGraph-info-name">
               <a href={item.url1} target="_new">{item.name}</a>
             </p>
-            <p className="info-id">
+            <p className="StatusGraph-info-id">
               No. {item.id}
             </p>
-            <p className="info-total">
+            <p className="StatusGraph-info-total">
               合計：{total}
             </p>
           </div>
@@ -77,9 +77,9 @@ class StatusGraph extends BaseComponent {
     });
 
     return (
-      <div id="status-graph">
-        <div id="status-graph-box">
-          <TransitionGroup transitionName="status-graph" transitionAppear={true}>
+      <div id="StatusGraph">
+        <div id="StatusGraph-body">
+          <TransitionGroup transitionName="StatusGraph" transitionAppear={true}>
             {status}
           </TransitionGroup>
         </div>

@@ -1,0 +1,36 @@
+// -----------------------------
+// background lines
+// -----------------------------
+
+#GraphBack
+  border-bottom: 1px solid $backline-color-main
+  left: 0
+  position: absolute
+  right: 0
+  top: 0
+  vertical-align: bottom
+  z-index: 1
+
+  .GraphBack-line
+    border-top: 1px solid $backline-color-main
+    box-sizing: border-box
+    height: 5px * $height-scale
+    line-height: 1
+    position: relative
+    width: 100%
+
+    &:nth-child(even)
+      border-top: 1px dotted $backline-color-sub
+
+      &::before
+        content: ''
+
+    &::before
+      content: attr(data-line)
+      display: block
+      font-size: 1rem
+      position: absolute
+      text-align: right
+      top: -0.5em
+      width: 3em
+      left: (@width + 0.5em) * -1

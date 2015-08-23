@@ -19,7 +19,7 @@ class StatusBar extends React.Component {
     }
 
     const props = {
-      className: `status-bar ${this.props.name}`,
+      className: `StatusBar ${this.props.name}`,
       style: {
         height: `${height}%`,
       },

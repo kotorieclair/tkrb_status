@@ -1,0 +1,60 @@
+// -----------------------------
+// globals
+// -----------------------------
+
+html
+  font-size: 62.5%
+
+body
+  color: $base-font-color
+  font-size: $base-font-size
+
+a
+  color: $base-font-color
+  cursor: pointer
+  transition: $transition-link
+
+  &:hover
+    color: $btn-color-none
+    text-decoration: none
+
+s
+  opacity: 0.8
+
+strong
+  font-weight: bold
+
+.fa
+  margin-right: 0.3em
+
+  &.fa-square-o
+    padding-right: 1px
+
+// -----------------------------
+// header
+// -----------------------------
+
+header
+  background-color: #333
+  color: #fff
+  padding: $form-fieldset-padding $form-fieldset-padding
+  position: relative
+  z-index: 8
+
+  h1
+    display: inline-block
+    font-size: 2rem
+    margin-right: 1.5em
+
+  nav
+    display: inline-block
+
+    li
+      display: inline-block
+      margin-right: 1.5em
+
+      a
+        color: #fff
+
+        .fa
+          font-size: 1.1em

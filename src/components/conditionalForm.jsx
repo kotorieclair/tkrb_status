@@ -3,6 +3,7 @@ import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';
 // import _find from 'lodash/collection/find';
 import BaseComponent from './baseComponent';
+import FormTab from './formTab';
 import FormCheckRadio from './formCheckRadio';
 
 // form: setting conditions
@@ -11,7 +12,7 @@ class ConditionalForm extends BaseComponent {
     super(props);
 
     this.state = {
-      activeField: 'status',
+      activeTab: 'status',
       suggestedNames: {
         index: null,
         names: [],
@@ -27,7 +28,7 @@ class ConditionalForm extends BaseComponent {
     this.setNamesFilter = this.setNamesFilter.bind(this);
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
-    this.changeField = this.changeField.bind(this);
+    this.changeActiveTab = this.changeActiveTab.bind(this);
     this.suggestNames = this.suggestNames.bind(this);
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
@@ -97,21 +98,39 @@ class ConditionalForm extends BaseComponent {
     this.props.onConditionChange(tmp);
   }
 
-  changeField(e) {
-    const targetField = e.currentTarget.getAttribute('data-field');
-    if (targetField === this.state.activeField) {
+  changeActiveTab(tabName) {
+    if (tabName === this.state.activeTab) {
       this.setState({
-        activeField: null,
+        activeTab: null,
+        suggestedNames: {
+          index: null,
+          names: [],
+        },
       });
     } else {
       this.setState({
-        activeField: targetField,
+        activeTab: tabName,
         suggestedNames: {
           index: null,
           names: [],
         },
       });
     }
+
+    // const targetField = e.currentTarget.getAttribute('data-field');
+    // if (targetField === this.state.activeTab) {
+    //   this.setState({
+    //     activeTab: null,
+    //   });
+    // } else {
+    //   this.setState({
+    //     activeTab: targetField,
+    //     suggestedNames: {
+    //       index: null,
+    //       names: [],
+    //     },
+    //   });
+    // }
   }
 
   suggestNames(inputs) {
@@ -256,75 +275,75 @@ class ConditionalForm extends BaseComponent {
     }
 
     return (
-      <form id="status-form" className={`active-${this.state.activeField}`}>
+      <form id="ConditionalForm">
         <h2>表示条件を変更</h2>
-        <fieldset>
-          <legend onClick={this.changeField} data-field="status">
-            表示ステータス<i className="fa fa-caret-down"></i>
-          </legend>
-          <div className="fieldset-item">
-            <div className="input-group cols">
-              {statusTypeInput}
-            </div>
-            <div className="input-group cols">
-              {statusModeInput}
-            </div>
+        <FormTab
+          tabName="status"
+          heading="表示ステータス"
+          activeTab={this.state.activeTab}
+          onChangeTab={this.changeActiveTab}
+        >
+          <div className="input-group cols">
+            {statusTypeInput}
           </div>
-        </fieldset>
-        <fieldset>
-          <legend onClick={this.changeField} data-field="narrowing">
-            条件で絞り込み<i className="fa fa-caret-down"></i>
-          </legend>
-          <div className="fieldset-item">
-            <div className="input-group rows">
-              <h3>刀種</h3>
-              {typeInput}
-              <button value="type" className="btn-all" onClick={this.selectAll}>
-                全選択
-              </button>
-              <button value="type" className="btn-none" onClick={this.selectNone}>
-                全解除
-              </button>
-            </div>
-            <div className="input-group rows">
-              <h3>刀派</h3>
-              {familyInput}
-              <button value="family" className="btn-all" onClick={this.selectAll}>
-                全選択
-              </button>
-              <button value="family" className="btn-none" onClick={this.selectNone}>
-                全解除
-              </button>
-            </div>
-            <div className="input-group rows">
-              <h3>レアリティ</h3>
-              {rareInput}
-              <button value="rare" className="btn-all" onClick={this.selectAll}>
-                全選択
-              </button>
-              <button value="rare" className="btn-none" onClick={this.selectNone}>
-                全解除
-              </button>
-            </div>
+          <div className="input-group cols">
+            {statusModeInput}
           </div>
-        </fieldset>
-        <fieldset>
-          <legend onClick={this.changeField} data-field="names">
-            刀剣名指定<i className="fa fa-caret-down"></i>
-          </legend>
-          <div className="fieldset-item">
-            <input
-              type="text"
-              ref="names"
-              value={this.props.condition.names.join(',')}
-              placeholder="半角カンマ区切り（空白なし）"
-              onChange={this.setNamesFilter} />
-            {suggestedNames}
-            <button value="names" className="btn-none" onClick={this.selectNone}>
-              解除
+        </FormTab>
+        <FormTab
+          tabName="narrowing"
+          heading="条件で絞り込み"
+          activeTab={this.state.activeTab}
+          onChangeTab={this.changeActiveTab}
+        >
+          <div className="input-group rows">
+            <h3>刀種</h3>
+            {typeInput}
+            <button value="type" className="btn-all" onClick={this.selectAll}>
+              全選択
+            </button>
+            <button value="type" className="btn-none" onClick={this.selectNone}>
+              全解除
             </button>
           </div>
-        </fieldset>
+          <div className="input-group rows">
+            <h3>刀派</h3>
+            {familyInput}
+            <button value="family" className="btn-all" onClick={this.selectAll}>
+              全選択
+            </button>
+            <button value="family" className="btn-none" onClick={this.selectNone}>
+              全解除
+            </button>
+          </div>
+          <div className="input-group rows">
+            <h3>レアリティ</h3>
+            {rareInput}
+            <button value="rare" className="btn-all" onClick={this.selectAll}>
+              全選択
+            </button>
+            <button value="rare" className="btn-none" onClick={this.selectNone}>
+              全解除
+            </button>
+          </div>
+        </FormTab>
+        <FormTab
+          tabName="names"
+          heading="刀剣名指定"
+          activeTab={this.state.activeTab}
+          onChangeTab={this.changeActiveTab}
+        >
+          <input
+            type="text"
+            ref="names"
+            value={this.props.condition.names.join(',')}
+            placeholder="半角カンマ区切り（空白なし）"
+            onChange={this.setNamesFilter} />
+          {suggestedNames}
+          <button value="names" className="btn-none" onClick={this.selectNone}>
+            解除
+          </button>
+        </FormTab>
       </form>
     );
   }

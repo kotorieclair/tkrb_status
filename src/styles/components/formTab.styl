@@ -1,0 +1,69 @@
+.FormTab
+  display: inline-block
+  padding-bottom: 2px
+  // margin-bottom: $form-item-padding * 2 + $form-fieldset-padding * 2 + 1em
+  white-space: nowrap
+
+  &.active
+    // display: block
+
+    .FormTab-heading
+      background-color: rgba(#fff, 0.3)
+
+      .fa
+        transform: rotate(180deg);
+        transition: $transition-form
+
+      &::after
+        border-color: rgba(#fff, 0.3) transparent transparent transparent
+        border-style: solid
+        border-bottom-width: 0
+        border-left-width: 6px
+        border-right-width: @border-left-width
+        border-top-width: 7px
+        bottom: -(@border-top-width)
+        content: ''
+        left: 50%
+        margin-left: -(@border-left-width)
+        position: absolute
+
+    .FormTab-body
+      opacity: 1
+      //transform: translateY(100%)
+      z-index: 3
+
+  .FormTab-heading
+    border-radius: $border-radius
+    color: #fff
+    margin: 0 ($form-fieldset-padding / 2)
+    padding: ($form-fieldset-padding / 2)
+    position: relative
+    transition: $transition-form
+    z-index: 5
+
+    &:hover
+      background-color: rgba(#fff, 0.2)
+      cursor: pointer
+
+    .fa
+      margin-left: 0.5em
+      margin-right: 0
+      transition: $transition-form
+
+  .FormTab-body
+    background-color: rgba($form-background-color, 85%)
+    border-top: 1px dotted rgba(#fff, 0.3)
+    bottom: 0
+    box-sizing: border-box
+    left: 0
+    opacity: 0
+    padding: $form-fieldset-padding $form-fieldset-padding
+    position: absolute
+    right: 0
+    transition: $transition-form
+    transform: translateY(100%)
+    transform-origin: 50% 0%;
+    z-index: 2
+
+    &:first-child
+      display: block

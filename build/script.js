@@ -2010,6 +2010,10 @@ var _baseComponent = require('./baseComponent');
 
 var _baseComponent2 = _interopRequireDefault(_baseComponent);
 
+var _formTab = require('./formTab');
+
+var _formTab2 = _interopRequireDefault(_formTab);
+
 var _formCheckRadio = require('./formCheckRadio');
 
 // form: setting conditions
@@ -2025,7 +2029,7 @@ var ConditionalForm = (function (_BaseComponent) {
     _get(Object.getPrototypeOf(ConditionalForm.prototype), 'constructor', this).call(this, props);
 
     this.state = {
-      activeField: 'status',
+      activeTab: 'status',
       suggestedNames: {
         index: null,
         names: []
@@ -2041,7 +2045,7 @@ var ConditionalForm = (function (_BaseComponent) {
     this.setNamesFilter = this.setNamesFilter.bind(this);
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
-    this.changeField = this.changeField.bind(this);
+    this.changeActiveTab = this.changeActiveTab.bind(this);
     this.suggestNames = this.suggestNames.bind(this);
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
@@ -2121,22 +2125,40 @@ var ConditionalForm = (function (_BaseComponent) {
       this.props.onConditionChange(tmp);
     }
   }, {
-    key: 'changeField',
-    value: function changeField(e) {
-      var targetField = e.currentTarget.getAttribute('data-field');
-      if (targetField === this.state.activeField) {
+    key: 'changeActiveTab',
+    value: function changeActiveTab(tabName) {
+      if (tabName === this.state.activeTab) {
         this.setState({
-          activeField: null
+          activeTab: null,
+          suggestedNames: {
+            index: null,
+            names: []
+          }
         });
       } else {
         this.setState({
-          activeField: targetField,
+          activeTab: tabName,
           suggestedNames: {
             index: null,
             names: []
           }
         });
       }
+
+      // const targetField = e.currentTarget.getAttribute('data-field');
+      // if (targetField === this.state.activeTab) {
+      //   this.setState({
+      //     activeTab: null,
+      //   });
+      // } else {
+      //   this.setState({
+      //     activeTab: targetField,
+      //     suggestedNames: {
+      //       index: null,
+      //       names: [],
+      //     },
+      //   });
+      // }
     }
   }, {
     key: 'suggestNames',
@@ -2286,134 +2308,119 @@ var ConditionalForm = (function (_BaseComponent) {
 
       return React.createElement(
         'form',
-        { id: "status-form", className: 'active-' + this.state.activeField },
+        { id: "ConditionalForm" },
         React.createElement(
           'h2',
           null,
           '表示条件を変更'
         ),
         React.createElement(
-          'fieldset',
-          null,
+          _formTab2['default'],
+          {
+            tabName: "status",
+            heading: "表示ステータス",
+            activeTab: this.state.activeTab,
+            onChangeTab: this.changeActiveTab
+          },
           React.createElement(
-            'legend',
-            { onClick: this.changeField, 'data-field': "status" },
-            '表示ステータス',
-            React.createElement('i', { className: "fa fa-caret-down" })
+            'div',
+            { className: "input-group cols" },
+            statusTypeInput
           ),
           React.createElement(
             'div',
-            { className: "fieldset-item" },
-            React.createElement(
-              'div',
-              { className: "input-group cols" },
-              statusTypeInput
-            ),
-            React.createElement(
-              'div',
-              { className: "input-group cols" },
-              statusModeInput
-            )
+            { className: "input-group cols" },
+            statusModeInput
           )
         ),
         React.createElement(
-          'fieldset',
-          null,
-          React.createElement(
-            'legend',
-            { onClick: this.changeField, 'data-field': "narrowing" },
-            '条件で絞り込み',
-            React.createElement('i', { className: "fa fa-caret-down" })
-          ),
-          React.createElement(
-            'div',
-            { className: "fieldset-item" },
-            React.createElement(
-              'div',
-              { className: "input-group rows" },
-              React.createElement(
-                'h3',
-                null,
-                '刀種'
-              ),
-              typeInput,
-              React.createElement(
-                'button',
-                { value: "type", className: "btn-all", onClick: this.selectAll },
-                '全選択'
-              ),
-              React.createElement(
-                'button',
-                { value: "type", className: "btn-none", onClick: this.selectNone },
-                '全解除'
-              )
-            ),
-            React.createElement(
-              'div',
-              { className: "input-group rows" },
-              React.createElement(
-                'h3',
-                null,
-                '刀派'
-              ),
-              familyInput,
-              React.createElement(
-                'button',
-                { value: "family", className: "btn-all", onClick: this.selectAll },
-                '全選択'
-              ),
-              React.createElement(
-                'button',
-                { value: "family", className: "btn-none", onClick: this.selectNone },
-                '全解除'
-              )
-            ),
-            React.createElement(
-              'div',
-              { className: "input-group rows" },
-              React.createElement(
-                'h3',
-                null,
-                'レアリティ'
-              ),
-              rareInput,
-              React.createElement(
-                'button',
-                { value: "rare", className: "btn-all", onClick: this.selectAll },
-                '全選択'
-              ),
-              React.createElement(
-                'button',
-                { value: "rare", className: "btn-none", onClick: this.selectNone },
-                '全解除'
-              )
-            )
-          )
-        ),
-        React.createElement(
-          'fieldset',
-          null,
-          React.createElement(
-            'legend',
-            { onClick: this.changeField, 'data-field': "names" },
-            '刀剣名指定',
-            React.createElement('i', { className: "fa fa-caret-down" })
-          ),
+          _formTab2['default'],
+          {
+            tabName: "narrowing",
+            heading: "条件で絞り込み",
+            activeTab: this.state.activeTab,
+            onChangeTab: this.changeActiveTab
+          },
           React.createElement(
             'div',
-            { className: "fieldset-item" },
-            React.createElement('input', {
-              type: "text",
-              ref: "names",
-              value: this.props.condition.names.join(','),
-              placeholder: "半角カンマ区切り（空白なし）",
-              onChange: this.setNamesFilter }),
-            suggestedNames,
+            { className: "input-group rows" },
+            React.createElement(
+              'h3',
+              null,
+              '刀種'
+            ),
+            typeInput,
             React.createElement(
               'button',
-              { value: "names", className: "btn-none", onClick: this.selectNone },
-              '解除'
+              { value: "type", className: "btn-all", onClick: this.selectAll },
+              '全選択'
+            ),
+            React.createElement(
+              'button',
+              { value: "type", className: "btn-none", onClick: this.selectNone },
+              '全解除'
             )
+          ),
+          React.createElement(
+            'div',
+            { className: "input-group rows" },
+            React.createElement(
+              'h3',
+              null,
+              '刀派'
+            ),
+            familyInput,
+            React.createElement(
+              'button',
+              { value: "family", className: "btn-all", onClick: this.selectAll },
+              '全選択'
+            ),
+            React.createElement(
+              'button',
+              { value: "family", className: "btn-none", onClick: this.selectNone },
+              '全解除'
+            )
+          ),
+          React.createElement(
+            'div',
+            { className: "input-group rows" },
+            React.createElement(
+              'h3',
+              null,
+              'レアリティ'
+            ),
+            rareInput,
+            React.createElement(
+              'button',
+              { value: "rare", className: "btn-all", onClick: this.selectAll },
+              '全選択'
+            ),
+            React.createElement(
+              'button',
+              { value: "rare", className: "btn-none", onClick: this.selectNone },
+              '全解除'
+            )
+          )
+        ),
+        React.createElement(
+          _formTab2['default'],
+          {
+            tabName: "names",
+            heading: "刀剣名指定",
+            activeTab: this.state.activeTab,
+            onChangeTab: this.changeActiveTab
+          },
+          React.createElement('input', {
+            type: "text",
+            ref: "names",
+            value: this.props.condition.names.join(','),
+            placeholder: "半角カンマ区切り（空白なし）",
+            onChange: this.setNamesFilter }),
+          suggestedNames,
+          React.createElement(
+            'button',
+            { value: "names", className: "btn-none", onClick: this.selectNone },
+            '解除'
           )
         )
       );
@@ -2426,7 +2433,7 @@ var ConditionalForm = (function (_BaseComponent) {
 exports['default'] = ConditionalForm;
 module.exports = exports['default'];
 
-},{"../config":64,"./baseComponent":56,"./formCheckRadio":58,"lodash/collection/filter":2,"lodash/collection/includes":3}],58:[function(require,module,exports){
+},{"../config":65,"./baseComponent":56,"./formCheckRadio":58,"./formTab":59,"lodash/collection/filter":2,"lodash/collection/includes":3}],58:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2492,6 +2499,68 @@ exports["default"] = FormCheckRadio;
 module.exports = exports["default"];
 
 },{}],59:[function(require,module,exports){
+// import config from '../config';
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FormTab = (function (_React$Component) {
+  _inherits(FormTab, _React$Component);
+
+  function FormTab(props) {
+    _classCallCheck(this, FormTab);
+
+    _get(Object.getPrototypeOf(FormTab.prototype), 'constructor', this).call(this, props);
+
+    this.changeTab = this.changeTab.bind(this);
+  }
+
+  _createClass(FormTab, [{
+    key: 'changeTab',
+    value: function changeTab() {
+      this.props.onChangeTab(this.props.tabName);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var isActive = this.props.tabName === this.props.activeTab;
+      var className = isActive ? ' active' : '';
+      return React.createElement(
+        'fieldset',
+        { className: 'FormTab ' + this.props.tabName + className },
+        React.createElement(
+          'legend',
+          { className: "FormTab-heading", onClick: this.changeTab },
+          this.props.heading,
+          React.createElement('i', { className: 'fa fa-caret-down' })
+        ),
+        React.createElement(
+          'div',
+          { className: "FormTab-body" },
+          this.props.children
+        )
+      );
+    }
+  }]);
+
+  return FormTab;
+})(React.Component);
+
+exports['default'] = FormTab;
+module.exports = exports['default'];
+
+},{}],60:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2522,12 +2591,12 @@ var GraphBack = (function (_React$Component) {
       var lines = [];
 
       for (var i = 100; i > 0; i -= 5) {
-        lines.push(React.createElement("div", { className: "graph-back", key: i, "data-line": i }));
+        lines.push(React.createElement("div", { className: "GraphBack-line", key: i, "data-line": i }));
       }
 
       return React.createElement(
         "div",
-        { id: "status-graph-back" },
+        { id: "GraphBack" },
         lines
       );
     }
@@ -2539,7 +2608,7 @@ var GraphBack = (function (_React$Component) {
 exports["default"] = GraphBack;
 module.exports = exports["default"];
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2580,14 +2649,14 @@ var HelpModal = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var className = this.props.show ? 'help-show' : 'help-hide';
+      var className = this.props.show ? 'show' : 'hide';
       return React.createElement(
         'div',
-        { id: "status-help", className: className },
-        React.createElement('div', { className: "help-body", dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } }),
+        { id: "HelpModal", className: className },
+        React.createElement('div', { className: "HelpModal-body", dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } }),
         React.createElement(
           'div',
-          { className: "help-close" },
+          { className: "HelpModal-close" },
           React.createElement(
             'a',
             { onClick: this.closeHelp },
@@ -2604,7 +2673,7 @@ var HelpModal = (function (_React$Component) {
 exports['default'] = HelpModal;
 module.exports = exports['default'];
 
-},{"../data/help":65}],61:[function(require,module,exports){
+},{"../data/help":66}],62:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2650,7 +2719,7 @@ var StatusBar = (function (_React$Component) {
       }
 
       var props = {
-        className: 'status-bar ' + this.props.name,
+        className: 'StatusBar ' + this.props.name,
         style: {
           height: height + '%'
         },
@@ -2667,7 +2736,7 @@ var StatusBar = (function (_React$Component) {
 exports['default'] = StatusBar;
 module.exports = exports['default'];
 
-},{"../config":64}],62:[function(require,module,exports){
+},{"../config":65}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2766,22 +2835,22 @@ var StatusGraph = (function (_BaseComponent) {
         // create graphs for each character
         return React.createElement(
           'div',
-          { className: 'status-graph-item bars-' + bars.length, key: item.id },
+          { className: 'StatusGraph-item bars-' + bars.length, key: item.id },
           React.createElement(
             'div',
-            { className: "status-bar-box" },
+            { className: "StatusGraph-bars" },
             React.createElement(
               TransitionGroup,
-              { transitionName: "status-bar", transitionAppear: true },
+              { transitionName: "StatusBar", transitionAppear: true },
               bars
             )
           ),
           React.createElement(
             'div',
-            { className: "status-info-box" },
+            { className: "StatusGraph-info" },
             React.createElement(
               'p',
-              { className: "info-name" },
+              { className: "StatusGraph-info-name" },
               React.createElement(
                 'a',
                 { href: item.url1, target: "_new" },
@@ -2790,13 +2859,13 @@ var StatusGraph = (function (_BaseComponent) {
             ),
             React.createElement(
               'p',
-              { className: "info-id" },
+              { className: "StatusGraph-info-id" },
               'No. ',
               item.id
             ),
             React.createElement(
               'p',
-              { className: "info-total" },
+              { className: "StatusGraph-info-total" },
               '合計：',
               total
             )
@@ -2806,13 +2875,13 @@ var StatusGraph = (function (_BaseComponent) {
 
       return React.createElement(
         'div',
-        { id: "status-graph" },
+        { id: "StatusGraph" },
         React.createElement(
           'div',
-          { id: "status-graph-box" },
+          { id: "StatusGraph-body" },
           React.createElement(
             TransitionGroup,
-            { transitionName: "status-graph", transitionAppear: true },
+            { transitionName: "StatusGraph", transitionAppear: true },
             status
           )
         ),
@@ -2827,7 +2896,7 @@ var StatusGraph = (function (_BaseComponent) {
 exports['default'] = StatusGraph;
 module.exports = exports['default'];
 
-},{"../data/status_old":67,"./baseComponent":56,"./graphBack":59,"./statusBar":61,"lodash/collection/filter":2,"lodash/collection/includes":3}],63:[function(require,module,exports){
+},{"../data/status_old":68,"./baseComponent":56,"./graphBack":60,"./statusBar":62,"lodash/collection/filter":2,"lodash/collection/includes":3}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2980,7 +3049,7 @@ var TkrbStatus = (function (_React$Component) {
 exports['default'] = TkrbStatus;
 module.exports = exports['default'];
 
-},{"../config":64,"./conditionalForm":57,"./helpModal":60,"./statusGraph":62}],64:[function(require,module,exports){
+},{"../config":65,"./conditionalForm":57,"./helpModal":61,"./statusGraph":63}],65:[function(require,module,exports){
 module.exports={
   "maxStatus": 100,
   "labels": {
@@ -3005,9 +3074,9 @@ module.exports={
   }
 }
 
-},{}],65:[function(require,module,exports){
-module.exports = '<h2>【刀剣乱舞ぬるぬる動くステータス】の使い方</h2>\n<h3>注意！</h3>\n<ul>\n<li>各刀剣のステータス差をグラフにしてにらにら眺めようという邪な動機の元、作成しております。</li>\n<li>したがって攻略用には向きません。</li>\n<li>データは<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様を参照いたしております。</li>\n<li>言うほどぬるぬるしてませんすみません…</li>\n<li>なにかございましたら、Twitterにて@kotorieclairまでリプお願いします。</li>\n</ul>\n<h3>グラフ</h3>\n<p>それぞれのバーにオンマウスすると、ステータス名と数値が表示されます。<br>\n左から 生存、打撃、統率、機動、衝力、必殺、偵察、隠蔽 です。<br>\n判明していないステータスに関しては、バーが半透明になります（2015年8月現在、日本号(特MAX)の生存・偵察のみ）<br>\n刀剣名は<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様の各刀剣個別ページにリンクされております。</p>\n<h3>表示ステータス</h3>\n<p>表示するステータスがどの時点のものかを選択できます。デフォルトでは初期値を表示。</p>\n<ul>\n<li>初期値…ドロップないしは鍛刀したばかりの初々しい頃のステータス</li>\n<li>特MAX…限界までバッキバキに上がった頼もしいステータス</li>\n<li>旧ステータス表示…2015年7月22日メンテ以前のステータスを表示します（刀種、レアリティはそのまま）</li>\n</ul>\n<h3>絞り込み</h3>\n<p>刀剣男士を各種条件で絞り込み表示します。</p>\n<h4>刀種</h4>\n<p>刀剣男士を刀種で絞り込みます。デフォルトでは全刀種を表示。<br>\n選択可能な刀種…短刀、脇差、打刀、太刀、大太刀、槍、薙刀</p>\n<h4>刀派</h4>\n<p>刀剣男士を刀派で絞り込みます。デフォルトでは全刀派を表示。<br>\n選択可能な刀派…三条、青江、粟田口、古備前、来、長船、左文字、兼定、堀川、虎徹、村正、その他（＝刀派なし）</p>\n<h4>レアリティ</h4>\n<p>刀剣男士をレアリティで絞り込みます。デフォルトでは全レアリティを表示。<br>\n選択可能なレアリティ…レア1、レア2、レア3、レア4、レア5</p>\n<h3>刀剣名</h3>\n<p>刀剣男士を刀剣名で絞り込みます。絞り込みとの併用は不可。刀剣名への入力が優先されます。<br>\n刀剣名は、入力した文字が含まれていれば候補がでます。例）「山」で山姥切国広と山伏国広が候補に出る<br>\n複数の刀剣名を入力する際には、刀剣名を半角カンマ(,)で区切ってください。例）三日月宗近,御手杵,へし切長谷部</p>\n<h3>予定している追加機能</h3>\n<ul>\n<li><del>刀剣名入力サジェスト</del> 完了！</li>\n<li>現在の表示状態を刀剣名欄に反映するボタン</li>\n<li>ステータス値選択</li>\n<li>刀帳No.でソート</li>\n<li>ステータス値でソート</li>\n<li>特初期値モード</li>\n</ul>\n';
 },{}],66:[function(require,module,exports){
+module.exports = '<h2>【刀剣乱舞ぬるぬる動くステータス】の使い方</h2>\n<h3>注意！</h3>\n<ul>\n<li>各刀剣のステータス差をグラフにしてにらにら眺めようという邪な動機の元、作成しております。</li>\n<li>したがって攻略用には向きません。</li>\n<li>データは<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様を参照いたしております。</li>\n<li>言うほどぬるぬるしてませんすみません…</li>\n<li>なにかございましたら、Twitterにて@kotorieclairまでリプお願いします。</li>\n</ul>\n<h3>グラフ</h3>\n<p>それぞれのバーにオンマウスすると、ステータス名と数値が表示されます。<br>\n左から 生存、打撃、統率、機動、衝力、必殺、偵察、隠蔽 です。<br>\n判明していないステータスに関しては、バーが半透明になります（2015年8月現在、日本号(特MAX)の生存・偵察のみ）<br>\n刀剣名は<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様の各刀剣個別ページにリンクされております。</p>\n<h3>表示ステータス</h3>\n<p>表示するステータスがどの時点のものかを選択できます。デフォルトでは初期値を表示。</p>\n<ul>\n<li>初期値…ドロップないしは鍛刀したばかりの初々しい頃のステータス</li>\n<li>特MAX…限界までバッキバキに上がった頼もしいステータス</li>\n<li>旧ステータス表示…2015年7月22日メンテ以前のステータスを表示します（刀種、レアリティはそのまま）</li>\n</ul>\n<h3>絞り込み</h3>\n<p>刀剣男士を各種条件で絞り込み表示します。</p>\n<h4>刀種</h4>\n<p>刀剣男士を刀種で絞り込みます。デフォルトでは全刀種を表示。<br>\n選択可能な刀種…短刀、脇差、打刀、太刀、大太刀、槍、薙刀</p>\n<h4>刀派</h4>\n<p>刀剣男士を刀派で絞り込みます。デフォルトでは全刀派を表示。<br>\n選択可能な刀派…三条、青江、粟田口、古備前、来、長船、左文字、兼定、堀川、虎徹、村正、その他（＝刀派なし）</p>\n<h4>レアリティ</h4>\n<p>刀剣男士をレアリティで絞り込みます。デフォルトでは全レアリティを表示。<br>\n選択可能なレアリティ…レア1、レア2、レア3、レア4、レア5</p>\n<h3>刀剣名</h3>\n<p>刀剣男士を刀剣名で絞り込みます。絞り込みとの併用は不可。刀剣名への入力が優先されます。<br>\n刀剣名は、入力した文字が含まれていれば候補がでます。例）「山」で山姥切国広と山伏国広が候補に出る<br>\n複数の刀剣名を入力する際には、刀剣名を半角カンマ(,)で区切ってください。例）三日月宗近,御手杵,へし切長谷部</p>\n<h3>予定している追加機能</h3>\n<ul>\n<li><del>刀剣名入力サジェスト</del> 完了！</li>\n<li>現在の表示状態を刀剣名欄に反映するボタン</li>\n<li>ステータス値選択</li>\n<li>刀帳No.でソート</li>\n<li>ステータス値でソート</li>\n<li>特初期値モード</li>\n</ul>\n';
+},{}],67:[function(require,module,exports){
 module.exports=[
   {
     "id": 3,
@@ -4515,7 +4584,7 @@ module.exports=[
   }
 ]
 
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 module.exports=[
   {
     "id": 91,
@@ -4615,7 +4684,7 @@ module.exports=[
   }
 ]
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -4630,7 +4699,7 @@ var _componentsTkrbStatus2 = _interopRequireDefault(_componentsTkrbStatus);
 
 React.render(React.createElement(_componentsTkrbStatus2['default'], { data: _dataStatus2['default'] }), document.getElementById('tkrb-status'));
 
-},{"./components/tkrbStatus":63,"./data/status":66}]},{},[68])
+},{"./components/tkrbStatus":64,"./data/status":67}]},{},[69])
 
 
 //# sourceMappingURL=script.js.map
