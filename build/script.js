@@ -2641,6 +2641,13 @@ var HelpModal = (function (_React$Component) {
   }
 
   _createClass(HelpModal, [{
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate(newProps) {
+      if (newProps.show) {
+        React.findDOMNode(this.refs.helpBody).scrollTop = 0;
+      }
+    }
+  }, {
     key: 'closeHelp',
     value: function closeHelp(e) {
       e.preventDefault();
@@ -2653,13 +2660,18 @@ var HelpModal = (function (_React$Component) {
       return React.createElement(
         'div',
         { id: "HelpModal", className: className },
-        React.createElement('div', { className: "HelpModal-body", dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } }),
+        React.createElement(
+          'div',
+          { className: "HelpModal-body", ref: "helpBody" },
+          React.createElement('div', { className: "HelpModal-body-inner", dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } })
+        ),
         React.createElement(
           'div',
           { className: "HelpModal-close" },
           React.createElement(
             'a',
             { onClick: this.closeHelp },
+            React.createElement('i', { className: "fa fa-times" }),
             'ヘルプをとじる'
           )
         )
@@ -2996,6 +3008,12 @@ var TkrbStatus = (function (_React$Component) {
         data: this.props.data
       };
 
+      if (this.state.showHelp) {
+        document.body.className = 'no-scroll';
+      } else {
+        document.body.className = '';
+      }
+
       return React.createElement(
         'div',
         null,
@@ -3075,7 +3093,7 @@ module.exports={
 }
 
 },{}],66:[function(require,module,exports){
-module.exports = '<h2>【刀剣乱舞ぬるぬる動くステータス】の使い方</h2>\n<h3>注意！</h3>\n<ul>\n<li>各刀剣のステータス差をグラフにしてにらにら眺めようという邪な動機の元、作成しております。</li>\n<li>したがって攻略用には向きません。</li>\n<li>データは<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様を参照いたしております。</li>\n<li>言うほどぬるぬるしてませんすみません…</li>\n<li>なにかございましたら、Twitterにて@kotorieclairまでリプお願いします。</li>\n</ul>\n<h3>グラフ</h3>\n<p>それぞれのバーにオンマウスすると、ステータス名と数値が表示されます。<br>\n左から 生存、打撃、統率、機動、衝力、必殺、偵察、隠蔽 です。<br>\n判明していないステータスに関しては、バーが半透明になります（2015年8月現在、日本号(特MAX)の生存・偵察のみ）<br>\n刀剣名は<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様の各刀剣個別ページにリンクされております。</p>\n<h3>表示ステータス</h3>\n<p>表示するステータスがどの時点のものかを選択できます。デフォルトでは初期値を表示。</p>\n<ul>\n<li>初期値…ドロップないしは鍛刀したばかりの初々しい頃のステータス</li>\n<li>特MAX…限界までバッキバキに上がった頼もしいステータス</li>\n<li>旧ステータス表示…2015年7月22日メンテ以前のステータスを表示します（刀種、レアリティはそのまま）</li>\n</ul>\n<h3>絞り込み</h3>\n<p>刀剣男士を各種条件で絞り込み表示します。</p>\n<h4>刀種</h4>\n<p>刀剣男士を刀種で絞り込みます。デフォルトでは全刀種を表示。<br>\n選択可能な刀種…短刀、脇差、打刀、太刀、大太刀、槍、薙刀</p>\n<h4>刀派</h4>\n<p>刀剣男士を刀派で絞り込みます。デフォルトでは全刀派を表示。<br>\n選択可能な刀派…三条、青江、粟田口、古備前、来、長船、左文字、兼定、堀川、虎徹、村正、その他（＝刀派なし）</p>\n<h4>レアリティ</h4>\n<p>刀剣男士をレアリティで絞り込みます。デフォルトでは全レアリティを表示。<br>\n選択可能なレアリティ…レア1、レア2、レア3、レア4、レア5</p>\n<h3>刀剣名</h3>\n<p>刀剣男士を刀剣名で絞り込みます。絞り込みとの併用は不可。刀剣名への入力が優先されます。<br>\n刀剣名は、入力した文字が含まれていれば候補がでます。例）「山」で山姥切国広と山伏国広が候補に出る<br>\n複数の刀剣名を入力する際には、刀剣名を半角カンマ(,)で区切ってください。例）三日月宗近,御手杵,へし切長谷部</p>\n<h3>予定している追加機能</h3>\n<ul>\n<li><del>刀剣名入力サジェスト</del> 完了！</li>\n<li>現在の表示状態を刀剣名欄に反映するボタン</li>\n<li>ステータス値選択</li>\n<li>刀帳No.でソート</li>\n<li>ステータス値でソート</li>\n<li>特初期値モード</li>\n</ul>\n';
+module.exports = '<h2>【刀剣乱舞ぬるぬる動くステータス】の使い方</h2>\n<h3>注意！</h3>\n<ul>\n<li>各刀剣のステータス差をグラフにしてにらにら眺めようという邪な動機の元、作成しております。</li>\n<li>したがって攻略用には向きません。</li>\n<li>データは<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様を参照いたしております。</li>\n<li>言うほどぬるぬるしてませんすみません…</li>\n<li>なにかございましたら、Twitterにて<a href="https://twitter.com/intent/tweet?text=@kotorieclair">@kotorieclair</a>までリプお願いします。</li>\n</ul>\n<h3>グラフ</h3>\n<p>それぞれのバーにオンマウスすると、ステータス名と数値が表示されます。<br>\n左から 生存、打撃、統率、機動、衝力、必殺、偵察、隠蔽 です。<br>\n判明していないステータスに関しては、バーが半透明になります（2015年8月現在、日本号(特MAX)の生存・偵察のみ）<br>\n刀剣名は<a href="http://wikiwiki.jp/toulove/">刀剣乱舞攻略Wiki</a>様の各刀剣個別ページにリンクされております。</p>\n<h3>表示ステータス</h3>\n<p>表示するステータスがどの時点のものかを選択できます。デフォルトでは初期値を表示。</p>\n<ul>\n<li>初期値…ドロップないしは鍛刀したばかりの初々しい頃のステータス</li>\n<li>特MAX…限界までバッキバキに上がった頼もしいステータス</li>\n<li>旧ステータス表示…2015年7月22日メンテ以前のステータスを表示します（刀種、レアリティはそのまま）</li>\n</ul>\n<h3>絞り込み</h3>\n<p>刀剣男士を各種条件で絞り込み表示します。</p>\n<h4>刀種</h4>\n<p>刀剣男士を刀種で絞り込みます。デフォルトでは全刀種を表示。<br>\n選択可能な刀種…短刀、脇差、打刀、太刀、大太刀、槍、薙刀</p>\n<h4>刀派</h4>\n<p>刀剣男士を刀派で絞り込みます。デフォルトでは全刀派を表示。<br>\n選択可能な刀派…三条、青江、粟田口、古備前、来、長船、左文字、兼定、堀川、虎徹、村正、その他（＝刀派なし）</p>\n<h4>レアリティ</h4>\n<p>刀剣男士をレアリティで絞り込みます。デフォルトでは全レアリティを表示。<br>\n選択可能なレアリティ…レア1、レア2、レア3、レア4、レア5</p>\n<h3>刀剣名</h3>\n<p>刀剣男士を刀剣名で絞り込みます。絞り込みとの併用は不可。刀剣名への入力が優先されます。<br>\n刀剣名は、入力した文字が含まれていれば候補がでます。例）「山」で山姥切国広と山伏国広が候補に出る<br>\n複数の刀剣名を入力する際には、刀剣名を半角カンマ(,)で区切ってください。例）三日月宗近,御手杵,へし切長谷部</p>\n<h3>予定している追加機能</h3>\n<ul>\n<li><del>刀剣名入力サジェスト</del> 完了！</li>\n<li>現在の表示状態を刀剣名欄に反映するボタン</li>\n<li>ステータス値選択</li>\n<li>刀帳No.でソート</li>\n<li>ステータス値でソート</li>\n<li>特初期値モード</li>\n</ul>\n';
 },{}],67:[function(require,module,exports){
 module.exports=[
   {

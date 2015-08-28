@@ -59,6 +59,12 @@ class TkrbStatus extends React.Component {
       data: this.props.data,
     };
 
+    if (this.state.showHelp) {
+      document.body.className = 'no-scroll';
+    } else {
+      document.body.className = '';
+    }
+
     return (
       <div>
         <header>

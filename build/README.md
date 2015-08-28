@@ -5,7 +5,7 @@
 * したがって攻略用には向きません。
 * データは[刀剣乱舞攻略Wiki](http://wikiwiki.jp/toulove/)様を参照いたしております。
 * 言うほどぬるぬるしてませんすみません…
-* なにかございましたら、Twitterにて@kotorieclairまでリプお願いします。
+* なにかございましたら、Twitterにて[@kotorieclair](https://twitter.com/intent/tweet?text=@kotorieclair)までリプお願いします。
 
 ### グラフ
 それぞれのバーにオンマウスすると、ステータス名と数値が表示されます。  

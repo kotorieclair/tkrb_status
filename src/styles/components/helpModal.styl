@@ -7,20 +7,26 @@
   bottom: 0
   color: #fff
   left: 0
-  position: absolute
+  position: fixed
   right: 0
   top: 0
   transition: $transition-help
 
   &.show
     opacity: 1
-    transform: translateY(0)
     z-index: 10
+
+    .HelpModal-body,
+    .HelpModal-close
+      transform: translateY(0)
 
   &.hide
     opacity: 0
-    transform: translateY(-2em)
     z-index: -1
+
+    .HelpModal-body,
+    .HelpModal-close
+      transform: translateY(-2em)
 
   a
     color: #fff
@@ -30,15 +36,18 @@
 
   .HelpModal-body
     bottom: 6em
-    left: 50%
+    left: 0%
     line-height: 1.8
-    margin-left: -350px
     overflow: auto
     position: absolute
     right: 0
     top: 2em
     transition: $transition-help
-    width: -(@margin-left * 2)
+
+    .HelpModal-body-inner
+      margin: 0 auto
+      max-width: 700px
+      width: 100%
 
     h2
       font-size: 2rem
@@ -52,8 +61,11 @@
       border-bottom: 1px solid rgba(#fff, 0.5)
       font-size: 1.6rem
       margin-bottom: 1.5em
-      margin-top: 2em
+      margin-top: 3em
       padding-left: 0.8em
+
+      &:first-of-type
+        margin-top: 2.5em;
 
     h4
       border-bottom: 1px solid rgba(#fff, 0.5)
@@ -73,6 +85,7 @@
     text-align: center
     position: absolute
     right: 0
+    transition: $transition-help
 
     a
       font-size: 1.6rem
