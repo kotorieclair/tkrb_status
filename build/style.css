@@ -512,11 +512,11 @@ header nav li a .fa {
   position: fixed;
   right: 0;
   top: 0;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: opacity 0.3s ease, -webkit-transform 0.3s ease;
+  -moz-transition: opacity 0.3s ease, -moz-transform 0.3s ease;
+  -o-transition: opacity 0.3s ease, -o-transform 0.3s ease;
+  -ms-transition: opacity 0.3s ease, -ms-transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 #HelpModal.show {
   opacity: 1;
@@ -560,11 +560,11 @@ header nav li a .fa {
   position: absolute;
   right: 0;
   top: 2em;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: opacity 0.3s ease, -webkit-transform 0.3s ease;
+  -moz-transition: opacity 0.3s ease, -moz-transform 0.3s ease;
+  -o-transition: opacity 0.3s ease, -o-transform 0.3s ease;
+  -ms-transition: opacity 0.3s ease, -ms-transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 #HelpModal .HelpModal-body .HelpModal-body-inner {
   margin: 0 auto;
@@ -609,11 +609,11 @@ header nav li a .fa {
   text-align: center;
   position: absolute;
   right: 0;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: opacity 0.3s ease, -webkit-transform 0.3s ease;
+  -moz-transition: opacity 0.3s ease, -moz-transform 0.3s ease;
+  -o-transition: opacity 0.3s ease, -o-transform 0.3s ease;
+  -ms-transition: opacity 0.3s ease, -ms-transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 #HelpModal .HelpModal-close a {
   font-size: 16px;
