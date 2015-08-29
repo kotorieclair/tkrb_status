@@ -104,7 +104,7 @@ gulp.task('fetchData', () =>  {
 
   $.cheerio.fetch(config.dataUrls.rankupMax)
   .then((result) => {
-    result.$('.style_table tbody tr').each((row) =>  {
+    result.$('.style_table tbody tr').each((index, row) =>  {
       const $td = result.$(row).children('td');
       const id = $td.eq(0).text();
 
@@ -141,11 +141,11 @@ gulp.task('fetchData', () =>  {
     return $.cheerio.fetch(config.dataUrls.initial);
   })
   .then((result) => {
-    result.$('.style_table tbody tr').each((row) =>  {
+    result.$('.style_table tbody tr').each((index, row) =>  {
       const $td = result.$(row).children('td');
 
       const id = parseInt($td.eq(0).text(), 10);
-      const destId = _.findIndex(statusArray, (chara) => {
+      const destId = _.findIndex(status, (chara) => {
         return chara.id === id;
       });
 
@@ -153,7 +153,7 @@ gulp.task('fetchData', () =>  {
         return false;
       }
 
-      _.extend(statusArray[destId].initial, {
+      _.extend(status[destId].initial, {
         life: parseInt($td.eq(5).text(), 10),
         attack: parseInt($td.eq(6).text(), 10),
         defence: parseInt($td.eq(7).text(), 10),

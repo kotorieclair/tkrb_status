@@ -475,7 +475,7 @@
       "speed": 64,
       "push": 31,
       "critical": 33,
-      "search": null,
+      "search": 58,
       "hide": 38
     }
   },
@@ -1461,7 +1461,7 @@
       "hide": 28
     },
     "rankupMax": {
-      "life": null,
+      "life": 66,
       "attack": 72,
       "defence": 50,
       "speed": 51,
