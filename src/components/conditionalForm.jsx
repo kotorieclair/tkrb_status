@@ -12,7 +12,7 @@ class ConditionalForm extends BaseComponent {
     super(props);
 
     this.state = {
-      activeTab: 'status',
+      // activeTab: 'status',
       suggestedNames: {
         index: null,
         names: [],
@@ -98,39 +98,13 @@ class ConditionalForm extends BaseComponent {
     this.props.onConditionChange(tmp);
   }
 
-  changeActiveTab(tabName) {
-    if (tabName === this.state.activeTab) {
-      this.setState({
-        activeTab: null,
-        suggestedNames: {
-          index: null,
-          names: [],
-        },
-      });
-    } else {
-      this.setState({
-        activeTab: tabName,
-        suggestedNames: {
-          index: null,
-          names: [],
-        },
-      });
-    }
-
-    // const targetField = e.currentTarget.getAttribute('data-field');
-    // if (targetField === this.state.activeTab) {
-    //   this.setState({
-    //     activeTab: null,
-    //   });
-    // } else {
-    //   this.setState({
-    //     activeTab: targetField,
-    //     suggestedNames: {
-    //       index: null,
-    //       names: [],
-    //     },
-    //   });
-    // }
+  changeActiveTab() {
+    this.setState({
+      suggestedNames: {
+        index: null,
+        names: [],
+      },
+    });
   }
 
   suggestNames(inputs) {
@@ -277,72 +251,61 @@ class ConditionalForm extends BaseComponent {
     return (
       <form id="ConditionalForm">
         <h2>表示条件を変更</h2>
-        <FormTab
-          tabName="status"
-          heading="表示ステータス"
-          activeTab={this.state.activeTab}
-          onChangeTab={this.changeActiveTab}
-        >
-          <div className="input-group cols">
-            {statusTypeInput}
+        <FormTab onChangeTab={this.changeActiveTab}>
+          <div tabName="status" heading="表示ステータス">
+            <div className="input-group cols">
+              {statusTypeInput}
+            </div>
+            <div className="input-group cols">
+              {statusModeInput}
+            </div>
           </div>
-          <div className="input-group cols">
-            {statusModeInput}
+
+          <div tabName="narrowing" heading="条件で絞り込み">
+            <div className="input-group rows">
+              <h3>刀種</h3>
+              {typeInput}
+              <button value="type" className="btn-all" onClick={this.selectAll}>
+                全選択
+              </button>
+              <button value="type" className="btn-none" onClick={this.selectNone}>
+                全解除
+              </button>
+            </div>
+            <div className="input-group rows">
+              <h3>刀派</h3>
+              {familyInput}
+              <button value="family" className="btn-all" onClick={this.selectAll}>
+                全選択
+              </button>
+              <button value="family" className="btn-none" onClick={this.selectNone}>
+                全解除
+              </button>
+            </div>
+            <div className="input-group rows">
+              <h3>レアリティ</h3>
+              {rareInput}
+              <button value="rare" className="btn-all" onClick={this.selectAll}>
+                全選択
+              </button>
+              <button value="rare" className="btn-none" onClick={this.selectNone}>
+                全解除
+              </button>
+            </div>
           </div>
-        </FormTab>
-        <FormTab
-          tabName="narrowing"
-          heading="条件で絞り込み"
-          activeTab={this.state.activeTab}
-          onChangeTab={this.changeActiveTab}
-        >
-          <div className="input-group rows">
-            <h3>刀種</h3>
-            {typeInput}
-            <button value="type" className="btn-all" onClick={this.selectAll}>
-              全選択
-            </button>
-            <button value="type" className="btn-none" onClick={this.selectNone}>
-              全解除
+
+          <div tabName="names" heading="刀剣名指定">
+            <input
+              type="text"
+              ref="names"
+              value={this.props.condition.names.join(',')}
+              placeholder="半角カンマ区切り（空白なし）"
+              onChange={this.setNamesFilter} />
+            {suggestedNames}
+            <button value="names" className="btn-none" onClick={this.selectNone}>
+              解除
             </button>
           </div>
-          <div className="input-group rows">
-            <h3>刀派</h3>
-            {familyInput}
-            <button value="family" className="btn-all" onClick={this.selectAll}>
-              全選択
-            </button>
-            <button value="family" className="btn-none" onClick={this.selectNone}>
-              全解除
-            </button>
-          </div>
-          <div className="input-group rows">
-            <h3>レアリティ</h3>
-            {rareInput}
-            <button value="rare" className="btn-all" onClick={this.selectAll}>
-              全選択
-            </button>
-            <button value="rare" className="btn-none" onClick={this.selectNone}>
-              全解除
-            </button>
-          </div>
-        </FormTab>
-        <FormTab
-          tabName="names"
-          heading="刀剣名指定"
-          activeTab={this.state.activeTab}
-          onChangeTab={this.changeActiveTab}
-        >
-          <input
-            type="text"
-            ref="names"
-            value={this.props.condition.names.join(',')}
-            placeholder="半角カンマ区切り（空白なし）"
-            onChange={this.setNamesFilter} />
-          {suggestedNames}
-          <button value="names" className="btn-none" onClick={this.selectNone}>
-            解除
-          </button>
         </FormTab>
       </form>
     );

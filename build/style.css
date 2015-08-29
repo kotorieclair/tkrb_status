@@ -370,13 +370,16 @@ header nav li a .fa {
 }
 .FormTab {
   display: inline-block;
+}
+.FormTab .FormTab-tab {
+  display: inline-block;
   padding-bottom: 2px;
   white-space: nowrap;
 }
-.FormTab.active .FormTab-heading {
+.FormTab .FormTab-tab.active .FormTab-heading {
   background-color: rgba(255,255,255,0.3);
 }
-.FormTab.active .FormTab-heading .fa {
+.FormTab .FormTab-tab.active .FormTab-heading .fa {
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
   -o-transform: rotate(180deg);
@@ -388,7 +391,7 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.FormTab.active .FormTab-heading::after {
+.FormTab .FormTab-tab.active .FormTab-heading::after {
   border-color: rgba(255,255,255,0.3) transparent transparent transparent;
   border-style: solid;
   border-bottom-width: 0;
@@ -401,13 +404,13 @@ header nav li a .fa {
   margin-left: -6px;
   position: absolute;
 }
-.FormTab.active .FormTab-body {
+.FormTab .FormTab-tab.active .FormTab-body {
   opacity: 1;
   -ms-filter: none;
   filter: none;
   z-index: 3;
 }
-.FormTab .FormTab-heading {
+.FormTab .FormTab-tab .FormTab-heading {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   color: #fff;
@@ -421,11 +424,11 @@ header nav li a .fa {
   transition: all 0.2s ease;
   z-index: 5;
 }
-.FormTab .FormTab-heading:hover {
+.FormTab .FormTab-tab .FormTab-heading:hover {
   background-color: rgba(255,255,255,0.2);
   cursor: pointer;
 }
-.FormTab .FormTab-heading .fa {
+.FormTab .FormTab-tab .FormTab-heading .fa {
   margin-left: 0.5em;
   margin-right: 0;
   -webkit-transition: all 0.2s ease;
@@ -434,7 +437,7 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.FormTab .FormTab-body {
+.FormTab .FormTab-tab .FormTab-body {
   background-color: rgba(74,58,69,0.85);
   border-top: 1px dotted rgba(255,255,255,0.3);
   bottom: 0;
@@ -465,7 +468,7 @@ header nav li a .fa {
   transform-origin: 50% 0%;
   z-index: 2;
 }
-.FormTab .FormTab-body:first-child {
+.FormTab .FormTab-tab .FormTab-body:first-child {
   display: block;
 }
 #GraphBack {

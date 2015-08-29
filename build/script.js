@@ -2029,7 +2029,7 @@ var ConditionalForm = (function (_BaseComponent) {
     _get(Object.getPrototypeOf(ConditionalForm.prototype), 'constructor', this).call(this, props);
 
     this.state = {
-      activeTab: 'status',
+      // activeTab: 'status',
       suggestedNames: {
         index: null,
         names: []
@@ -2126,39 +2126,13 @@ var ConditionalForm = (function (_BaseComponent) {
     }
   }, {
     key: 'changeActiveTab',
-    value: function changeActiveTab(tabName) {
-      if (tabName === this.state.activeTab) {
-        this.setState({
-          activeTab: null,
-          suggestedNames: {
-            index: null,
-            names: []
-          }
-        });
-      } else {
-        this.setState({
-          activeTab: tabName,
-          suggestedNames: {
-            index: null,
-            names: []
-          }
-        });
-      }
-
-      // const targetField = e.currentTarget.getAttribute('data-field');
-      // if (targetField === this.state.activeTab) {
-      //   this.setState({
-      //     activeTab: null,
-      //   });
-      // } else {
-      //   this.setState({
-      //     activeTab: targetField,
-      //     suggestedNames: {
-      //       index: null,
-      //       names: [],
-      //     },
-      //   });
-      // }
+    value: function changeActiveTab() {
+      this.setState({
+        suggestedNames: {
+          index: null,
+          names: []
+        }
+      });
     }
   }, {
     key: 'suggestNames',
@@ -2316,111 +2290,100 @@ var ConditionalForm = (function (_BaseComponent) {
         ),
         React.createElement(
           _formTab2['default'],
-          {
-            tabName: "status",
-            heading: "表示ステータス",
-            activeTab: this.state.activeTab,
-            onChangeTab: this.changeActiveTab
-          },
+          { onChangeTab: this.changeActiveTab },
           React.createElement(
             'div',
-            { className: "input-group cols" },
-            statusTypeInput
-          ),
-          React.createElement(
-            'div',
-            { className: "input-group cols" },
-            statusModeInput
-          )
-        ),
-        React.createElement(
-          _formTab2['default'],
-          {
-            tabName: "narrowing",
-            heading: "条件で絞り込み",
-            activeTab: this.state.activeTab,
-            onChangeTab: this.changeActiveTab
-          },
-          React.createElement(
-            'div',
-            { className: "input-group rows" },
+            { tabName: "status", heading: "表示ステータス" },
             React.createElement(
-              'h3',
-              null,
-              '刀種'
-            ),
-            typeInput,
-            React.createElement(
-              'button',
-              { value: "type", className: "btn-all", onClick: this.selectAll },
-              '全選択'
+              'div',
+              { className: "input-group cols" },
+              statusTypeInput
             ),
             React.createElement(
-              'button',
-              { value: "type", className: "btn-none", onClick: this.selectNone },
-              '全解除'
+              'div',
+              { className: "input-group cols" },
+              statusModeInput
             )
           ),
           React.createElement(
             'div',
-            { className: "input-group rows" },
+            { tabName: "narrowing", heading: "条件で絞り込み" },
             React.createElement(
-              'h3',
-              null,
-              '刀派'
+              'div',
+              { className: "input-group rows" },
+              React.createElement(
+                'h3',
+                null,
+                '刀種'
+              ),
+              typeInput,
+              React.createElement(
+                'button',
+                { value: "type", className: "btn-all", onClick: this.selectAll },
+                '全選択'
+              ),
+              React.createElement(
+                'button',
+                { value: "type", className: "btn-none", onClick: this.selectNone },
+                '全解除'
+              )
             ),
-            familyInput,
             React.createElement(
-              'button',
-              { value: "family", className: "btn-all", onClick: this.selectAll },
-              '全選択'
+              'div',
+              { className: "input-group rows" },
+              React.createElement(
+                'h3',
+                null,
+                '刀派'
+              ),
+              familyInput,
+              React.createElement(
+                'button',
+                { value: "family", className: "btn-all", onClick: this.selectAll },
+                '全選択'
+              ),
+              React.createElement(
+                'button',
+                { value: "family", className: "btn-none", onClick: this.selectNone },
+                '全解除'
+              )
             ),
             React.createElement(
-              'button',
-              { value: "family", className: "btn-none", onClick: this.selectNone },
-              '全解除'
+              'div',
+              { className: "input-group rows" },
+              React.createElement(
+                'h3',
+                null,
+                'レアリティ'
+              ),
+              rareInput,
+              React.createElement(
+                'button',
+                { value: "rare", className: "btn-all", onClick: this.selectAll },
+                '全選択'
+              ),
+              React.createElement(
+                'button',
+                { value: "rare", className: "btn-none", onClick: this.selectNone },
+                '全解除'
+              )
             )
           ),
           React.createElement(
             'div',
-            { className: "input-group rows" },
-            React.createElement(
-              'h3',
-              null,
-              'レアリティ'
-            ),
-            rareInput,
-            React.createElement(
-              'button',
-              { value: "rare", className: "btn-all", onClick: this.selectAll },
-              '全選択'
-            ),
+            { tabName: "names", heading: "刀剣名指定" },
+            React.createElement('input', {
+              type: "text",
+              ref: "names",
+              value: this.props.condition.names.join(','),
+              placeholder: "半角カンマ区切り（空白なし）",
+              onChange: this.setNamesFilter }),
+            suggestedNames,
             React.createElement(
               'button',
-              { value: "rare", className: "btn-none", onClick: this.selectNone },
-              '全解除'
+              { value: "names", className: "btn-none", onClick: this.selectNone },
+              '解除'
             )
-          )
-        ),
-        React.createElement(
-          _formTab2['default'],
-          {
-            tabName: "names",
-            heading: "刀剣名指定",
-            activeTab: this.state.activeTab,
-            onChangeTab: this.changeActiveTab
-          },
-          React.createElement('input', {
-            type: "text",
-            ref: "names",
-            value: this.props.condition.names.join(','),
-            placeholder: "半角カンマ区切り（空白なし）",
-            onChange: this.setNamesFilter }),
-          suggestedNames,
-          React.createElement(
-            'button',
-            { value: "names", className: "btn-none", onClick: this.selectNone },
-            '解除'
           )
         )
       );
@@ -2523,33 +2486,58 @@ var FormTab = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(FormTab.prototype), 'constructor', this).call(this, props);
 
+    this.state = {
+      activeTab: 'status'
+    };
+
     this.changeTab = this.changeTab.bind(this);
   }
 
   _createClass(FormTab, [{
     key: 'changeTab',
-    value: function changeTab() {
-      this.props.onChangeTab(this.props.tabName);
+    value: function changeTab(e) {
+      var activeTab = e.currentTarget.parentNode.getAttribute('data-tab');
+
+      if (activeTab !== this.state.activeTab) {
+        this.setState({ activeTab: activeTab });
+      } else {
+        this.setState({
+          activeTab: null
+        });
+      }
+
+      this.props.onChangeTab(activeTab);
     }
   }, {
     key: 'render',
     value: function render() {
-      var isActive = this.props.tabName === this.props.activeTab;
-      var className = isActive ? ' active' : '';
+      var _this = this;
+
+      var tabBodies = this.props.children.map(function (child) {
+        var tabName = child.props.tabName;
+        var isActive = tabName === _this.state.activeTab ? ' active' : '';
+
+        return React.createElement(
+          'fieldset',
+          { className: 'FormTab-tab' + isActive, key: tabName, 'data-tab': tabName },
+          React.createElement(
+            'legend',
+            { className: "FormTab-heading", onClick: _this.changeTab },
+            child.props.heading,
+            React.createElement('i', { className: "fa fa-caret-down" })
+          ),
+          React.createElement(
+            'div',
+            { className: "FormTab-body" },
+            child.props.children
+          )
+        );
+      });
+
       return React.createElement(
-        'fieldset',
-        { className: 'FormTab ' + this.props.tabName + className },
-        React.createElement(
-          'legend',
-          { className: "FormTab-heading", onClick: this.changeTab },
-          this.props.heading,
-          React.createElement('i', { className: 'fa fa-caret-down' })
-        ),
-        React.createElement(
-          'div',
-          { className: "FormTab-body" },
-          this.props.children
-        )
+        'div',
+        { className: "FormTab" },
+        tabBodies
       );
     }
   }]);
