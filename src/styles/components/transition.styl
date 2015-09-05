@@ -57,3 +57,31 @@
   &.StatusGraph-leave-active
     opacity: 0
     width: 0 !important
+
+.HelpModal-enter
+  opacity: 0
+
+  .HelpModal-body,
+  .HelpModal-close
+    transform: translateY(-2em)
+
+  &.HelpModal-enter-active
+    opacity: 1
+
+    .HelpModal-body,
+    .HelpModal-close
+      transform: translateY(0)
+
+.HelpModal-leave
+  opacity: 1
+
+  .HelpModal-body,
+  .HelpModal-close
+    transform: translateY(0)
+
+  &.HelpModal-leave-active
+    opacity: 0
+
+    .HelpModal-body,
+    .HelpModal-close
+      transform: translateY(-2em)

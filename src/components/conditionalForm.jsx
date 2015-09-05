@@ -1,7 +1,6 @@
 import config from '../config';
 import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';
-// import _find from 'lodash/collection/find';
 import BaseComponent from './baseComponent';
 import FormTab from './formTab';
 import FormCheckRadio from './formCheckRadio';
@@ -12,7 +11,6 @@ class ConditionalForm extends BaseComponent {
     super(props);
 
     this.state = {
-      // activeTab: 'status',
       suggestedNames: {
         index: null,
         names: [],

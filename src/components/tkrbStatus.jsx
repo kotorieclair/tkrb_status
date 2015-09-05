@@ -72,12 +72,14 @@ class TkrbStatus extends React.Component {
           <nav>
             <ul>
               <li>
-                <a onClick={this.toggleHelp}>
-                  <i className="fa fa-question"></i>ヘルプ
+                <a href="" onClick={this.toggleHelp}>
+                  <i className="fa fa-question" />ヘルプ
                 </a>
               </li>
               <li>
-                <s><i className="fa fa-github"></i>GitHub</s>
+                <a href="https://github.com/kotorieclair/tkrb_status">
+                  <i className="fa fa-github" />GitHub
+                </a>
               </li>
             </ul>
           </nav>

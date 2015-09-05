@@ -2002,8 +2002,6 @@ var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionInclude
 
 var _lodashCollectionFilter = require('lodash/collection/filter');
 
-// import _find from 'lodash/collection/find';
-
 var _lodashCollectionFilter2 = _interopRequireDefault(_lodashCollectionFilter);
 
 var _baseComponent = require('./baseComponent');
@@ -2029,7 +2027,6 @@ var ConditionalForm = (function (_BaseComponent) {
     _get(Object.getPrototypeOf(ConditionalForm.prototype), 'constructor', this).call(this, props);
 
     this.state = {
-      // activeTab: 'status',
       suggestedNames: {
         index: null,
         names: []
@@ -2462,8 +2459,6 @@ exports["default"] = FormCheckRadio;
 module.exports = exports["default"];
 
 },{}],59:[function(require,module,exports){
-// import config from '../config';
-
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -2597,25 +2592,27 @@ exports["default"] = GraphBack;
 module.exports = exports["default"];
 
 },{}],61:[function(require,module,exports){
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _dataHelp = require('../data/help');
 
 var _dataHelp2 = _interopRequireDefault(_dataHelp);
+
+var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var HelpModal = (function (_React$Component) {
   _inherits(HelpModal, _React$Component);
@@ -2623,46 +2620,46 @@ var HelpModal = (function (_React$Component) {
   function HelpModal(props) {
     _classCallCheck(this, HelpModal);
 
-    _get(Object.getPrototypeOf(HelpModal.prototype), 'constructor', this).call(this, props);
+    _get(Object.getPrototypeOf(HelpModal.prototype), "constructor", this).call(this, props);
 
     this.closeHelp = this.closeHelp.bind(this);
   }
 
   _createClass(HelpModal, [{
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate(newProps) {
-      if (newProps.show) {
-        React.findDOMNode(this.refs.helpBody).scrollTop = 0;
-      }
-    }
-  }, {
-    key: 'closeHelp',
+    key: "closeHelp",
     value: function closeHelp(e) {
       e.preventDefault();
       this.props.onCloseClick();
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-      var className = this.props.show ? 'show' : 'hide';
-      return React.createElement(
-        'div',
-        { id: "HelpModal", className: className },
-        React.createElement(
-          'div',
-          { className: "HelpModal-body", ref: "helpBody" },
-          React.createElement('div', { className: "HelpModal-body-inner", dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } })
-        ),
-        React.createElement(
-          'div',
-          { className: "HelpModal-close" },
+      var help = null;
+      if (this.props.show) {
+        help = React.createElement(
+          "div",
+          { id: "HelpModal" },
           React.createElement(
-            'a',
-            { onClick: this.closeHelp },
-            React.createElement('i', { className: "fa fa-times" }),
-            'ヘルプをとじる'
+            "div",
+            { className: "HelpModal-body" },
+            React.createElement("div", { className: "HelpModal-body-inner", dangerouslySetInnerHTML: { __html: _dataHelp2["default"] } })
+          ),
+          React.createElement(
+            "div",
+            { className: "HelpModal-close" },
+            React.createElement(
+              "a",
+              { onClick: this.closeHelp },
+              React.createElement("i", { className: "fa fa-times" }),
+              "ヘルプをとじる"
+            )
           )
-        )
+        );
+      }
+      return React.createElement(
+        TransitionGroup,
+        { transitionName: "HelpModal" },
+        help
       );
     }
   }]);
@@ -2670,8 +2667,8 @@ var HelpModal = (function (_React$Component) {
   return HelpModal;
 })(React.Component);
 
-exports['default'] = HelpModal;
-module.exports = exports['default'];
+exports["default"] = HelpModal;
+module.exports = exports["default"];
 
 },{"../data/help":66}],62:[function(require,module,exports){
 'use strict';
@@ -3024,7 +3021,7 @@ var TkrbStatus = (function (_React$Component) {
                 null,
                 React.createElement(
                   'a',
-                  { onClick: this.toggleHelp },
+                  { href: "", onClick: this.toggleHelp },
                   React.createElement('i', { className: "fa fa-question" }),
                   'ヘルプ'
                 )
@@ -3033,8 +3030,8 @@ var TkrbStatus = (function (_React$Component) {
                 'li',
                 null,
                 React.createElement(
-                  's',
-                  null,
+                  'a',
+                  { href: "https://github.com/kotorieclair/tkrb_status" },
                   React.createElement('i', { className: "fa fa-github" }),
                   'GitHub'
                 )

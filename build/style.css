@@ -149,6 +149,7 @@ header nav li {
 }
 header nav li a {
   color: #fff;
+  text-decoration: none;
 }
 header nav li a .fa {
   font-size: 1.1em;
@@ -520,34 +521,7 @@ header nav li a .fa {
   -o-transition: opacity 0.3s ease, -o-transform 0.3s ease;
   -ms-transition: opacity 0.3s ease, -ms-transform 0.3s ease;
   transition: opacity 0.3s ease, transform 0.3s ease;
-}
-#HelpModal.show {
-  opacity: 1;
-  -ms-filter: none;
-  filter: none;
   z-index: 10;
-}
-#HelpModal.show .HelpModal-body,
-#HelpModal.show .HelpModal-close {
-  -webkit-transform: translateY(0);
-  -moz-transform: translateY(0);
-  -o-transform: translateY(0);
-  -ms-transform: translateY(0);
-  transform: translateY(0);
-}
-#HelpModal.hide {
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-  z-index: -1;
-}
-#HelpModal.hide .HelpModal-body,
-#HelpModal.hide .HelpModal-close {
-  -webkit-transform: translateY(-2em);
-  -moz-transform: translateY(-2em);
-  -o-transform: translateY(-2em);
-  -ms-transform: translateY(-2em);
-  transform: translateY(-2em);
 }
 #HelpModal a {
   color: #fff;
@@ -1031,4 +1005,56 @@ header nav li a .fa {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
   width: 0 !important;
+}
+.HelpModal-enter {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.HelpModal-enter .HelpModal-body,
+.HelpModal-enter .HelpModal-close {
+  -webkit-transform: translateY(-2em);
+  -moz-transform: translateY(-2em);
+  -o-transform: translateY(-2em);
+  -ms-transform: translateY(-2em);
+  transform: translateY(-2em);
+}
+.HelpModal-enter.HelpModal-enter-active {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.HelpModal-enter.HelpModal-enter-active .HelpModal-body,
+.HelpModal-enter.HelpModal-enter-active .HelpModal-close {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -o-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+.HelpModal-leave {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.HelpModal-leave .HelpModal-body,
+.HelpModal-leave .HelpModal-close {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -o-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+.HelpModal-leave.HelpModal-leave-active {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.HelpModal-leave.HelpModal-leave-active .HelpModal-body,
+.HelpModal-leave.HelpModal-leave-active .HelpModal-close {
+  -webkit-transform: translateY(-2em);
+  -moz-transform: translateY(-2em);
+  -o-transform: translateY(-2em);
+  -ms-transform: translateY(-2em);
+  transform: translateY(-2em);
 }

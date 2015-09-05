@@ -1,4 +1,5 @@
 import helpMd from '../data/help';
+const TransitionGroup = React.addons.CSSTransitionGroup;
 
 class HelpModal extends React.Component {
   constructor(props) {
@@ -7,30 +8,31 @@ class HelpModal extends React.Component {
     this.closeHelp = this.closeHelp.bind(this);
   }
 
-  componentWillUpdate(newProps) {
-    if (newProps.show) {
-      React.findDOMNode(this.refs.helpBody).scrollTop = 0;
-    }
-  }
-
   closeHelp(e) {
     e.preventDefault();
     this.props.onCloseClick();
   }
 
   render() {
-    const className = this.props.show ? 'show' : 'hide';
+    let help = null;
+    if (this.props.show) {
+      help = (
+        <div id="HelpModal">
+          <div className="HelpModal-body">
+            <div className="HelpModal-body-inner" dangerouslySetInnerHTML={{__html: helpMd}} />
+          </div>
+          <div className="HelpModal-close">
+            <a onClick={this.closeHelp}>
+              <i className="fa fa-times" />ヘルプをとじる
+            </a>
+          </div>
+        </div>
+      );
+    }
     return (
-      <div id="HelpModal" className={className}>
-        <div className="HelpModal-body" ref="helpBody">
-          <div className="HelpModal-body-inner" dangerouslySetInnerHTML={{__html: helpMd}} />
-        </div>
-        <div className="HelpModal-close">
-          <a onClick={this.closeHelp}>
-            <i className="fa fa-times" />ヘルプをとじる
-          </a>
-        </div>
-      </div>
+      <TransitionGroup transitionName="HelpModal">
+        {help}
+      </TransitionGroup>
     );
   }
 }

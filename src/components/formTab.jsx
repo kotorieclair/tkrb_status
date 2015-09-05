@@ -1,5 +1,3 @@
-// import config from '../config';
-
 class FormTab extends React.Component {
   constructor(props) {
     super(props);
