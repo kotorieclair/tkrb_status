@@ -1,5 +1,6 @@
-// import helpMd from '../data/help';
+import helpMd from '../../data/help.md';
 import React from 'react';
+import Markdown from 'react-markdown';
 const TransitionGroup = React.addons.CSSTransitionGroup;
 
 class HelpModal extends React.Component {
@@ -22,7 +23,9 @@ class HelpModal extends React.Component {
       help = (
         <div className={this.name}>
           <div className={`${this.name}_body`}>
-            <div className={`${this.name}_body_inner`} />
+            <div className={`${this.name}_body_inner`}>
+              <Markdown source={helpMd} />
+            </div>
           </div>
           <div className={`${this.name}_close`}>
             <a onClick={this.closeHelp}>

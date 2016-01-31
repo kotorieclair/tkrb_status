@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import _includes from 'lodash/collection/includes';
-import _filter from 'lodash/collection/filter';
+// import _includes from 'lodash/collection/includes';
 import config from '../../config';
 import FormTab from './FormTab';
 import FormCheckRadio from './FormCheckRadio';
@@ -136,9 +135,9 @@ class ConditionalForm extends React.Component {
         return false;
       }
 
-      const filteredNames = _filter(this.props.data, (item) => {
+      const filteredNames = this.props.data.filter((item) => {
         // don't include the name which is already in the inputs
-        if (!_includes(this.props.condition.names, item.name)) {
+        if (this.props.condition.names.indexOf(item.name) === -1) {
           if (item.name.includes(input)) {
             return true;
           }
@@ -211,7 +210,7 @@ class ConditionalForm extends React.Component {
         type: 'checkbox',
         name: 'type',
         value: item,
-        checked: _includes(this.props.condition.type, item),
+        checked: this.props.condition.type.indexOf(item) !== -1 ? true : false,
         onChange: this.setTypeFilter,
       };
       return (
@@ -227,7 +226,8 @@ class ConditionalForm extends React.Component {
         type: 'checkbox',
         name: 'family',
         value: item,
-        checked: _includes(this.props.condition.family, item),
+        checked: this.props.condition.family.indexOf(item) !== -1 ? true : false,
+        // checked: _includes(this.props.condition.family, item),
         onChange: this.setFamilyFilter,
       };
       return (
@@ -243,7 +243,8 @@ class ConditionalForm extends React.Component {
         type: 'checkbox',
         name: 'rare',
         value: item,
-        checked: _includes(this.props.condition.rare, item),
+        checked: this.props.condition.rare.indexOf(item) !== -1 ? true : false,
+        // checked: _includes(this.props.condition.rare, item),
         onChange: this.setRareFilter,
       };
       return (

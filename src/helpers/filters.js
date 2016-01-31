@@ -1,9 +1,6 @@
-// import React from 'react';
-import _includes from 'lodash/collection/includes';
-
 export default {
   type: (item, condition) => {
-    if (!_includes(condition.type, item.type)) {
+    if (condition.type.indexOf(item.type) === -1) {
       return false;
     }
     return true;
@@ -17,21 +14,21 @@ export default {
       item.family = 'その他';
     }
 
-    if (!_includes(condition.family, item.family)) {
+    if (condition.family.indexOf(item.family) === -1) {
       return false;
     }
     return true;
   },
 
   rare: (item, condition) => {
-    if (!_includes(condition.rare, item.rare)) {
+    if (condition.rare.indexOf(item.rare) === -1) {
       return false;
     }
     return true;
   },
 
   name: (item, condition) => {
-    if (!_includes(condition.names, item.name)) {
+    if (condition.names.indexOf(item.name) === -1) {
       return false;
     }
     return true;

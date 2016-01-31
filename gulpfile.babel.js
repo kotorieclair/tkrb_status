@@ -34,7 +34,7 @@ const config = {
       loaders: [
         {
           test: /\.json$/,
-          exclude: /node_modules/,
+          // exclude: /node_modules/,
           loader: 'json',
         },
         {
@@ -42,6 +42,11 @@ const config = {
           exclude: /node_modules/,
           loader: 'babel',
           query: { presets: ['react', 'es2015', 'stage-1'] },
+        },
+        {
+          test: /\.md$/,
+          exclude: /node_modules/,
+          loader: 'raw',
         },
       ],
     },

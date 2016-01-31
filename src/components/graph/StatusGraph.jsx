@@ -1,6 +1,5 @@
 import React from 'react';
-import _includes from 'lodash/collection/includes';
-import _filter from 'lodash/collection/filter';
+// import _includes from 'lodash/collection/includes';
 import filters from '../../helpers/filters';
 import StatusBar from './StatusBar';
 import GraphBack from './GraphBack';
@@ -31,7 +30,7 @@ class StatusGraph extends React.Component {
       }
 
       if (condition.isOldStatus) {
-        item = _filter(oldStatus, (old) => {
+        item = oldStatus.filter((old) => {
           return old.id === item.id;
         })[0] || item;
       }
@@ -39,7 +38,8 @@ class StatusGraph extends React.Component {
       let total = 0;
       const bars = Object.keys(item[condition.statusType]).map((key) => {
         // filter by status
-        if (!_includes(condition.status, key)) {
+        if (condition.status.indexOf(key) !== -1) {
+        // if (!_includes(condition.status, key)) {
           return false;
         }
 
