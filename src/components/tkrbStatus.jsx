@@ -76,7 +76,7 @@ class TkrbStatus extends React.Component {
       document.body.className = '';
     }
 
-    return (<div>bbb</div>);
+    return (<div>aaa</div>);
     // return (
     //   <div>
     //     <header>

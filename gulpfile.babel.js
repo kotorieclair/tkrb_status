@@ -7,66 +7,30 @@ import nib from 'nib';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import cheerio from 'cheerio-httpcli';
-import source from 'vinyl-source-stream';
-import buffer from 'vinyl-buffer';
 const $ = plugins();
-$.nib = nib;
-$.webpack = webpack;
-// $.webpackDevServer = webpackDevServer;
-$.cheerio = cheerio;
-$.source = source;
-$.buffer = buffer;
+
+let compress = $.util.env.compress || false;
+const production = $.util.env.production || false;
+
+const srcDir = 'src';
+const buildDir = 'build';
+const dataUrls = {
+  initial: 'http://wikiwiki.jp/toulove/?%C5%E1%B7%F5%C3%CB%BB%CE%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB',
+  rankupMax: 'http://wikiwiki.jp/toulove/?%C6%C3%20%BA%C7%C2%E7%C3%CD%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB',
+};
 
 const config = {
-  dataUrls: {
-    initial: 'http://wikiwiki.jp/toulove/?%C5%E1%B7%F5%C3%CB%BB%CE%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB',
-    rankupMax: 'http://wikiwiki.jp/toulove/?%C6%C3%20%BA%C7%C2%E7%C3%CD%B0%EC%CD%F7%2F%A5%C6%A1%BC%A5%D6%A5%EB',
-  },
-  build: './build',
   stylus: {
-    entry: './src/styles/style.styl',
-    watch: './src/styles/**/*.styl',
+    entry: `./${srcDir}/styles/style.styl`,
+    watch: `./${srcDir}/styles/**/*.styl`,
   },
   webpack: {
     entry: ['./src/index.js'],
-    out: {
+    output: {
       filename: 'script.js',
-      path: path.resolve(__dirname, 'build'),
+      path: path.resolve(__dirname, buildDir),
+      publicPath: buildDir,
     },
-    watch: ['./src/components/**/*.jsx', './src/data/**/*'],
-  },
-  moveIndex: {
-    entry: './src/index.html',
-  },
-  moveMd: {
-    entry: './src/data/help.md',
-    out: 'README.md',
-  },
-  fetchData: {
-    out: './src/data/status.json',
-  },
-  deploy: {
-    entry: './build/**/!(*.map)',
-  },
-};
-
-let compress = $.util.env.compress || false;
-
-gulp.task('stylus', () =>  {
-  return gulp.src(config.stylus.entry)
-    .pipe($.plumber())
-    .pipe($.stylus({
-      use: $.nib(),
-      import: 'nib',
-      compress: compress,
-    }))
-    .pipe(gulp.dest(config.build));
-});
-
-gulp.task('webpack', (callback) => {
-  const webpackConfig = {
-    entry: config.webpack.entry,
-    output: config.webpack.out,
     module: {
       loaders: [
         {
@@ -86,20 +50,70 @@ gulp.task('webpack', (callback) => {
       modulesDirectories: ['node_modules', 'src'],
       extensions: ['', '.js', '.json', '.jsx'],
     },
+    plugins: [],
+  },
+  moveIndex: {
+    entry: `./${srcDir}/index.html`,
+  },
+  moveMd: {
+    entry: `./${srcDir}/data/help.md`,
+    out: 'README.md',
+  },
+  fetchData: {
+    out: `./${srcDir}/data/status.json`,
+  },
+  deploy: {
+    entry: `./${buildDir}/**/!(*.map)`,
+  },
+};
+
+
+gulp.task('stylus', () =>  {
+  return gulp.src(config.stylus.entry)
+    .pipe($.plumber())
+    .pipe($.stylus({
+      use: nib(),
+      import: 'nib',
+      compress: compress,
+    }))
+    .pipe(gulp.dest(`./${buildDir}`));
+});
+
+gulp.task('webpack', (callback) => {
+  webpack({
+    ...config.webpack,
+    plugins: config.webpack.plugins.concat(production ? [
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false,
+        },
+      }),
+    ] : []),
+  }, (err, stats) => {
+    if (err) throw new $.util.PluginError('webpack', err);
+    $.util.log('[webpack]', stats.toString());
+    callback();
+  });
+});
+
+gulp.task('webpack-server', (callback) => {
+  const devConfig = {
+    ...config.webpack,
+    entry: [
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/dev-server',
+      ...config.webpack.entry,
+    ],
+    plugins: [
+      ...config.webpack.plugins,
+      new webpack.HotModuleReplacementPlugin(),
+    ],
   };
 
-  // $.webpack(webpackConfig, (err, stats) => {
-  //   if (err) throw new $.util.PluginError('webpack', err);
-  //   $.util.log('[webpack]', stats.toString({
-  //       // output options
-  //   }));
-  //   callback();
-  // });
-
-  webpackConfig.entry.unshift('webpack-dev-server/client?http://localhost:3000');
-  const compiler = $.webpack(webpackConfig);
+  const compiler = webpack(devConfig);
   new WebpackDevServer(compiler, {
-    contentBase: './build/',
+    contentBase: `./${buildDir}/`,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000,
@@ -115,48 +129,21 @@ gulp.task('webpack', (callback) => {
   });
 });
 
-// gulp.task('browserify', () =>  {
-//   return $.browserify({
-//     entries: config.browserify.entry,
-//     extensions: ['.jsx', '.json', '.md'],
-//     debug: true,
-//   })
-//     .transform($.babelify.configure({
-//       optional: ['es7.objectRestSpread'],
-//     }))
-//     .transform($.mdify({
-//       breaks: true,
-//     }))
-//     .bundle()
-//     .on('error', (err) => {
-//       $.util.log(err);
-//       err.stream.emit('end');
-//     })
-//     .pipe($.source(config.browserify.out))
-//     .pipe($.buffer())
-//     .pipe($.sourcemaps.init({
-//       loadMaps: true,
-//     }))
-//     .pipe(compress ? $.uglify() : $.util.noop())
-//     .pipe($.sourcemaps.write('./'))
-//     .pipe(gulp.dest(config.build));
-// });
-
 gulp.task('moveIndex', () =>  {
   return gulp.src(config.moveIndex.entry)
-    .pipe(gulp.dest(config.build));
+    .pipe(gulp.dest(`./${buildDir}`));
 });
 
 gulp.task('moveMd', () =>  {
   return gulp.src(config.moveMd.entry)
     .pipe($.rename(config.moveMd.out))
-    .pipe(gulp.dest(config.build));
+    .pipe(gulp.dest(`./${buildDir}`));
 });
 
 gulp.task('fetchData', () =>  {
   let status = [];
 
-  $.cheerio.fetch(config.dataUrls.rankupMax)
+  cheerio.fetch(dataUrls.rankupMax)
   .then((result) => {
     result.$('.style_table tbody tr').each((index, row) =>  {
       const $td = result.$(row).children('td');
@@ -192,7 +179,7 @@ gulp.task('fetchData', () =>  {
       status.push(tmp);
     });
 
-    return $.cheerio.fetch(config.dataUrls.initial);
+    return cheerio.fetch(dataUrls.initial);
   })
   .then((result) => {
     result.$('.style_table tbody tr').each((index, row) =>  {
@@ -235,7 +222,7 @@ gulp.task('setCompress', () => {
   compress = true;
 });
 
-gulp.task('build', ['moveIndex', 'moveMd', 'stylus', 'browserify']);
+gulp.task('build', ['moveIndex', 'moveMd', 'stylus', 'webpack']);
 
 gulp.task('deploy', ['setCompress', 'build'], () =>  {
   return gulp.src(config.deploy.entry)
@@ -244,7 +231,11 @@ gulp.task('deploy', ['setCompress', 'build'], () =>  {
 
 gulp.task('watch', ['build'], () =>  {
   gulp.watch(config.stylus.watch, ['stylus']);
-  gulp.watch(config.browserify.watch, ['browserify']);
+  // gulp.watch(config.browserify.watch, ['browserify']);
   gulp.watch(config.moveIndex.entry, ['moveIndex']);
   gulp.watch(config.moveMd.entry, ['moveMd']);
+});
+
+gulp.task('default', () => {
+
 });
