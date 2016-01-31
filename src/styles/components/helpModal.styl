@@ -2,7 +2,8 @@
 // usage help
 // -----------------------------
 
-#HelpModal
+// .HelpModal
+.HelpModal
   background-color: rgba(0,0,0,0.8)
   bottom: 0
   color: #fff
@@ -13,29 +14,14 @@
   transition: $transition-help
   z-index: 10
 
-  // &.show
-  //   opacity: 1
-  //   z-index: 10
-  //
-  //   .HelpModal-body,
-  //   .HelpModal-close
-  //     transform: translateY(0)
-  //
-  // &.hide
-  //   opacity: 0
-  //   z-index: -1
-  //
-  //   .HelpModal-body,
-  //   .HelpModal-close
-  //     transform: translateY(-2em)
-
   a
     color: #fff
 
     &:hover
       color: rgba(#fff, 0.5)
 
-  .HelpModal-body
++prefix-classes('HelpModal')
+  ._body
     bottom: 6em
     left: 0%
     line-height: 1.8
@@ -45,41 +31,41 @@
     top: 2em
     transition: $transition-help
 
-    .HelpModal-body-inner
+    &_inner
       margin: 0 auto
       max-width: 700px
       width: 100%
 
-    h2
-      font-size: 2rem
-      border-bottom: 1px solid rgba(#fff, 0.5)
-      margin-bottom: 2em
-      padding-bottom: 1.5em
-      text-align: center
+      h2
+        font-size: 2rem
+        border-bottom: 1px solid rgba(#fff, 0.5)
+        margin-bottom: 2em
+        padding-bottom: 1.5em
+        text-align: center
 
-    h3
-      border-left: 5px solid rgba(#fff, 0.5)
-      border-bottom: 1px solid rgba(#fff, 0.5)
-      font-size: 1.6rem
-      margin-bottom: 1.5em
-      margin-top: 3em
-      padding-left: 0.8em
+      h3
+        border-left: 5px solid rgba(#fff, 0.5)
+        border-bottom: 1px solid rgba(#fff, 0.5)
+        font-size: 1.6rem
+        margin-bottom: 1.5em
+        margin-top: 3em
+        padding-left: 0.8em
 
-      &:first-of-type
-        margin-top: 2.5em;
+        &:first-of-type
+          margin-top: 2.5em;
 
-    h4
-      border-bottom: 1px solid rgba(#fff, 0.5)
-      margin-bottom: 1em
-      margin-top: 1.5em
+      h4
+        border-bottom: 1px solid rgba(#fff, 0.5)
+        margin-bottom: 1em
+        margin-top: 1.5em
 
-    ul
-      margin-left: 1.5em
+      ul
+        margin-left: 1.5em
 
-    li
-      list-style-type: disc
+      li
+        list-style-type: disc
 
-  .HelpModal-close
+  ._close
     bottom: 2em
     left: 0
     line-height: 4em
@@ -90,3 +76,33 @@
 
     a
       font-size: 1.6rem
+
+
+
+  .-enter
+    opacity: 0
+
+    ._body,
+    ._close
+      transform: translateY(-2em)
+
+    &.-enter-active
+      opacity: 1
+
+      ._body,
+      ._close
+        transform: translateY(0)
+
+  .-leave
+    opacity: 1
+
+    ._body,
+    ._close
+      transform: translateY(0)
+
+    &.-leave-active
+      opacity: 0
+
+      ._body,
+      ._close
+        transform: translateY(-2em)

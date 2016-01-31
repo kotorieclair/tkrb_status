@@ -2014,7 +2014,10 @@ var _formTab2 = _interopRequireDefault(_formTab);
 
 var _formCheckRadio = require('./formCheckRadio');
 
-// form: setting conditions
+/**
+ * ConditionalForm component
+ * A form to set the conditionals for the data display
+ */
 
 var _formCheckRadio2 = _interopRequireDefault(_formCheckRadio);
 
@@ -2026,6 +2029,7 @@ var ConditionalForm = (function (_BaseComponent) {
 
     _get(Object.getPrototypeOf(ConditionalForm.prototype), 'constructor', this).call(this, props);
 
+    // set state
     this.state = {
       suggestedNames: {
         index: null,
@@ -2033,6 +2037,7 @@ var ConditionalForm = (function (_BaseComponent) {
       }
     };
 
+    // bind 'this' to the methods
     this._checkboxFilter = this._checkboxFilter.bind(this);
     this.setStatusType = this.setStatusType.bind(this);
     this.setStatusMode = this.setStatusMode.bind(this);
@@ -2047,42 +2052,54 @@ var ConditionalForm = (function (_BaseComponent) {
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
+  // gathers the checked checkboxes's value
+
   _createClass(ConditionalForm, [{
     key: '_checkboxFilter',
     value: function _checkboxFilter(cond) {
-      var _chbxs = React.findDOMNode(this).querySelectorAll('[name=\'' + cond + '\']');
-      var _arr = [];
+      var chbxs = React.findDOMNode(this).querySelectorAll('[name=\'' + cond + '\']');
+      var arr = [];
 
-      Array.prototype.forEach.call(_chbxs, function (_chbx) {
-        if (_chbx.checked) {
-          _arr.push(_chbx.value);
+      Array.prototype.forEach.call(chbxs, function (chbx) {
+        if (chbx.checked) {
+          arr.push(chbx.value);
         }
       });
 
-      return _arr;
+      return arr;
     }
+
+    // notifies the status type change to the parent
   }, {
     key: 'setStatusType',
     value: function setStatusType(e) {
       this.props.onStatusTypeChange(e.currentTarget.value);
     }
+
+    // notifies the status mode change to the parent
   }, {
     key: 'setStatusMode',
     value: function setStatusMode() {
       this.props.onStatusModeChange();
     }
+
+    // notifies the type change to the parent
   }, {
     key: 'setTypeFilter',
     value: function setTypeFilter() {
       var type = this._checkboxFilter('type');
       this.props.onConditionChange({ type: type });
     }
+
+    // notifies the family change to the parent
   }, {
     key: 'setFamilyFilter',
     value: function setFamilyFilter() {
       var family = this._checkboxFilter('family');
       this.props.onConditionChange({ family: family });
     }
+
+    // notifies the rare change to the parent
   }, {
     key: 'setRareFilter',
     value: function setRareFilter() {
@@ -2092,9 +2109,12 @@ var ConditionalForm = (function (_BaseComponent) {
       });
       this.props.onConditionChange({ rare: rare });
     }
+
+    // notifies the names change to the parent
   }, {
     key: 'setNamesFilter',
     value: function setNamesFilter() {
+      // creates an array of the inputted names
       var input = React.findDOMNode(this.refs.names).value;
       var names = [];
       if (input.length) {
@@ -2103,8 +2123,11 @@ var ConditionalForm = (function (_BaseComponent) {
 
       this.props.onConditionChange({ names: names });
 
+      // suggests the name completion
       this.suggestNames(names);
     }
+
+    // checks all items in a checkbox group
   }, {
     key: 'selectAll',
     value: function selectAll(e) {
@@ -2113,6 +2136,8 @@ var ConditionalForm = (function (_BaseComponent) {
       tmp[e.target.value] = _config2['default'].labels[e.target.value];
       this.props.onConditionChange(tmp);
     }
+
+    // unchecks all items in a checkbox group
   }, {
     key: 'selectNone',
     value: function selectNone(e) {
@@ -2121,6 +2146,8 @@ var ConditionalForm = (function (_BaseComponent) {
       tmp[e.target.value] = [];
       this.props.onConditionChange(tmp);
     }
+
+    // handles the active tab change
   }, {
     key: 'changeActiveTab',
     value: function changeActiveTab() {
@@ -2131,6 +2158,8 @@ var ConditionalForm = (function (_BaseComponent) {
         }
       });
     }
+
+    // suggests the name completion
   }, {
     key: 'suggestNames',
     value: function suggestNames(inputs) {
@@ -2141,37 +2170,42 @@ var ConditionalForm = (function (_BaseComponent) {
         names: []
       };
 
+      // returns the suggestion only for the first incomplete name in the inputs
       inputs.some(function (input, index) {
         if (!input) {
           return false;
         }
 
         var filteredNames = (0, _lodashCollectionFilter2['default'])(_this.props.data, function (item) {
+          // don't include the name which is already in the inputs
           if (!(0, _lodashCollectionIncludes2['default'])(_this.props.condition.names, item.name)) {
-            if (item.name !== input) {
-              if (item.name.includes(input)) {
-                return true;
-              }
+            if (item.name.includes(input)) {
+              return true;
             }
           }
         });
+
         if (filteredNames.length) {
           suggestedNames.index = index;
           suggestedNames.names = filteredNames;
           return true;
         }
+
         return false;
       });
 
       this.setState({ suggestedNames: suggestedNames });
     }
+
+    // adds the suggested name to the names input
   }, {
     key: 'addSuggestedName',
     value: function addSuggestedName(e) {
-      var targetName = e.currentTarget.getAttribute('data-name');
+      var name = e.currentTarget.getAttribute('data-name');
 
-      var names = this.props.condition.names;
-      names[this.state.suggestedNames.index] = targetName;
+      var _names = this.props.condition.names;
+      var index = this.state.suggestedNames.index;
+      var names = _names.slice(0, index).concat(name, _names.slice(index + 1));
 
       this.props.onConditionChange({ names: names });
 
@@ -2279,7 +2313,7 @@ var ConditionalForm = (function (_BaseComponent) {
 
       return React.createElement(
         'form',
-        { id: "ConditionalForm" },
+        { className: "ConditionalForm" },
         React.createElement(
           'h2',
           null,
@@ -2544,19 +2578,19 @@ exports['default'] = FormTab;
 module.exports = exports['default'];
 
 },{}],60:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var GraphBack = (function (_React$Component) {
   _inherits(GraphBack, _React$Component);
@@ -2564,22 +2598,24 @@ var GraphBack = (function (_React$Component) {
   function GraphBack() {
     _classCallCheck(this, GraphBack);
 
-    _get(Object.getPrototypeOf(GraphBack.prototype), "constructor", this).call(this);
+    _get(Object.getPrototypeOf(GraphBack.prototype), 'constructor', this).call(this);
+
+    this.name = 'GraphBack';
   }
 
   _createClass(GraphBack, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       // create background lines
       var lines = [];
 
       for (var i = 100; i > 0; i -= 5) {
-        lines.push(React.createElement("div", { className: "GraphBack-line", key: i, "data-line": i }));
+        lines.push(React.createElement('div', { className: this.name + '_line', key: i, 'data-line': i }));
       }
 
       return React.createElement(
-        "div",
-        { id: "GraphBack" },
+        'div',
+        { className: this.name },
         lines
       );
     }
@@ -2588,25 +2624,25 @@ var GraphBack = (function (_React$Component) {
   return GraphBack;
 })(React.Component);
 
-exports["default"] = GraphBack;
-module.exports = exports["default"];
+exports['default'] = GraphBack;
+module.exports = exports['default'];
 
 },{}],61:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _dataHelp = require('../data/help');
 
@@ -2620,45 +2656,48 @@ var HelpModal = (function (_React$Component) {
   function HelpModal(props) {
     _classCallCheck(this, HelpModal);
 
-    _get(Object.getPrototypeOf(HelpModal.prototype), "constructor", this).call(this, props);
+    _get(Object.getPrototypeOf(HelpModal.prototype), 'constructor', this).call(this, props);
+
+    this.name = 'HelpModal';
 
     this.closeHelp = this.closeHelp.bind(this);
   }
 
   _createClass(HelpModal, [{
-    key: "closeHelp",
+    key: 'closeHelp',
     value: function closeHelp(e) {
       e.preventDefault();
       this.props.onCloseClick();
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       var help = null;
       if (this.props.show) {
         help = React.createElement(
-          "div",
-          { id: "HelpModal" },
+          'div',
+          { className: this.name },
           React.createElement(
-            "div",
-            { className: "HelpModal-body" },
-            React.createElement("div", { className: "HelpModal-body-inner", dangerouslySetInnerHTML: { __html: _dataHelp2["default"] } })
+            'div',
+            { className: this.name + '_body' },
+            React.createElement('div', { className: this.name + '_body_inner', dangerouslySetInnerHTML: { __html: _dataHelp2['default'] } })
           ),
           React.createElement(
-            "div",
-            { className: "HelpModal-close" },
+            'div',
+            { className: this.name + '_close' },
             React.createElement(
-              "a",
+              'a',
               { onClick: this.closeHelp },
-              React.createElement("i", { className: "fa fa-times" }),
-              "ヘルプをとじる"
+              React.createElement('i', { className: "fa fa-times" }),
+              'ヘルプをとじる'
             )
           )
         );
       }
+
       return React.createElement(
         TransitionGroup,
-        { transitionName: "HelpModal" },
+        { transitionName: '' + this.name },
         help
       );
     }
@@ -2667,8 +2706,8 @@ var HelpModal = (function (_React$Component) {
   return HelpModal;
 })(React.Component);
 
-exports["default"] = HelpModal;
-module.exports = exports["default"];
+exports['default'] = HelpModal;
+module.exports = exports['default'];
 
 },{"../data/help":66}],62:[function(require,module,exports){
 'use strict';
@@ -2698,6 +2737,8 @@ var StatusBar = (function (_React$Component) {
     _classCallCheck(this, StatusBar);
 
     _get(Object.getPrototypeOf(StatusBar.prototype), 'constructor', this).call(this, props);
+
+    this.name = 'StatusBar';
   }
 
   _createClass(StatusBar, [{
@@ -2716,7 +2757,7 @@ var StatusBar = (function (_React$Component) {
       }
 
       var props = {
-        className: 'StatusBar ' + this.props.name,
+        className: this.name + ' ' + this.name + '-' + this.props.name,
         style: {
           height: height + '%'
         },
@@ -2783,6 +2824,8 @@ var StatusGraph = (function (_BaseComponent) {
     _classCallCheck(this, StatusGraph);
 
     _get(Object.getPrototypeOf(StatusGraph.prototype), 'constructor', this).call(this, props);
+
+    this.name = 'StatusGraph';
   }
 
   _createClass(StatusGraph, [{
@@ -2791,6 +2834,7 @@ var StatusGraph = (function (_BaseComponent) {
       var _this = this;
 
       var condition = this.props.condition;
+
       var status = this.props.data.map(function (_item) {
         var item = _item;
 
@@ -2804,7 +2848,7 @@ var StatusGraph = (function (_BaseComponent) {
           }
         }
 
-        if (_this.props.condition.isOldStatus) {
+        if (condition.isOldStatus) {
           item = (0, _lodashCollectionFilter2['default'])(_dataStatus_old2['default'], function (old) {
             return old.id === item.id;
           })[0] || item;
@@ -2832,22 +2876,18 @@ var StatusGraph = (function (_BaseComponent) {
         // create graphs for each character
         return React.createElement(
           'div',
-          { className: 'StatusGraph-item bars-' + bars.length, key: item.id },
+          { className: _this.name + '_item ' + _this.name + '_item-bars' + bars.length, key: item.id },
           React.createElement(
             'div',
-            { className: "StatusGraph-bars" },
-            React.createElement(
-              TransitionGroup,
-              { transitionName: "StatusBar", transitionAppear: true },
-              bars
-            )
+            { className: _this.name + '_bars' },
+            bars
           ),
           React.createElement(
             'div',
-            { className: "StatusGraph-info" },
+            { className: _this.name + '_info' },
             React.createElement(
               'p',
-              { className: "StatusGraph-info-name" },
+              { className: _this.name + '_info_name' },
               React.createElement(
                 'a',
                 { href: item.url1, target: "_new" },
@@ -2856,13 +2896,13 @@ var StatusGraph = (function (_BaseComponent) {
             ),
             React.createElement(
               'p',
-              { className: "StatusGraph-info-id" },
+              { className: _this.name + '_info_id' },
               'No. ',
               item.id
             ),
             React.createElement(
               'p',
-              { className: "StatusGraph-info-total" },
+              { className: _this.name + '_info_total' },
               '合計：',
               total
             )
@@ -2872,13 +2912,13 @@ var StatusGraph = (function (_BaseComponent) {
 
       return React.createElement(
         'div',
-        { id: "StatusGraph" },
+        { className: this.name },
         React.createElement(
           'div',
-          { id: "StatusGraph-body" },
+          { className: this.name + '_body' },
           React.createElement(
             TransitionGroup,
-            { transitionName: "StatusGraph", transitionAppear: true },
+            { transitionName: this.name, transitionAppear: true },
             status
           )
         ),
@@ -2924,7 +2964,10 @@ var _statusGraph2 = _interopRequireDefault(_statusGraph);
 
 var _helpModal = require('./helpModal');
 
-// wrapper component
+/**
+ * TkrbStatus component
+ * A wrapper component
+ */
 
 var _helpModal2 = _interopRequireDefault(_helpModal);
 
@@ -2936,6 +2979,7 @@ var TkrbStatus = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(TkrbStatus.prototype), 'constructor', this).call(this, props);
 
+    // set state
     this.state = {
       showHelp: false,
       statusType: 'initial',
@@ -2947,11 +2991,14 @@ var TkrbStatus = (function (_React$Component) {
       isOldStatus: false
     };
 
+    // bind 'this' to the methods
     this.handleStatusType = this.handleStatusType.bind(this);
     this.handleCondition = this.handleCondition.bind(this);
     this.toggleStatusMode = this.toggleStatusMode.bind(this);
     this.toggleHelp = this.toggleHelp.bind(this);
   }
+
+  // handles a status type change notification
 
   _createClass(TkrbStatus, [{
     key: 'handleStatusType',
@@ -2960,11 +3007,15 @@ var TkrbStatus = (function (_React$Component) {
         statusType: type
       });
     }
+
+    // handles a condition change notification
   }, {
     key: 'handleCondition',
     value: function handleCondition(condition) {
       this.setState(condition);
     }
+
+    // handles a status mode change notification
   }, {
     key: 'toggleStatusMode',
     value: function toggleStatusMode() {
@@ -2972,6 +3023,8 @@ var TkrbStatus = (function (_React$Component) {
         isOldStatus: !this.state.isOldStatus
       });
     }
+
+    // handles a help display state change notification
   }, {
     key: 'toggleHelp',
     value: function toggleHelp(e) {
@@ -2985,7 +3038,8 @@ var TkrbStatus = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var props = {
+      // defines the props for ConditionalForm component
+      var conditionalFormProps = {
         onStatusTypeChange: this.handleStatusType,
         onStatusModeChange: this.toggleStatusMode,
         onConditionChange: this.handleCondition,
@@ -2993,6 +3047,7 @@ var TkrbStatus = (function (_React$Component) {
         data: this.props.data
       };
 
+      // adds a class to the body for usability
       if (this.state.showHelp) {
         document.body.className = 'no-scroll';
       } else {
@@ -3039,7 +3094,7 @@ var TkrbStatus = (function (_React$Component) {
             )
           )
         ),
-        React.createElement(_conditionalForm2['default'], props),
+        React.createElement(_conditionalForm2['default'], conditionalFormProps),
         React.createElement(_statusGraph2['default'], { condition: this.state, data: this.props.data }),
         React.createElement(_helpModal2['default'], { show: this.state.showHelp, onCloseClick: this.toggleHelp })
       );

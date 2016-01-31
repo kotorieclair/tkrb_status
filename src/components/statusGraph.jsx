@@ -9,10 +9,13 @@ const TransitionGroup = React.addons.CSSTransitionGroup;
 class StatusGraph extends BaseComponent {
   constructor(props) {
     super(props);
+
+    this.name = 'StatusGraph';
   }
 
   render() {
     const condition = this.props.condition;
+
     const status = this.props.data.map((_item) => {
       let item = _item;
 
@@ -26,7 +29,7 @@ class StatusGraph extends BaseComponent {
         }
       }
 
-      if (this.props.condition.isOldStatus) {
+      if (condition.isOldStatus) {
         item = _filter(oldStatus, (old) => {
           return old.id === item.id;
         })[0] || item;
@@ -55,20 +58,18 @@ class StatusGraph extends BaseComponent {
 
       // create graphs for each character
       return (
-        <div className={`StatusGraph-item bars-${bars.length}`} key={item.id}>
-          <div className="StatusGraph-bars">
-            <TransitionGroup transitionName="StatusBar" transitionAppear={true}>
-              {bars}
-            </TransitionGroup>
+        <div className={`${this.name}_item ${this.name}_item-bars${bars.length}`} key={item.id}>
+          <div className={`${this.name}_bars`}>
+            {bars}
           </div>
-          <div className="StatusGraph-info">
-            <p className="StatusGraph-info-name">
+          <div className={`${this.name}_info`}>
+            <p className={`${this.name}_info_name`}>
               <a href={item.url1} target="_new">{item.name}</a>
             </p>
-            <p className="StatusGraph-info-id">
+            <p className={`${this.name}_info_id`}>
               No. {item.id}
             </p>
-            <p className="StatusGraph-info-total">
+            <p className={`${this.name}_info_total`}>
               合計：{total}
             </p>
           </div>
@@ -77,9 +78,9 @@ class StatusGraph extends BaseComponent {
     });
 
     return (
-      <div id="StatusGraph">
-        <div id="StatusGraph-body">
-          <TransitionGroup transitionName="StatusGraph" transitionAppear={true}>
+      <div className={this.name}>
+        <div className={`${this.name}_body`}>
+          <TransitionGroup transitionName={this.name} transitionAppear={true}>
             {status}
           </TransitionGroup>
         </div>

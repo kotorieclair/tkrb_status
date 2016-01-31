@@ -5,6 +5,8 @@ class HelpModal extends React.Component {
   constructor(props) {
     super(props);
 
+    this.name = 'HelpModal';
+
     this.closeHelp = this.closeHelp.bind(this);
   }
 
@@ -17,11 +19,11 @@ class HelpModal extends React.Component {
     let help = null;
     if (this.props.show) {
       help = (
-        <div id="HelpModal">
-          <div className="HelpModal-body">
-            <div className="HelpModal-body-inner" dangerouslySetInnerHTML={{__html: helpMd}} />
+        <div className={this.name}>
+          <div className={`${this.name}_body`}>
+            <div className={`${this.name}_body_inner`} dangerouslySetInnerHTML={{__html: helpMd}} />
           </div>
-          <div className="HelpModal-close">
+          <div className={`${this.name}_close`}>
             <a onClick={this.closeHelp}>
               <i className="fa fa-times" />ヘルプをとじる
             </a>
@@ -29,8 +31,9 @@ class HelpModal extends React.Component {
         </div>
       );
     }
+
     return (
-      <TransitionGroup transitionName="HelpModal">
+      <TransitionGroup transitionName={`${this.name}`}>
         {help}
       </TransitionGroup>
     );

@@ -3,11 +3,15 @@ import ConditionalForm from './conditionalForm';
 import StatusGraph from './statusGraph';
 import HelpModal from './helpModal';
 
-// wrapper component
+/**
+ * TkrbStatus component
+ * A wrapper component
+ */
 class TkrbStatus extends React.Component {
   constructor(props) {
     super(props);
 
+    // set state
     this.state = {
       showHelp: false,
       statusType: 'initial',
@@ -19,28 +23,33 @@ class TkrbStatus extends React.Component {
       isOldStatus: false,
     };
 
+    // bind 'this' to the methods
     this.handleStatusType = this.handleStatusType.bind(this);
     this.handleCondition = this.handleCondition.bind(this);
     this.toggleStatusMode = this.toggleStatusMode.bind(this);
     this.toggleHelp = this.toggleHelp.bind(this);
   }
 
+  // handles a status type change notification
   handleStatusType(type) {
     this.setState({
       statusType: type,
     });
   }
 
+  // handles a condition change notification
   handleCondition(condition) {
     this.setState(condition);
   }
 
+  // handles a status mode change notification
   toggleStatusMode() {
     this.setState({
       isOldStatus: !this.state.isOldStatus,
     });
   }
 
+  // handles a help display state change notification
   toggleHelp(e) {
     if (e) {
       e.preventDefault();
@@ -51,7 +60,8 @@ class TkrbStatus extends React.Component {
   }
 
   render() {
-    const props = {
+    // defines the props for ConditionalForm component
+    const conditionalFormProps = {
       onStatusTypeChange: this.handleStatusType,
       onStatusModeChange: this.toggleStatusMode,
       onConditionChange: this.handleCondition,
@@ -59,6 +69,7 @@ class TkrbStatus extends React.Component {
       data: this.props.data,
     };
 
+    // adds a class to the body for usability
     if (this.state.showHelp) {
       document.body.className = 'no-scroll';
     } else {
@@ -84,7 +95,7 @@ class TkrbStatus extends React.Component {
             </ul>
           </nav>
         </header>
-        <ConditionalForm {...props} />
+        <ConditionalForm {...conditionalFormProps} />
         <StatusGraph condition={this.state} data={this.props.data} />
         <HelpModal show={this.state.showHelp} onCloseClick={this.toggleHelp} />
       </div>

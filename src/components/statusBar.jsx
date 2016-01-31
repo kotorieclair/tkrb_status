@@ -3,6 +3,8 @@ import config from '../config';
 class StatusBar extends React.Component {
   constructor(props) {
     super(props);
+
+    this.name = 'StatusBar';
   }
 
   render() {
@@ -19,7 +21,7 @@ class StatusBar extends React.Component {
     }
 
     const props = {
-      className: `StatusBar ${this.props.name}`,
+      className: `${this.name} ${this.name}-${this.props.name}`,
       style: {
         height: `${height}%`,
       },

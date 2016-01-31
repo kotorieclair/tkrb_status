@@ -2,22 +2,6 @@
 // animations
 // -----------------------------
 
-.StatusBar-enter {
-  transform: scale(1, 0)
-
-  &.StatusBar-enter-active {
-    transform: scale(1, 1)
-  }
-}
-
-.StatusBar-leave {
-  transform: scale(1, 1)
-
-  &.StatusBar-leave-active {
-    transform: scale(1, 0)
-  }
-}
-
 .StatusGraph-appear
   opacity: 0
 
@@ -32,7 +16,7 @@
 
 .StatusGraph-enter
   opacity: 0
-  width: 0 !important
+  width: 0
 
   .StatusBar
     transform: scale(1, 0)
@@ -41,8 +25,8 @@
     opacity: 1
 
     for _num in 0...9
-      &.bars-{_num}
-        width: ($bar-width + $bar-margin * 2) * _num + $graph-item-margin * 2 !important
+      &.StatusGraph_item-bars{_num}
+        width: ($bar-width + $bar-margin * 2) * _num + $graph-item-margin * 2
 
     .StatusBar
       transform: scale(1, 0)
@@ -51,37 +35,9 @@
   opacity: 1
 
   for _num in 0...9
-    &.bars-{_num}
-      width: ($bar-width + $bar-margin * 2) * _num + $graph-item-margin * 2 !important
+    &.StatusGraph_item-bars{_num}
+      width: ($bar-width + $bar-margin * 2) * _num + $graph-item-margin * 2
 
   &.StatusGraph-leave-active
     opacity: 0
-    width: 0 !important
-
-.HelpModal-enter
-  opacity: 0
-
-  .HelpModal-body,
-  .HelpModal-close
-    transform: translateY(-2em)
-
-  &.HelpModal-enter-active
-    opacity: 1
-
-    .HelpModal-body,
-    .HelpModal-close
-      transform: translateY(0)
-
-.HelpModal-leave
-  opacity: 1
-
-  .HelpModal-body,
-  .HelpModal-close
-    transform: translateY(0)
-
-  &.HelpModal-leave-active
-    opacity: 0
-
-    .HelpModal-body,
-    .HelpModal-close
-      transform: translateY(-2em)
+    width: 0

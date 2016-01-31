@@ -154,60 +154,60 @@ header nav li a {
 header nav li a .fa {
   font-size: 1.1em;
 }
-#ConditionalForm {
+.ConditionalForm {
   background-color: #4a3a45;
   padding-bottom: 1em;
   padding-left: 0.5em;
   padding-top: 1em;
   position: relative;
 }
-#ConditionalForm h2 {
+.ConditionalForm h2 {
   color: #fff;
   display: inline-block;
   margin-left: 0.5em;
 }
-#ConditionalForm h2::after {
+.ConditionalForm h2::after {
   content: '：';
 }
-#ConditionalForm .input-group.rows {
+.ConditionalForm .input-group.rows {
   margin-top: 1em;
 }
-#ConditionalForm .input-group.rows:first-child {
+.ConditionalForm .input-group.rows:first-child {
   margin-top: 0;
 }
-#ConditionalForm .input-group.cols {
+.ConditionalForm .input-group.cols {
   display: inline-block;
   margin-left: 1.5em;
 }
-#ConditionalForm .input-group.cols:first-child {
+.ConditionalForm .input-group.cols:first-child {
   margin-left: 0;
 }
-#ConditionalForm h3 {
+.ConditionalForm h3 {
   color: #fff;
   display: inline-block;
   margin-right: 1em;
 }
-#ConditionalForm label {
+.ConditionalForm label {
   display: inline-block;
   margin-right: 1px;
 }
-#ConditionalForm label:hover {
+.ConditionalForm label:hover {
   cursor: pointer;
 }
-#ConditionalForm label:first-of-type > span {
+.ConditionalForm label:first-of-type > span {
   border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
 }
-#ConditionalForm label:last-of-type > span {
+.ConditionalForm label:last-of-type > span {
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
 }
-#ConditionalForm input[type="checkbox"],
-#ConditionalForm input[type="radio"] {
+.ConditionalForm input[type="checkbox"],
+.ConditionalForm input[type="radio"] {
   display: none;
 }
-#ConditionalForm input[type="checkbox"] + span,
-#ConditionalForm input[type="radio"] + span {
+.ConditionalForm input[type="checkbox"] + span,
+.ConditionalForm input[type="radio"] + span {
   background-color: #e0e8ed;
   border-color: #e0e8ed;
   border-style: solid;
@@ -225,19 +225,19 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-#ConditionalForm input[type="checkbox"] + span:hover,
-#ConditionalForm input[type="radio"] + span:hover {
+.ConditionalForm input[type="checkbox"] + span:hover,
+.ConditionalForm input[type="radio"] + span:hover {
   background-color: #fff;
 }
-#ConditionalForm input[type="checkbox"] + span:hover .fa,
-#ConditionalForm input[type="radio"] + span:hover .fa {
+.ConditionalForm input[type="checkbox"] + span:hover .fa,
+.ConditionalForm input[type="radio"] + span:hover .fa {
   color: #207290;
   opacity: 0.2;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
 }
-#ConditionalForm input[type="checkbox"] + span .fa,
-#ConditionalForm input[type="radio"] + span .fa {
+.ConditionalForm input[type="checkbox"] + span .fa,
+.ConditionalForm input[type="radio"] + span .fa {
   bottom: 0;
   display: block;
   left: 0;
@@ -256,30 +256,30 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-#ConditionalForm input[type="checkbox"] + span .fa::before,
-#ConditionalForm input[type="radio"] + span .fa::before {
+.ConditionalForm input[type="checkbox"] + span .fa::before,
+.ConditionalForm input[type="radio"] + span .fa::before {
   font-size: 30px;
   font-size: 3rem;
 }
-#ConditionalForm input[type="checkbox"] + span .fa + span,
-#ConditionalForm input[type="radio"] + span .fa + span {
+.ConditionalForm input[type="checkbox"] + span .fa + span,
+.ConditionalForm input[type="radio"] + span .fa + span {
   position: relative;
   z-index: 2;
 }
-#ConditionalForm input[type="checkbox"]:checked + span,
-#ConditionalForm input[type="radio"]:checked + span {
+.ConditionalForm input[type="checkbox"]:checked + span,
+.ConditionalForm input[type="radio"]:checked + span {
   background-color: #207290;
   border-color: #207290;
   color: #fff;
 }
-#ConditionalForm input[type="checkbox"]:checked + span .fa,
-#ConditionalForm input[type="radio"]:checked + span .fa {
+.ConditionalForm input[type="checkbox"]:checked + span .fa,
+.ConditionalForm input[type="radio"]:checked + span .fa {
   color: #fff;
   opacity: 0.3;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
   filter: alpha(opacity=30);
 }
-#ConditionalForm input[type="text"] {
+.ConditionalForm input[type="text"] {
   background-color: #e0e8ed;
   border: 1px solid #e0e8ed;
   -webkit-border-radius: 3px;
@@ -296,10 +296,10 @@ header nav li a .fa {
   transition: all 0.2s ease;
   width: 400px;
 }
-#ConditionalForm input[type="text"]:focus {
+.ConditionalForm input[type="text"]:focus {
   background-color: #fff;
 }
-#ConditionalForm button {
+.ConditionalForm button {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   color: #fff;
@@ -315,24 +315,24 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-#ConditionalForm button:hover {
+.ConditionalForm button:hover {
   cursor: pointer;
 }
-#ConditionalForm button.btn-all {
+.ConditionalForm button.btn-all {
   background-color: #3a7b44;
   border: 1px solid #3a7b44;
 }
-#ConditionalForm button.btn-all:hover {
+.ConditionalForm button.btn-all:hover {
   background-color: #459150;
 }
-#ConditionalForm button.btn-none {
+.ConditionalForm button.btn-none {
   background-color: #b52c39;
   border: 1px solid #b52c39;
 }
-#ConditionalForm button.btn-none:hover {
+.ConditionalForm button.btn-none:hover {
   background-color: #cc3240;
 }
-#ConditionalForm .names-suggested {
+.ConditionalForm .names-suggested {
   background-color: #e0e8ed;
   border: 1px solid #e0e8ed;
   -webkit-border-radius: 3px;
@@ -348,7 +348,7 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-#ConditionalForm .names-suggested li {
+.ConditionalForm .names-suggested li {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   border-top: 1px dotted rgba(0,0,0,0.3);
@@ -357,7 +357,7 @@ header nav li a .fa {
   padding: 0.3em;
   width: 400px;
 }
-#ConditionalForm .names-suggested li:hover {
+.ConditionalForm .names-suggested li:hover {
   background-color: rgba(32,114,144,0.3);
   cursor: pointer;
   -webkit-transition: all 0.2s ease;
@@ -366,7 +366,7 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-#ConditionalForm .names-suggested li:first-child {
+.ConditionalForm .names-suggested li:first-child {
   border-top: none;
 }
 .FormTab {
@@ -472,7 +472,7 @@ header nav li a .fa {
 .FormTab .FormTab-tab .FormTab-body:first-child {
   display: block;
 }
-#GraphBack {
+.GraphBack {
   border-bottom: 1px solid #333;
   left: 0;
   position: absolute;
@@ -481,7 +481,7 @@ header nav li a .fa {
   vertical-align: bottom;
   z-index: 1;
 }
-#GraphBack .GraphBack-line {
+.GraphBack_line {
   border-top: 1px solid #333;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -491,13 +491,13 @@ header nav li a .fa {
   position: relative;
   width: 100%;
 }
-#GraphBack .GraphBack-line:nth-child(even) {
+.GraphBack_line:nth-child(even) {
   border-top: 1px dotted #9f9f9f;
 }
-#GraphBack .GraphBack-line:nth-child(even)::before {
+.GraphBack_line:nth-child(even)::before {
   content: '';
 }
-#GraphBack .GraphBack-line::before {
+.GraphBack_line::before {
   content: attr(data-line);
   display: block;
   font-size: 10px;
@@ -508,7 +508,7 @@ header nav li a .fa {
   width: 3em;
   left: -3.5em;
 }
-#HelpModal {
+.HelpModal {
   background-color: rgba(0,0,0,0.8);
   bottom: 0;
   color: #fff;
@@ -523,13 +523,13 @@ header nav li a .fa {
   transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 10;
 }
-#HelpModal a {
+.HelpModal a {
   color: #fff;
 }
-#HelpModal a:hover {
+.HelpModal a:hover {
   color: rgba(255,255,255,0.5);
 }
-#HelpModal .HelpModal-body {
+.HelpModal_body {
   bottom: 6em;
   left: 0%;
   line-height: 1.8;
@@ -543,12 +543,12 @@ header nav li a .fa {
   -ms-transition: opacity 0.3s ease, -ms-transform 0.3s ease;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-#HelpModal .HelpModal-body .HelpModal-body-inner {
+.HelpModal_body_inner {
   margin: 0 auto;
   max-width: 700px;
   width: 100%;
 }
-#HelpModal .HelpModal-body h2 {
+.HelpModal_body_inner h2 {
   font-size: 20px;
   font-size: 2rem;
   border-bottom: 1px solid rgba(255,255,255,0.5);
@@ -556,7 +556,7 @@ header nav li a .fa {
   padding-bottom: 1.5em;
   text-align: center;
 }
-#HelpModal .HelpModal-body h3 {
+.HelpModal_body_inner h3 {
   border-left: 5px solid rgba(255,255,255,0.5);
   border-bottom: 1px solid rgba(255,255,255,0.5);
   font-size: 16px;
@@ -565,21 +565,21 @@ header nav li a .fa {
   margin-top: 3em;
   padding-left: 0.8em;
 }
-#HelpModal .HelpModal-body h3:first-of-type {
+.HelpModal_body_inner h3:first-of-type {
   margin-top: 2.5em;
 }
-#HelpModal .HelpModal-body h4 {
+.HelpModal_body_inner h4 {
   border-bottom: 1px solid rgba(255,255,255,0.5);
   margin-bottom: 1em;
   margin-top: 1.5em;
 }
-#HelpModal .HelpModal-body ul {
+.HelpModal_body_inner ul {
   margin-left: 1.5em;
 }
-#HelpModal .HelpModal-body li {
+.HelpModal_body_inner li {
   list-style-type: disc;
 }
-#HelpModal .HelpModal-close {
+.HelpModal_close {
   bottom: 2em;
   left: 0;
   line-height: 4em;
@@ -592,9 +592,61 @@ header nav li a .fa {
   -ms-transition: opacity 0.3s ease, -ms-transform 0.3s ease;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-#HelpModal .HelpModal-close a {
+.HelpModal_close a {
   font-size: 16px;
   font-size: 1.6rem;
+}
+.HelpModal-enter {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.HelpModal-enter .HelpModal_body,
+.HelpModal-enter .HelpModal_close {
+  -webkit-transform: translateY(-2em);
+  -moz-transform: translateY(-2em);
+  -o-transform: translateY(-2em);
+  -ms-transform: translateY(-2em);
+  transform: translateY(-2em);
+}
+.HelpModal-enter.HelpModal-enter-active {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.HelpModal-enter.HelpModal-enter-active .HelpModal_body,
+.HelpModal-enter.HelpModal-enter-active .HelpModal_close {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -o-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+.HelpModal-leave {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.HelpModal-leave .HelpModal_body,
+.HelpModal-leave .HelpModal_close {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -o-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+.HelpModal-leave.HelpModal-leave-active {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+}
+.HelpModal-leave.HelpModal-leave-active .HelpModal_body,
+.HelpModal-leave.HelpModal-leave-active .HelpModal_close {
+  -webkit-transform: translateY(-2em);
+  -moz-transform: translateY(-2em);
+  -o-transform: translateY(-2em);
+  -ms-transform: translateY(-2em);
+  transform: translateY(-2em);
 }
 .StatusBar {
   display: inline-block;
@@ -613,100 +665,100 @@ header nav li a .fa {
   vertical-align: bottom;
   width: 11px;
 }
-.StatusBar.life {
+.StatusBar-life {
   background-color: rgba(76,92,174,0.5);
 }
-.StatusBar.life:hover {
+.StatusBar-life:hover {
   background-color: rgba(110,124,192,0.5);
 }
-.StatusBar.life[data-status] {
+.StatusBar-life[data-status] {
   background-color: #4c5cae;
 }
-.StatusBar.life[data-status]:hover {
+.StatusBar-life[data-status]:hover {
   background-color: #6e7cc0;
 }
-.StatusBar.attack {
+.StatusBar-attack {
   background-color: rgba(226,164,49,0.5);
 }
-.StatusBar.attack:hover {
+.StatusBar-attack:hover {
   background-color: rgba(232,182,90,0.5);
 }
-.StatusBar.attack[data-status] {
+.StatusBar-attack[data-status] {
   background-color: #e2a431;
 }
-.StatusBar.attack[data-status]:hover {
+.StatusBar-attack[data-status]:hover {
   background-color: #e8b65a;
 }
-.StatusBar.defence {
+.StatusBar-defence {
   background-color: rgba(82,158,57,0.5);
 }
-.StatusBar.defence:hover {
+.StatusBar-defence:hover {
   background-color: rgba(109,192,82,0.5);
 }
-.StatusBar.defence[data-status] {
+.StatusBar-defence[data-status] {
   background-color: #529e39;
 }
-.StatusBar.defence[data-status]:hover {
+.StatusBar-defence[data-status]:hover {
   background-color: #6dc052;
 }
-.StatusBar.speed {
+.StatusBar-speed {
   background-color: rgba(96,170,207,0.5);
 }
-.StatusBar.speed:hover {
+.StatusBar-speed:hover {
   background-color: rgba(128,187,217,0.5);
 }
-.StatusBar.speed[data-status] {
+.StatusBar-speed[data-status] {
   background-color: #60aacf;
 }
-.StatusBar.speed[data-status]:hover {
+.StatusBar-speed[data-status]:hover {
   background-color: #80bbd9;
 }
-.StatusBar.push {
+.StatusBar-push {
   background-color: rgba(202,207,25,0.5);
 }
-.StatusBar.push:hover {
+.StatusBar-push:hover {
   background-color: rgba(226,231,57,0.5);
 }
-.StatusBar.push[data-status] {
+.StatusBar-push[data-status] {
   background-color: #cacf19;
 }
-.StatusBar.push[data-status]:hover {
+.StatusBar-push[data-status]:hover {
   background-color: #e2e739;
 }
-.StatusBar.critical {
+.StatusBar-critical {
   background-color: rgba(219,75,49,0.5);
 }
-.StatusBar.critical:hover {
+.StatusBar-critical:hover {
   background-color: rgba(226,111,90,0.5);
 }
-.StatusBar.critical[data-status] {
+.StatusBar-critical[data-status] {
   background-color: #db4b31;
 }
-.StatusBar.critical[data-status]:hover {
+.StatusBar-critical[data-status]:hover {
   background-color: #e26f5a;
 }
-.StatusBar.search {
+.StatusBar-search {
   background-color: rgba(167,167,167,0.5);
 }
-.StatusBar.search:hover {
+.StatusBar-search:hover {
   background-color: rgba(185,185,185,0.5);
 }
-.StatusBar.search[data-status] {
+.StatusBar-search[data-status] {
   background-color: #a7a7a7;
 }
-.StatusBar.search[data-status]:hover {
+.StatusBar-search[data-status]:hover {
   background-color: #b9b9b9;
 }
-.StatusBar.hide {
+.StatusBar-hide {
   background-color: rgba(163,86,153,0.5);
 }
-.StatusBar.hide:hover {
+.StatusBar-hide:hover {
   background-color: rgba(183,118,174,0.5);
 }
-.StatusBar.hide[data-status] {
+.StatusBar-hide[data-status] {
   background-color: #a35699;
 }
-.StatusBar.hide[data-status]:hover {
+.StatusBar-hide[data-status]:hover {
   background-color: #b776ae;
 }
 .StatusBar::after {
@@ -745,66 +797,66 @@ header nav li a .fa {
   top: -3.5em;
   visibility: visible;
 }
-.StatusBar.life::after {
+.StatusBar-life::after {
   content: "生存" "\A？";
 }
-.StatusBar.life[data-status]::after {
+.StatusBar-life[data-status]::after {
   content: "生存" "\A" attr(data-status);
 }
-.StatusBar.attack::after {
+.StatusBar-attack::after {
   content: "打撃" "\A？";
 }
-.StatusBar.attack[data-status]::after {
+.StatusBar-attack[data-status]::after {
   content: "打撃" "\A" attr(data-status);
 }
-.StatusBar.defence::after {
+.StatusBar-defence::after {
   content: "統率" "\A？";
 }
-.StatusBar.defence[data-status]::after {
+.StatusBar-defence[data-status]::after {
   content: "統率" "\A" attr(data-status);
 }
-.StatusBar.speed::after {
+.StatusBar-speed::after {
   content: "機動" "\A？";
 }
-.StatusBar.speed[data-status]::after {
+.StatusBar-speed[data-status]::after {
   content: "機動" "\A" attr(data-status);
 }
-.StatusBar.push::after {
+.StatusBar-push::after {
   content: "衝力" "\A？";
 }
-.StatusBar.push[data-status]::after {
+.StatusBar-push[data-status]::after {
   content: "衝力" "\A" attr(data-status);
 }
-.StatusBar.critical::after {
+.StatusBar-critical::after {
   content: "必殺" "\A？";
 }
-.StatusBar.critical[data-status]::after {
+.StatusBar-critical[data-status]::after {
   content: "必殺" "\A" attr(data-status);
 }
-.StatusBar.search::after {
+.StatusBar-search::after {
   content: "偵察" "\A？";
 }
-.StatusBar.search[data-status]::after {
+.StatusBar-search[data-status]::after {
   content: "偵察" "\A" attr(data-status);
 }
-.StatusBar.hide::after {
+.StatusBar-hide::after {
   content: "隠蔽" "\A？";
 }
-.StatusBar.hide[data-status]::after {
+.StatusBar-hide[data-status]::after {
   content: "隠蔽" "\A" attr(data-status);
 }
-#StatusGraph {
+.StatusGraph {
   margin: 2em 1.5em 1.5em 3em;
   position: relative;
   white-space: nowrap;
 }
-#StatusGraph #StatusGraph-body {
+.StatusGraph_body {
   overflow: auto;
   padding-left: 1em;
   position: relative;
   z-index: 2;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item {
+.StatusGraph_item {
   display: inline-block;
   font-size: 0;
   position: relative;
@@ -815,82 +867,54 @@ header nav li a .fa {
   transition: all 0.5s ease;
   vertical-align: bottom;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-0 {
+.StatusGraph_item-bars0 {
   width: 12px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-1 {
+.StatusGraph_item-bars1 {
   width: 25px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-2 {
+.StatusGraph_item-bars2 {
   width: 38px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-3 {
+.StatusGraph_item-bars3 {
   width: 51px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-4 {
+.StatusGraph_item-bars4 {
   width: 64px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-5 {
+.StatusGraph_item-bars5 {
   width: 77px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-6 {
+.StatusGraph_item-bars6 {
   width: 90px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-7 {
+.StatusGraph_item-bars7 {
   width: 103px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item.bars-8 {
+.StatusGraph_item-bars8 {
   width: 116px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item .StatusGraph-bars {
+.StatusGraph_bars {
   height: 600px;
   margin: 0 auto;
   text-align: center;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item .StatusGraph-bars::after {
+.StatusGraph_bars::after {
   content: '';
   display: inline-block;
   height: 100%;
   vertical-align: bottom;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item .StatusGraph-info {
+.StatusGraph_info {
   padding-bottom: 20px;
 }
-#StatusGraph #StatusGraph-body .StatusGraph-item .StatusGraph-info .StatusGraph-info-name,
-#StatusGraph #StatusGraph-body .StatusGraph-item .StatusGraph-info .StatusGraph-info-id,
-#StatusGraph #StatusGraph-body .StatusGraph-item .StatusGraph-info .StatusGraph-info-total {
+.StatusGraph_info_name,
+.StatusGraph_info_id,
+.StatusGraph_info_total {
   font-size: 12px;
   font-size: 1.2rem;
   text-align: center;
   padding-top: 7px;
-}
-.StatusBar-enter {
-  -webkit-transform: scale(1, 0);
-  -moz-transform: scale(1, 0);
-  -o-transform: scale(1, 0);
-  -ms-transform: scale(1, 0);
-  transform: scale(1, 0);
-}
-.StatusBar-enter.StatusBar-enter-active {
-  -webkit-transform: scale(1, 1);
-  -moz-transform: scale(1, 1);
-  -o-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  transform: scale(1, 1);
-}
-.StatusBar-leave {
-  -webkit-transform: scale(1, 1);
-  -moz-transform: scale(1, 1);
-  -o-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  transform: scale(1, 1);
-}
-.StatusBar-leave.StatusBar-leave-active {
-  -webkit-transform: scale(1, 0);
-  -moz-transform: scale(1, 0);
-  -o-transform: scale(1, 0);
-  -ms-transform: scale(1, 0);
-  transform: scale(1, 0);
 }
 .StatusGraph-appear {
   opacity: 0;
@@ -920,7 +944,7 @@ header nav li a .fa {
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
-  width: 0 !important;
+  width: 0;
 }
 .StatusGraph-enter .StatusBar {
   -webkit-transform: scale(1, 0);
@@ -934,32 +958,32 @@ header nav li a .fa {
   -ms-filter: none;
   filter: none;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-0 {
-  width: 12px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars0 {
+  width: 12px;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-1 {
-  width: 25px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars1 {
+  width: 25px;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-2 {
-  width: 38px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars2 {
+  width: 38px;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-3 {
-  width: 51px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars3 {
+  width: 51px;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-4 {
-  width: 64px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars4 {
+  width: 64px;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-5 {
-  width: 77px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars5 {
+  width: 77px;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-6 {
-  width: 90px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars6 {
+  width: 90px;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-7 {
-  width: 103px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars7 {
+  width: 103px;
 }
-.StatusGraph-enter.StatusGraph-enter-active.bars-8 {
-  width: 116px !important;
+.StatusGraph-enter.StatusGraph-enter-active.StatusGraph_item-bars8 {
+  width: 116px;
 }
 .StatusGraph-enter.StatusGraph-enter-active .StatusBar {
   -webkit-transform: scale(1, 0);
@@ -973,88 +997,36 @@ header nav li a .fa {
   -ms-filter: none;
   filter: none;
 }
-.StatusGraph-leave.bars-0 {
-  width: 12px !important;
+.StatusGraph-leave.StatusGraph_item-bars0 {
+  width: 12px;
 }
-.StatusGraph-leave.bars-1 {
-  width: 25px !important;
+.StatusGraph-leave.StatusGraph_item-bars1 {
+  width: 25px;
 }
-.StatusGraph-leave.bars-2 {
-  width: 38px !important;
+.StatusGraph-leave.StatusGraph_item-bars2 {
+  width: 38px;
 }
-.StatusGraph-leave.bars-3 {
-  width: 51px !important;
+.StatusGraph-leave.StatusGraph_item-bars3 {
+  width: 51px;
 }
-.StatusGraph-leave.bars-4 {
-  width: 64px !important;
+.StatusGraph-leave.StatusGraph_item-bars4 {
+  width: 64px;
 }
-.StatusGraph-leave.bars-5 {
-  width: 77px !important;
+.StatusGraph-leave.StatusGraph_item-bars5 {
+  width: 77px;
 }
-.StatusGraph-leave.bars-6 {
-  width: 90px !important;
+.StatusGraph-leave.StatusGraph_item-bars6 {
+  width: 90px;
 }
-.StatusGraph-leave.bars-7 {
-  width: 103px !important;
+.StatusGraph-leave.StatusGraph_item-bars7 {
+  width: 103px;
 }
-.StatusGraph-leave.bars-8 {
-  width: 116px !important;
+.StatusGraph-leave.StatusGraph_item-bars8 {
+  width: 116px;
 }
 .StatusGraph-leave.StatusGraph-leave-active {
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
-  width: 0 !important;
-}
-.HelpModal-enter {
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-}
-.HelpModal-enter .HelpModal-body,
-.HelpModal-enter .HelpModal-close {
-  -webkit-transform: translateY(-2em);
-  -moz-transform: translateY(-2em);
-  -o-transform: translateY(-2em);
-  -ms-transform: translateY(-2em);
-  transform: translateY(-2em);
-}
-.HelpModal-enter.HelpModal-enter-active {
-  opacity: 1;
-  -ms-filter: none;
-  filter: none;
-}
-.HelpModal-enter.HelpModal-enter-active .HelpModal-body,
-.HelpModal-enter.HelpModal-enter-active .HelpModal-close {
-  -webkit-transform: translateY(0);
-  -moz-transform: translateY(0);
-  -o-transform: translateY(0);
-  -ms-transform: translateY(0);
-  transform: translateY(0);
-}
-.HelpModal-leave {
-  opacity: 1;
-  -ms-filter: none;
-  filter: none;
-}
-.HelpModal-leave .HelpModal-body,
-.HelpModal-leave .HelpModal-close {
-  -webkit-transform: translateY(0);
-  -moz-transform: translateY(0);
-  -o-transform: translateY(0);
-  -ms-transform: translateY(0);
-  transform: translateY(0);
-}
-.HelpModal-leave.HelpModal-leave-active {
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-}
-.HelpModal-leave.HelpModal-leave-active .HelpModal-body,
-.HelpModal-leave.HelpModal-leave-active .HelpModal-close {
-  -webkit-transform: translateY(-2em);
-  -moz-transform: translateY(-2em);
-  -o-transform: translateY(-2em);
-  -ms-transform: translateY(-2em);
-  transform: translateY(-2em);
+  width: 0;
 }

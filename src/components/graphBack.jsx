@@ -1,6 +1,8 @@
 class GraphBack extends React.Component {
   constructor() {
     super();
+
+    this.name = 'GraphBack';
   }
 
   render() {
@@ -8,11 +10,11 @@ class GraphBack extends React.Component {
     const lines = [];
 
     for (let i = 100; i > 0; i -= 5) {
-      lines.push(<div className="GraphBack-line" key={i} data-line={i} />);
+      lines.push(<div className={`${this.name}_line`} key={i} data-line={i} />);
     }
 
     return (
-      <div id="GraphBack">
+      <div className={this.name}>
         {lines}
       </div>
     );

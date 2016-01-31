@@ -5,11 +5,15 @@ import BaseComponent from './baseComponent';
 import FormTab from './formTab';
 import FormCheckRadio from './formCheckRadio';
 
-// form: setting conditions
+/**
+ * ConditionalForm component
+ * A form to set the conditionals for the data display
+ */
 class ConditionalForm extends BaseComponent {
   constructor(props) {
     super(props);
 
+    // set state
     this.state = {
       suggestedNames: {
         index: null,
@@ -17,6 +21,7 @@ class ConditionalForm extends BaseComponent {
       },
     };
 
+    // bind 'this' to the methods
     this._checkboxFilter = this._checkboxFilter.bind(this);
     this.setStatusType = this.setStatusType.bind(this);
     this.setStatusMode = this.setStatusMode.bind(this);
@@ -31,37 +36,43 @@ class ConditionalForm extends BaseComponent {
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
+  // gathers the checked checkboxes's value
   _checkboxFilter(cond) {
-    const _chbxs = React.findDOMNode(this).querySelectorAll(`[name='${cond}']`);
-    const _arr = [];
+    const chbxs = React.findDOMNode(this).querySelectorAll(`[name='${cond}']`);
+    const arr = [];
 
-    Array.prototype.forEach.call(_chbxs, (_chbx) => {
-      if (_chbx.checked) {
-        _arr.push(_chbx.value);
+    Array.prototype.forEach.call(chbxs, (chbx) => {
+      if (chbx.checked) {
+        arr.push(chbx.value);
       }
     });
 
-    return _arr;
+    return arr;
   }
 
+  // notifies the status type change to the parent
   setStatusType(e) {
     this.props.onStatusTypeChange(e.currentTarget.value);
   }
 
+  // notifies the status mode change to the parent
   setStatusMode() {
     this.props.onStatusModeChange();
   }
 
+  // notifies the type change to the parent
   setTypeFilter() {
     const type = this._checkboxFilter('type');
     this.props.onConditionChange({type});
   }
 
+  // notifies the family change to the parent
   setFamilyFilter() {
     const family = this._checkboxFilter('family');
     this.props.onConditionChange({family});
   }
 
+  // notifies the rare change to the parent
   setRareFilter() {
     let rare = this._checkboxFilter('rare');
     rare = rare.map((_rare) => {
@@ -70,7 +81,9 @@ class ConditionalForm extends BaseComponent {
     this.props.onConditionChange({rare});
   }
 
+  // notifies the names change to the parent
   setNamesFilter() {
+    // creates an array of the inputted names
     const input = React.findDOMNode(this.refs.names).value;
     let names = [];
     if (input.length) {
@@ -79,9 +92,11 @@ class ConditionalForm extends BaseComponent {
 
     this.props.onConditionChange({names});
 
+    // suggests the name completion
     this.suggestNames(names);
   }
 
+  // checks all items in a checkbox group
   selectAll(e) {
     e.preventDefault();
     const tmp = {};
@@ -89,6 +104,7 @@ class ConditionalForm extends BaseComponent {
     this.props.onConditionChange(tmp);
   }
 
+  // unchecks all items in a checkbox group
   selectNone(e) {
     e.preventDefault();
     const tmp = {};
@@ -96,6 +112,7 @@ class ConditionalForm extends BaseComponent {
     this.props.onConditionChange(tmp);
   }
 
+  // handles the active tab change
   changeActiveTab() {
     this.setState({
       suggestedNames: {
@@ -105,42 +122,47 @@ class ConditionalForm extends BaseComponent {
     });
   }
 
+  // suggests the name completion
   suggestNames(inputs) {
     const suggestedNames = {
       index: null,
       names: [],
     };
 
+    // returns the suggestion only for the first incomplete name in the inputs
     inputs.some((input, index) => {
       if (!input) {
         return false;
       }
 
       const filteredNames = _filter(this.props.data, (item) => {
+        // don't include the name which is already in the inputs
         if (!_includes(this.props.condition.names, item.name)) {
-          if (item.name !== input) {
-            if (item.name.includes(input)) {
-              return true;
-            }
+          if (item.name.includes(input)) {
+            return true;
           }
         }
       });
+
       if (filteredNames.length) {
         suggestedNames.index = index;
         suggestedNames.names = filteredNames;
         return true;
       }
+
       return false;
     });
 
     this.setState({suggestedNames});
   }
 
+  // adds the suggested name to the names input
   addSuggestedName(e) {
-    const targetName = e.currentTarget.getAttribute('data-name');
+    const name = e.currentTarget.getAttribute('data-name');
 
-    const names = this.props.condition.names;
-    names[this.state.suggestedNames.index] = targetName;
+    const _names = this.props.condition.names;
+    const index = this.state.suggestedNames.index;
+    const names = _names.slice(0, index).concat(name, _names.slice(index + 1));
 
     this.props.onConditionChange({names});
 
@@ -247,7 +269,7 @@ class ConditionalForm extends BaseComponent {
     }
 
     return (
-      <form id="ConditionalForm">
+      <form className="ConditionalForm">
         <h2>表示条件を変更</h2>
         <FormTab onChangeTab={this.changeActiveTab}>
           <div tabName="status" heading="表示ステータス">

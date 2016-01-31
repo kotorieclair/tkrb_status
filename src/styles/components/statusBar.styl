@@ -8,7 +8,7 @@
   width: $bar-width
 
   for _name, _color in $status-color
-    &.{_name}
+    &-{_name}
       background-color: rgba(_color, 0.5)
 
       &:hover
@@ -45,7 +45,7 @@
     visibility: visible
 
   for _class, _label in $config.labels.status
-    &.{_class}
+    &-{_class}
       &::after
         content: quote(_label)"\A？"
 
