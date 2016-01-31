@@ -1,19 +1,18 @@
 import fs from 'fs';
+import path from 'path';
 import _ from 'lodash';
 import gulp from 'gulp';
 import plugins from 'gulp-load-plugins';
 import nib from 'nib';
-import browserify from 'browserify';
-import babelify from 'babelify';
-import mdify from 'browserify-markdown';
+import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
 import cheerio from 'cheerio-httpcli';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 const $ = plugins();
 $.nib = nib;
-$.browserify = browserify;
-$.babelify = babelify;
-$.mdify = mdify;
+$.webpack = webpack;
+// $.webpackDevServer = webpackDevServer;
 $.cheerio = cheerio;
 $.source = source;
 $.buffer = buffer;
@@ -28,9 +27,12 @@ const config = {
     entry: './src/styles/style.styl',
     watch: './src/styles/**/*.styl',
   },
-  browserify: {
-    entry: './src/index.js',
-    out: 'script.js',
+  webpack: {
+    entry: ['./src/index.js'],
+    out: {
+      filename: 'script.js',
+      path: path.resolve(__dirname, 'build'),
+    },
     watch: ['./src/components/**/*.jsx', './src/data/**/*'],
   },
   moveIndex: {
@@ -61,32 +63,84 @@ gulp.task('stylus', () =>  {
     .pipe(gulp.dest(config.build));
 });
 
-gulp.task('browserify', () =>  {
-  return $.browserify({
-    entries: config.browserify.entry,
-    extensions: ['.jsx', '.json', '.md'],
+gulp.task('webpack', (callback) => {
+  const webpackConfig = {
+    entry: config.webpack.entry,
+    output: config.webpack.out,
+    module: {
+      loaders: [
+        {
+          test: /\.json$/,
+          exclude: /node_modules/,
+          loader: 'json',
+        },
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          loader: 'babel',
+          query: { presets: ['react', 'es2015', 'stage-1'] },
+        },
+      ],
+    },
+    resolve: {
+      modulesDirectories: ['node_modules', 'src'],
+      extensions: ['', '.js', '.json', '.jsx'],
+    },
+  };
+
+  // $.webpack(webpackConfig, (err, stats) => {
+  //   if (err) throw new $.util.PluginError('webpack', err);
+  //   $.util.log('[webpack]', stats.toString({
+  //       // output options
+  //   }));
+  //   callback();
+  // });
+
+  webpackConfig.entry.unshift('webpack-dev-server/client?http://localhost:3000');
+  const compiler = $.webpack(webpackConfig);
+  new WebpackDevServer(compiler, {
+    contentBase: './build/',
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000,
+    },
     debug: true,
-  })
-    .transform($.babelify.configure({
-      optional: ['es7.objectRestSpread'],
-    }))
-    .transform($.mdify({
-      breaks: true,
-    }))
-    .bundle()
-    .on('error', (err) => {
-      $.util.log(err);
-      err.stream.emit('end');
-    })
-    .pipe($.source(config.browserify.out))
-    .pipe($.buffer())
-    .pipe($.sourcemaps.init({
-      loadMaps: true,
-    }))
-    .pipe(compress ? $.uglify() : $.util.noop())
-    .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest(config.build));
+  }).listen(3000, 'localhost', (err) => {
+    if (err) throw new $.util.PluginError('webpack-dev-server', err);
+    // Server listening
+    $.util.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
+
+    // keep the server alive or continue?
+    callback();
+  });
 });
+
+// gulp.task('browserify', () =>  {
+//   return $.browserify({
+//     entries: config.browserify.entry,
+//     extensions: ['.jsx', '.json', '.md'],
+//     debug: true,
+//   })
+//     .transform($.babelify.configure({
+//       optional: ['es7.objectRestSpread'],
+//     }))
+//     .transform($.mdify({
+//       breaks: true,
+//     }))
+//     .bundle()
+//     .on('error', (err) => {
+//       $.util.log(err);
+//       err.stream.emit('end');
+//     })
+//     .pipe($.source(config.browserify.out))
+//     .pipe($.buffer())
+//     .pipe($.sourcemaps.init({
+//       loadMaps: true,
+//     }))
+//     .pipe(compress ? $.uglify() : $.util.noop())
+//     .pipe($.sourcemaps.write('./'))
+//     .pipe(gulp.dest(config.build));
+// });
 
 gulp.task('moveIndex', () =>  {
   return gulp.src(config.moveIndex.entry)
