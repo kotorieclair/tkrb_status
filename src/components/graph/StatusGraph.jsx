@@ -1,13 +1,13 @@
 import React from 'react';
 import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';
-import BaseComponent from './BaseComponent';
+import filters from '../../helpers/filters';
 import StatusBar from './StatusBar';
 import GraphBack from './GraphBack';
-import oldStatus from '../data/status_old';
+import oldStatus from '../../data/status_old';
 const TransitionGroup = React.addons.CSSTransitionGroup;
 
-class StatusGraph extends BaseComponent {
+class StatusGraph extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,11 +21,11 @@ class StatusGraph extends BaseComponent {
       let item = _item;
 
       if (condition.names.length) {
-        if (!this._namesFilter(item)) {
+        if (!filters.name(item, condition)) {
           return false;
         }
       } else {
-        if (!this._typeFilter(item) || !this._familyFilter(item) || !this._rareFilter(item)) {
+        if (!filters.type(item, condition) || !filters.family(item, condition) || !filters.rare(item, condition)) {
           return false;
         }
       }

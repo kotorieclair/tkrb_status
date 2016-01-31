@@ -1,8 +1,8 @@
 import React from 'react';
-import config from '../config';
+import ReactDOM from 'react-dom';
 import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';
-import BaseComponent from './BaseComponent';
+import config from '../../config';
 import FormTab from './FormTab';
 import FormCheckRadio from './FormCheckRadio';
 
@@ -10,7 +10,7 @@ import FormCheckRadio from './FormCheckRadio';
  * ConditionalForm component
  * A form to set the conditionals for the data display
  */
-class ConditionalForm extends BaseComponent {
+class ConditionalForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -39,7 +39,7 @@ class ConditionalForm extends BaseComponent {
 
   // gathers the checked checkboxes's value
   _checkboxFilter(cond) {
-    const chbxs = React.findDOMNode(this).querySelectorAll(`[name='${cond}']`);
+    const chbxs = ReactDOM.findDOMNode(this).querySelectorAll(`[name='${cond}']`);
     const arr = [];
 
     Array.prototype.forEach.call(chbxs, (chbx) => {
@@ -85,7 +85,7 @@ class ConditionalForm extends BaseComponent {
   // notifies the names change to the parent
   setNamesFilter() {
     // creates an array of the inputted names
-    const input = React.findDOMNode(this.refs.names).value;
+    const input = this._namesInput.value;
     let names = [];
     if (input.length) {
       names = input.split(',');
@@ -318,7 +318,7 @@ class ConditionalForm extends BaseComponent {
           <div tabName="names" heading="刀剣名指定">
             <input
               type="text"
-              ref="names"
+              ref={(c) => this._namesInput = c}
               value={this.props.condition.names.join(',')}
               placeholder="半角カンマ区切り（空白なし）"
               onChange={this.setNamesFilter} />

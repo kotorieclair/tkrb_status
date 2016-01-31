@@ -1,8 +1,8 @@
 import React from 'react';
 import config from '../config';
-import ConditionalForm from './ConditionalForm';
-import StatusGraph from './StatusGraph';
-import HelpModal from './HelpModal';
+import ConditionalForm from './form/ConditionalForm';
+import StatusGraph from './graph/StatusGraph';
+import HelpModal from './help/HelpModal';
 
 /**
  * TkrbStatus component
