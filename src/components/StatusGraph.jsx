@@ -1,9 +1,9 @@
 import React from 'react';
 import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';
-import BaseComponent from './baseComponent';
-import StatusBar from './statusBar';
-import GraphBack from './graphBack';
+import BaseComponent from './BaseComponent';
+import StatusBar from './StatusBar';
+import GraphBack from './GraphBack';
 import oldStatus from '../data/status_old';
 const TransitionGroup = React.addons.CSSTransitionGroup;
 

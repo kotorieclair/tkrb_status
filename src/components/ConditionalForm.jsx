@@ -2,9 +2,9 @@ import React from 'react';
 import config from '../config';
 import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';
-import BaseComponent from './baseComponent';
-import FormTab from './formTab';
-import FormCheckRadio from './formCheckRadio';
+import BaseComponent from './BaseComponent';
+import FormTab from './FormTab';
+import FormCheckRadio from './FormCheckRadio';
 
 /**
  * ConditionalForm component
