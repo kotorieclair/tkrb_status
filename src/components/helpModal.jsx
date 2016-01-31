@@ -1,4 +1,5 @@
 // import helpMd from '../data/help';
+import React from 'react';
 const TransitionGroup = React.addons.CSSTransitionGroup;
 
 class HelpModal extends React.Component {
@@ -33,7 +34,7 @@ class HelpModal extends React.Component {
     }
 
     return (
-      <TransitionGroup transitionName={`${this.name}`}>
+      <TransitionGroup transitionName={`${this.name}`} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
         {help}
       </TransitionGroup>
     );

@@ -1,3 +1,4 @@
+import React from 'react';
 import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';
 import BaseComponent from './baseComponent';
@@ -80,7 +81,7 @@ class StatusGraph extends BaseComponent {
     return (
       <div className={this.name}>
         <div className={`${this.name}_body`}>
-          <TransitionGroup transitionName={this.name} transitionAppear={true}>
+          <TransitionGroup transitionName={this.name} transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
             {status}
           </TransitionGroup>
         </div>

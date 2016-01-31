@@ -1,3 +1,4 @@
+import React from 'react';
 import config from '../config';
 import ConditionalForm from './conditionalForm';
 import StatusGraph from './statusGraph';

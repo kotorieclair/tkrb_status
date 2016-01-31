@@ -50,6 +50,11 @@ const config = {
       extensions: ['', '.js', '.json', '.jsx'],
     },
     plugins: [],
+    externals: {
+      react: 'React',
+      'react-addons-css-transition-group': 'React',
+      'react-dom': 'ReactDOM',
+    },
   },
   moveIndex: {
     entry: `./${srcDir}/index.html`,
@@ -122,7 +127,7 @@ gulp.task('webpack-server', (callback) => {
   }).listen(3000, 'localhost', (err) => {
     if (err) throw new $.util.PluginError('webpack-dev-server', err);
     // Server listening
-    $.util.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
+    $.util.log('[webpack-dev-server]', 'http://localhost:3000');
 
     // keep the server alive or continue?
     callback();
@@ -225,10 +230,10 @@ gulp.task('deploy', () =>  {
     .pipe($.ghPages());
 });
 
-gulp.task('watch', ['build'], () =>  {
+gulp.task('watch', () =>  {
   gulp.watch(config.stylus.watch, ['stylus']);
   gulp.watch(config.moveIndex.entry, ['moveIndex']);
   gulp.watch(config.moveMd.entry, ['moveMd']);
 });
 
-gulp.task('default', ['webpack-server', 'watch']);
+gulp.task('default', ['moveIndex', 'moveMd', 'stylus', 'webpack-server', 'watch']);

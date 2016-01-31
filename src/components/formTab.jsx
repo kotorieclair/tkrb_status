@@ -1,3 +1,5 @@
+import React from 'react';
+
 class FormTab extends React.Component {
   constructor(props) {
     super(props);

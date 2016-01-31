@@ -1,3 +1,4 @@
+import React from 'react';
 import config from '../config';
 import _includes from 'lodash/collection/includes';
 import _filter from 'lodash/collection/filter';

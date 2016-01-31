@@ -1,3 +1,4 @@
+import React from 'react';
 import _includes from 'lodash/collection/includes';
 
 class BaseComponent extends React.Component {
