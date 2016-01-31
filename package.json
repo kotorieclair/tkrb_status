@@ -6,8 +6,8 @@
   "scripts": {
     "start": "$(npm bin)/gulp",
     "build": "$(npm bin)/gulp build",
-    "build-prod": "$(npm bin)/gulp --production",
-    "deploy": "$(npm bin)/gulp ",
+    "build-prod": "$(npm bin)/gulp build --production",
+    "deploy": "$(npm bin)/gulp build --production && gulp deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

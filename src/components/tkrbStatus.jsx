@@ -76,31 +76,30 @@ class TkrbStatus extends React.Component {
       document.body.className = '';
     }
 
-    return (<div>aaa</div>);
-    // return (
-    //   <div>
-    //     <header>
-    //       <h1>刀剣乱舞ぬるぬる動くステータス</h1>
-    //       <nav>
-    //         <ul>
-    //           <li>
-    //             <a href="" onClick={this.toggleHelp}>
-    //               <i className="fa fa-question" />ヘルプ
-    //             </a>
-    //           </li>
-    //           <li>
-    //             <a href="https://github.com/kotorieclair/tkrb_status">
-    //               <i className="fa fa-github" />GitHub
-    //             </a>
-    //           </li>
-    //         </ul>
-    //       </nav>
-    //     </header>
-    //     <ConditionalForm {...conditionalFormProps} />
-    //     <StatusGraph condition={this.state} data={this.props.data} />
-    //     <HelpModal show={this.state.showHelp} onCloseClick={this.toggleHelp} />
-    //   </div>
-    // );
+    return (
+      <div>
+        <header>
+          <h1>刀剣乱舞ぬるぬる動くステータス</h1>
+          <nav>
+            <ul>
+              <li>
+                <a href="" onClick={this.toggleHelp}>
+                  <i className="fa fa-question" />ヘルプ
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/kotorieclair/tkrb_status">
+                  <i className="fa fa-github" />GitHub
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <ConditionalForm {...conditionalFormProps} />
+        <StatusGraph condition={this.state} data={this.props.data} />
+        <HelpModal show={this.state.showHelp} onCloseClick={this.toggleHelp} />
+      </div>
+    );
   }
 }
 

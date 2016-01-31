@@ -9,7 +9,6 @@ import WebpackDevServer from 'webpack-dev-server';
 import cheerio from 'cheerio-httpcli';
 const $ = plugins();
 
-let compress = $.util.env.compress || false;
 const production = $.util.env.production || false;
 
 const srcDir = 'src';
@@ -74,7 +73,7 @@ gulp.task('stylus', () =>  {
     .pipe($.stylus({
       use: nib(),
       import: 'nib',
-      compress: compress,
+      compress: production,
     }))
     .pipe(gulp.dest(`./${buildDir}`));
 });
@@ -109,6 +108,7 @@ gulp.task('webpack-server', (callback) => {
       ...config.webpack.plugins,
       new webpack.HotModuleReplacementPlugin(),
     ],
+    devtool: 'eval',
   };
 
   const compiler = webpack(devConfig);
@@ -194,7 +194,7 @@ gulp.task('fetchData', () =>  {
         return false;
       }
 
-      _.extend(status[destId].initial, {
+      Object.assign(status[destId].initial, {
         life: parseInt($td.eq(5).text(), 10),
         attack: parseInt($td.eq(6).text(), 10),
         defence: parseInt($td.eq(7).text(), 10),
@@ -218,24 +218,17 @@ gulp.task('fetchData', () =>  {
   });
 });
 
-gulp.task('setCompress', () => {
-  compress = true;
-});
-
 gulp.task('build', ['moveIndex', 'moveMd', 'stylus', 'webpack']);
 
-gulp.task('deploy', ['setCompress', 'build'], () =>  {
+gulp.task('deploy', () =>  {
   return gulp.src(config.deploy.entry)
     .pipe($.ghPages());
 });
 
 gulp.task('watch', ['build'], () =>  {
   gulp.watch(config.stylus.watch, ['stylus']);
-  // gulp.watch(config.browserify.watch, ['browserify']);
   gulp.watch(config.moveIndex.entry, ['moveIndex']);
   gulp.watch(config.moveMd.entry, ['moveMd']);
 });
 
-gulp.task('default', () => {
-
-});
+gulp.task('default', ['webpack-server', 'watch']);
