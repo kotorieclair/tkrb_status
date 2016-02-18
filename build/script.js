@@ -1602,11 +1602,11 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
@@ -1672,6 +1672,7 @@
 
 	  // handles a status type change notification
 
+
 	  _createClass(TkrbStatus, [{
 	    key: 'handleStatusType',
 	    value: function handleStatusType(type) {
@@ -1713,15 +1714,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      // defines the props for ConditionalForm component
-	      var conditionalFormProps = {
-	        onStatusTypeChange: this.handleStatusType,
-	        onStatusModeChange: this.toggleStatusMode,
-	        onConditionChange: this.handleCondition,
-	        condition: this.state,
-	        data: this.props.data
-	      };
-
 	      // adds a class to the body for usability
 	      if (this.state.showHelp) {
 	        document.body.className = 'no-scroll';
@@ -1769,7 +1761,13 @@
 	            )
 	          )
 	        ),
-	        _react2.default.createElement(_ConditionalForm2.default, conditionalFormProps),
+	        _react2.default.createElement(_ConditionalForm2.default, {
+	          condition: this.state,
+	          data: this.props.data,
+	          onStatusTypeChange: this.handleStatusType,
+	          onStatusModeChange: this.toggleStatusMode,
+	          onConditionChange: this.handleCondition
+	        }),
 	        _react2.default.createElement(_StatusGraph2.default, { condition: this.state, data: this.props.data }),
 	        _react2.default.createElement(_HelpModal2.default, { show: this.state.showHelp, onCloseClick: this.toggleHelp })
 	      );
@@ -1842,19 +1840,15 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(3);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	var _config = __webpack_require__(6);
 
@@ -1870,12 +1864,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	// import _includes from 'lodash/collection/includes';
+
 
 	/**
 	 * ConditionalForm component
@@ -1888,19 +1885,19 @@
 	  function ConditionalForm(props) {
 	    _classCallCheck(this, ConditionalForm);
 
-	    // set state
-
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ConditionalForm).call(this, props));
 
+	    _this.initialSuggestedNames = {
+	      index: null,
+	      names: []
+	    };
+
+	    // set state
 	    _this.state = {
-	      suggestedNames: {
-	        index: null,
-	        names: []
-	      }
+	      suggestedNames: _this.initialSuggestedNames
 	    };
 
 	    // bind 'this' to the methods
-	    _this._checkboxFilter = _this._checkboxFilter.bind(_this);
 	    _this.setStatusType = _this.setStatusType.bind(_this);
 	    _this.setStatusMode = _this.setStatusMode.bind(_this);
 	    _this.setTypeFilter = _this.setTypeFilter.bind(_this);
@@ -1917,10 +1914,11 @@
 
 	  // gathers the checked checkboxes's value
 
+
 	  _createClass(ConditionalForm, [{
 	    key: '_checkboxFilter',
 	    value: function _checkboxFilter(cond) {
-	      var chbxs = _reactDom2.default.findDOMNode(this).querySelectorAll('[name=\'' + cond + '\']');
+	      var chbxs = this._form.querySelectorAll('[name=\'' + cond + '\']');
 	      var arr = [];
 
 	      Array.prototype.forEach.call(chbxs, function (chbx) {
@@ -1985,10 +1983,7 @@
 	    value: function setNamesFilter() {
 	      // creates an array of the inputted names
 	      var input = this._namesInput.value;
-	      var names = [];
-	      if (input.length) {
-	        names = input.split(',');
-	      }
+	      var names = input.length ? input.split(',') : [];
 
 	      this.props.onConditionChange({ names: names });
 
@@ -2002,8 +1997,7 @@
 	    key: 'selectAll',
 	    value: function selectAll(e) {
 	      e.preventDefault();
-	      var tmp = {};
-	      tmp[e.target.value] = _config2.default.labels[e.target.value];
+	      var tmp = _defineProperty({}, e.target.value, _config2.default.labels[e.target.value]);
 	      this.props.onConditionChange(tmp);
 	    }
 
@@ -2013,8 +2007,7 @@
 	    key: 'selectNone',
 	    value: function selectNone(e) {
 	      e.preventDefault();
-	      var tmp = {};
-	      tmp[e.target.value] = [];
+	      var tmp = _defineProperty({}, e.target.value, []);
 	      this.props.onConditionChange(tmp);
 	    }
 
@@ -2023,12 +2016,7 @@
 	  }, {
 	    key: 'changeActiveTab',
 	    value: function changeActiveTab() {
-	      this.setState({
-	        suggestedNames: {
-	          index: null,
-	          names: []
-	        }
-	      });
+	      this.setState({ suggestedNames: this.initialSuggestedNames });
 	    }
 
 	    // suggests the name completion
@@ -2038,10 +2026,7 @@
 	    value: function suggestNames(inputs) {
 	      var _this2 = this;
 
-	      var suggestedNames = {
-	        index: null,
-	        names: []
-	      };
+	      var suggestedNames = Object.assign({}, this.initialSuggestedNames);
 
 	      // returns the suggestion only for the first incomplete name in the inputs
 	      inputs.some(function (input, index) {
@@ -2083,12 +2068,7 @@
 
 	      this.props.onConditionChange({ names: names });
 
-	      this.setState({
-	        suggestedNames: {
-	          index: null,
-	          names: []
-	        }
-	      });
+	      this.setState({ suggestedNames: this.initialSuggestedNames });
 	    }
 	  }, {
 	    key: 'render',
@@ -2189,7 +2169,9 @@
 
 	      return _react2.default.createElement(
 	        'form',
-	        { className: 'ConditionalForm' },
+	        { className: 'ConditionalForm', ref: function ref(c) {
+	            return _this3._form = c;
+	          } },
 	        _react2.default.createElement(
 	          'h2',
 	          null,
@@ -2310,11 +2292,11 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
@@ -2352,9 +2334,7 @@
 	      if (activeTab !== this.state.activeTab) {
 	        this.setState({ activeTab: activeTab });
 	      } else {
-	        this.setState({
-	          activeTab: null
-	        });
+	        this.setState({ activeTab: null });
 	      }
 
 	      this.props.onChangeTab(activeTab);
@@ -2364,31 +2344,33 @@
 	    value: function render() {
 	      var _this2 = this;
 
-	      var tabBodies = this.props.children.map(function (child) {
-	        var tabName = child.props.tabName;
-	        var isActive = tabName === _this2.state.activeTab ? ' active' : '';
-
-	        return _react2.default.createElement(
-	          'fieldset',
-	          { className: 'FormTab-tab' + isActive, key: tabName, 'data-tab': tabName },
-	          _react2.default.createElement(
-	            'legend',
-	            { className: 'FormTab-heading', onClick: _this2.changeTab },
-	            child.props.heading,
-	            _react2.default.createElement('i', { className: 'fa fa-caret-down' })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'FormTab-body' },
-	            child.props.children
-	          )
-	        );
-	      });
-
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'FormTab' },
-	        tabBodies
+	        this.props.children.map(function (child) {
+	          var _child$props = child.props;
+	          var tabName = _child$props.tabName;
+	          var heading = _child$props.heading;
+	          var children = _child$props.children;
+
+	          var isActive = tabName === _this2.state.activeTab ? ' active' : '';
+
+	          return _react2.default.createElement(
+	            'fieldset',
+	            { className: 'FormTab-tab' + isActive, key: tabName, 'data-tab': tabName },
+	            _react2.default.createElement(
+	              'legend',
+	              { className: 'FormTab-heading', onClick: _this2.changeTab },
+	              heading,
+	              _react2.default.createElement('i', { className: 'fa fa-caret-down' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'FormTab-body' },
+	              children
+	            )
+	          );
+	        })
 	      );
 	    }
 	  }]);
@@ -2404,13 +2386,13 @@
 
 	"use strict";
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
@@ -2478,8 +2460,6 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -2506,129 +2486,97 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	// import _includes from 'lodash/collection/includes';
 
 	var TransitionGroup = _react2.default.addons.CSSTransitionGroup;
 
-	var StatusGraph = function (_React$Component) {
-	  _inherits(StatusGraph, _React$Component);
+	var name = 'StatusGraph';
 
-	  function StatusGraph(props) {
-	    _classCallCheck(this, StatusGraph);
+	var StatusGraph = function StatusGraph(props) {
+	  var condition = props.condition;
+	  var data = props.data;
+	  var isOldStatus = condition.isOldStatus;
+	  var names = condition.names;
+	  var statusType = condition.statusType;
+	  var status = condition.status;
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StatusGraph).call(this, props));
+	  // create a graph for each character
 
-	    _this.name = 'StatusGraph';
-	    return _this;
-	  }
+	  var graphs = data.map(function (_item) {
+	    // replace current status with old status
+	    var item = isOldStatus && _status_old2.default.filter(function (old) {
+	      return old.id === _item.id;
+	    })[0] || _item;
 
-	  _createClass(StatusGraph, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
+	    // filter
+	    if (names.length) {
+	      if (!_filters2.default.name(item, condition)) {
+	        return false;
+	      }
+	    } else {
+	      if (!_filters2.default.type(item, condition) || !_filters2.default.family(item, condition) || !_filters2.default.rare(item, condition)) {
+	        return false;
+	      }
+	    }
 
-	      var condition = this.props.condition;
+	    // sum of the status values
+	    var total = status.reduce(function (previous, current) {
+	      return previous + item[statusType][current];
+	    }, 0);
 
-	      var status = this.props.data.map(function (_item) {
-	        var item = _item;
-
-	        if (condition.names.length) {
-	          if (!_filters2.default.name(item, condition)) {
-	            return false;
-	          }
-	        } else {
-	          if (!_filters2.default.type(item, condition) || !_filters2.default.family(item, condition) || !_filters2.default.rare(item, condition)) {
-	            return false;
-	          }
-	        }
-
-	        if (condition.isOldStatus) {
-	          item = _status_old2.default.filter(function (old) {
-	            return old.id === item.id;
-	          })[0] || item;
-	        }
-
-	        var total = 0;
-	        var bars = Object.keys(item[condition.statusType]).map(function (key) {
-	          // filter by status
-	          if (condition.status.indexOf(key) !== -1) {
-	            // if (!_includes(condition.status, key)) {
-	            return false;
-	          }
-
-	          total += item[condition.statusType][key];
-
-	          var props = {
-	            statusType: condition.statusType,
-	            item: item,
-	            name: key,
-	            key: key
-	          };
-
-	          return _react2.default.createElement(_StatusBar2.default, props);
-	        });
-
-	        // create graphs for each character
-	        return _react2.default.createElement(
-	          'div',
-	          { className: _this2.name + '_item ' + _this2.name + '_item-bars' + bars.length, key: item.id },
-	          _react2.default.createElement(
-	            'div',
-	            { className: _this2.name + '_bars' },
-	            bars
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: _this2.name + '_info' },
-	            _react2.default.createElement(
-	              'p',
-	              { className: _this2.name + '_info_name' },
-	              _react2.default.createElement(
-	                'a',
-	                { href: item.url1, target: '_new' },
-	                item.name
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              { className: _this2.name + '_info_id' },
-	              'No. ',
-	              item.id
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              { className: _this2.name + '_info_total' },
-	              '合計：',
-	              total
-	            )
-	          )
-	        );
-	      });
-
-	      return _react2.default.createElement(
+	    return _react2.default.createElement(
+	      'div',
+	      { className: name + '_item ' + name + '_item-bars' + status.length, key: item.id },
+	      _react2.default.createElement(
 	        'div',
-	        { className: this.name },
+	        { className: name + '_bars' },
+	        status.map(function (key) {
+	          return _react2.default.createElement(_StatusBar2.default, { key: key, val: item[statusType][key], name: key, item: item });
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: name + '_info' },
 	        _react2.default.createElement(
-	          'div',
-	          { className: this.name + '_body' },
+	          'p',
+	          { className: name + '_info_name' },
 	          _react2.default.createElement(
-	            TransitionGroup,
-	            { transitionName: this.name, transitionAppear: true, transitionAppearTimeout: 500, transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
-	            status
+	            'a',
+	            { href: item.url1, target: '_new' },
+	            item.name
 	          )
 	        ),
-	        _react2.default.createElement(_GraphBack2.default, null)
-	      );
-	    }
-	  }]);
+	        _react2.default.createElement(
+	          'p',
+	          { className: name + '_info_id' },
+	          'No. ',
+	          item.id
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: name + '_info_total' },
+	          '合計：',
+	          total
+	        )
+	      )
+	    );
+	  });
 
-	  return StatusGraph;
-	}(_react2.default.Component);
+	  return _react2.default.createElement(
+	    'div',
+	    { className: name },
+	    _react2.default.createElement(
+	      'div',
+	      { className: name + '_body' },
+	      _react2.default.createElement(
+	        TransitionGroup,
+	        { transitionName: name, transitionAppear: true, transitionAppearTimeout: 500, transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
+	        graphs
+	      )
+	    ),
+	    _react2.default.createElement(_GraphBack2.default, null)
+	  );
+	};
 
 	exports.default = StatusGraph;
 
@@ -2684,8 +2632,6 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -2700,53 +2646,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var name = 'StatusBar';
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	// create graph bars
+	var StatusBar = function StatusBar(props) {
+	  var val = props.val || props.item.initial[props.name];
+	  var height = val / _config2.default.maxStatus * 100;
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var StatusBar = function (_React$Component) {
-	  _inherits(StatusBar, _React$Component);
-
-	  function StatusBar(props) {
-	    _classCallCheck(this, StatusBar);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StatusBar).call(this, props));
-
-	    _this.name = 'StatusBar';
-	    return _this;
-	  }
-
-	  _createClass(StatusBar, [{
-	    key: 'render',
-	    value: function render() {
-	      // create graph bars
-	      var item = this.props.item;
-	      var name = this.props.name;
-	      var val = item[this.props.statusType][name];
-	      var height = '';
-
-	      if (val) {
-	        height = val / _config2.default.maxStatus * 100;
-	      } else {
-	        height = item.initial[name] / _config2.default.maxStatus * 100;
-	      }
-
-	      var props = {
-	        className: this.name + ' ' + this.name + '-' + this.props.name,
-	        style: {
-	          height: height + '%'
-	        },
-	        'data-status': val
-	      };
-
-	      return _react2.default.createElement('div', props);
-	    }
-	  }]);
-
-	  return StatusBar;
-	}(_react2.default.Component);
+	  return _react2.default.createElement('div', { className: name + ' ' + name + '-' + props.name, style: { height: height + '%' }, 'data-status': val });
+	};
 
 	exports.default = StatusBar;
 
@@ -2755,8 +2663,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -2768,44 +2674,24 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var name = 'GraphBack';
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	var GraphBack = function GraphBack() {
+	  // create background lines
+	  var lines = [];
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var GraphBack = function (_React$Component) {
-	  _inherits(GraphBack, _React$Component);
-
-	  function GraphBack() {
-	    _classCallCheck(this, GraphBack);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(GraphBack).call(this));
-
-	    _this.name = 'GraphBack';
-	    return _this;
+	  for (var i = 100; i > 0; i -= 5) {
+	    lines.push(i);
 	  }
 
-	  _createClass(GraphBack, [{
-	    key: 'render',
-	    value: function render() {
-	      // create background lines
-	      var lines = [];
-
-	      for (var i = 100; i > 0; i -= 5) {
-	        lines.push(_react2.default.createElement('div', { className: this.name + '_line', key: i, 'data-line': i }));
-	      }
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: this.name },
-	        lines
-	      );
-	    }
-	  }]);
-
-	  return GraphBack;
-	}(_react2.default.Component);
+	  return _react2.default.createElement(
+	    'div',
+	    { className: name },
+	    lines.map(function (line) {
+	      return _react2.default.createElement('div', { className: name + '_line', key: line, 'data-line': line });
+	    })
+	  );
+	};
 
 	exports.default = GraphBack;
 
@@ -2918,11 +2804,11 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _help = __webpack_require__(16);
 
@@ -2969,9 +2855,10 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var help = null;
-	      if (this.props.show) {
-	        help = _react2.default.createElement(
+	      return _react2.default.createElement(
+	        TransitionGroup,
+	        { transitionName: '' + this.name, transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
+	        this.props.show ? _react2.default.createElement(
 	          'div',
 	          { className: this.name },
 	          _react2.default.createElement(
@@ -2993,13 +2880,7 @@
 	              'ヘルプをとじる'
 	            )
 	          )
-	        );
-	      }
-
-	      return _react2.default.createElement(
-	        TransitionGroup,
-	        { transitionName: '' + this.name, transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
-	        help
+	        ) : null
 	      );
 	    }
 	  }]);
