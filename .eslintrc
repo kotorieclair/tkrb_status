@@ -49,7 +49,7 @@
     "no-invalid-this": 2,
     "no-useless-call": 2,
     "prefer-spread": 2,
-    "max-len": [2, 100, 4, {ignoreComments: true, ignoreUrls: true}],
+    "max-len": [0, 100, 4, {ignoreComments: true, ignoreUrls: true}],
     "id-length": [0, {
       "min": 3,
       "max": 20,
@@ -186,7 +186,7 @@
     }],
 
     "react/display-name": 0,
-    "react/jsx-boolean-value": 2,
+    "react/jsx-boolean-value": 0,
     "react/jsx-quotes": [2, "double"],
     "react/jsx-no-undef": 2,
     "react/jsx-sort-props": 0,

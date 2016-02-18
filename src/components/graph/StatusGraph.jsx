@@ -38,7 +38,7 @@ class StatusGraph extends React.Component {
       let total = 0;
       const bars = Object.keys(item[condition.statusType]).map((key) => {
         // filter by status
-        if (condition.status.indexOf(key) !== -1) {
+        if (condition.status.indexOf(key) === -1) {
         // if (!_includes(condition.status, key)) {
           return false;
         }
