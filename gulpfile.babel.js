@@ -46,7 +46,7 @@ const config = {
         {
           test: /\.md$/,
           exclude: /node_modules/,
-          loader: 'babel!html-jsx-loader!markdown',
+          loader: 'babel!html-jsx!markdown',
         },
       ],
     },
