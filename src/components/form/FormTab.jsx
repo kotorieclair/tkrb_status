@@ -17,34 +17,30 @@ class FormTab extends React.Component {
     if (activeTab !== this.state.activeTab) {
       this.setState({activeTab});
     } else {
-      this.setState({
-        activeTab: null,
-      });
+      this.setState({ activeTab: null });
     }
 
     this.props.onChangeTab(activeTab);
   }
 
   render() {
-    const tabBodies = this.props.children.map((child) => {
-      const tabName = child.props.tabName;
-      const isActive = tabName === this.state.activeTab ? ' active' : '';
-
-      return (
-        <fieldset className={`FormTab-tab${isActive}`} key={tabName} data-tab={tabName}>
-          <legend className="FormTab-heading" onClick={this.changeTab}>
-            {child.props.heading}<i className="fa fa-caret-down" />
-          </legend>
-          <div className="FormTab-body">
-            {child.props.children}
-          </div>
-        </fieldset>
-      );
-    });
-
     return (
       <div className="FormTab">
-        {tabBodies}
+        {this.props.children.map((child) => {
+          const { tabName, heading, children } = child.props;
+          const isActive = tabName === this.state.activeTab ? ' active' : '';
+
+          return (
+            <fieldset className={`FormTab-tab${isActive}`} key={tabName} data-tab={tabName}>
+              <legend className="FormTab-heading" onClick={this.changeTab}>
+                {heading}<i className="fa fa-caret-down" />
+              </legend>
+              <div className="FormTab-body">
+                {children}
+              </div>
+            </fieldset>
+          );
+        })}
       </div>
     );
   }

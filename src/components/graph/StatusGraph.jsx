@@ -6,89 +6,65 @@ import GraphBack from './GraphBack';
 import oldStatus from '../../data/status_old';
 const TransitionGroup = React.addons.CSSTransitionGroup;
 
-class StatusGraph extends React.Component {
-  constructor(props) {
-    super(props);
+const name = 'StatusGraph';
 
-    this.name = 'StatusGraph';
-  }
+const StatusGraph = (props) => {
+  const { condition, data } = props;
+  const { isOldStatus, names, statusType, status } = condition;
 
-  render() {
-    const condition = this.props.condition;
+  // create a graph for each character
+  const graphs = data.map((_item) => {
+    // replace current status with old status
+    const item = isOldStatus && oldStatus.filter((old) => old.id === _item.id)[0] || _item;
 
-    const status = this.props.data.map((_item) => {
-      let item = _item;
-
-      if (condition.names.length) {
-        if (!filters.name(item, condition)) {
-          return false;
-        }
-      } else {
-        if (!filters.type(item, condition) || !filters.family(item, condition) || !filters.rare(item, condition)) {
-          return false;
-        }
+    // filter
+    if (names.length) {
+      if (!filters.name(item, condition)) {
+        return false;
       }
-
-      if (condition.isOldStatus) {
-        item = oldStatus.filter((old) => {
-          return old.id === item.id;
-        })[0] || item;
+    } else {
+      if (!filters.type(item, condition) || !filters.family(item, condition) || !filters.rare(item, condition)) {
+        return false;
       }
+    }
 
-      let total = 0;
-      const bars = Object.keys(item[condition.statusType]).map((key) => {
-        // filter by status
-        if (condition.status.indexOf(key) === -1) {
-        // if (!_includes(condition.status, key)) {
-          return false;
-        }
-
-        total += item[condition.statusType][key];
-
-        const props = {
-          statusType: condition.statusType,
-          item: item,
-          name: key,
-          key: key,
-        };
-
-        return (
-          <StatusBar {...props} />
-        );
-      });
-
-      // create graphs for each character
-      return (
-        <div className={`${this.name}_item ${this.name}_item-bars${bars.length}`} key={item.id}>
-          <div className={`${this.name}_bars`}>
-            {bars}
-          </div>
-          <div className={`${this.name}_info`}>
-            <p className={`${this.name}_info_name`}>
-              <a href={item.url1} target="_new">{item.name}</a>
-            </p>
-            <p className={`${this.name}_info_id`}>
-              No. {item.id}
-            </p>
-            <p className={`${this.name}_info_total`}>
-              合計：{total}
-            </p>
-          </div>
-        </div>
-      );
-    });
+    // sum of the status values
+    const total = status.reduce((previous, current) => {
+      return previous + item[statusType][current];
+    }, 0);
 
     return (
-      <div className={this.name}>
-        <div className={`${this.name}_body`}>
-          <TransitionGroup transitionName={this.name} transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-            {status}
-          </TransitionGroup>
+      <div className={`${name}_item ${name}_item-bars${status.length}`} key={item.id}>
+        <div className={`${name}_bars`}>
+          {status.map((key) => {
+            return <StatusBar key={key} val={item[statusType][key]} name={key} item={item} />;
+          })}
         </div>
-        <GraphBack />
+        <div className={`${name}_info`}>
+          <p className={`${name}_info_name`}>
+            <a href={item.url1} target="_new">{item.name}</a>
+          </p>
+          <p className={`${name}_info_id`}>
+            No. {item.id}
+          </p>
+          <p className={`${name}_info_total`}>
+            合計：{total}
+          </p>
+        </div>
       </div>
     );
-  }
-}
+  });
+
+  return (
+    <div className={name}>
+      <div className={`${name}_body`}>
+        <TransitionGroup transitionName={name} transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+          {graphs}
+        </TransitionGroup>
+      </div>
+      <GraphBack />
+    </div>
+  );
+};
 
 export default StatusGraph;

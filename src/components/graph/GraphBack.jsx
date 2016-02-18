@@ -1,26 +1,22 @@
 import React from 'react';
 
-class GraphBack extends React.Component {
-  constructor() {
-    super();
+const name = 'GraphBack';
 
-    this.name = 'GraphBack';
+const GraphBack = () => {
+  // create background lines
+  const lines = [];
+
+  for (let i = 100; i > 0; i -= 5) {
+    lines.push(i);
   }
 
-  render() {
-    // create background lines
-    const lines = [];
-
-    for (let i = 100; i > 0; i -= 5) {
-      lines.push(<div className={`${this.name}_line`} key={i} data-line={i} />);
-    }
-
-    return (
-      <div className={this.name}>
-        {lines}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={name}>
+      {lines.map((line) => {
+        return <div className={`${name}_line`} key={line} data-line={line} />;
+      })}
+    </div>
+  );
+};
 
 export default GraphBack;

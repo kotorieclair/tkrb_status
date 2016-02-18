@@ -61,15 +61,6 @@ class TkrbStatus extends React.Component {
   }
 
   render() {
-    // defines the props for ConditionalForm component
-    const conditionalFormProps = {
-      onStatusTypeChange: this.handleStatusType,
-      onStatusModeChange: this.toggleStatusMode,
-      onConditionChange: this.handleCondition,
-      condition: this.state,
-      data: this.props.data,
-    };
-
     // adds a class to the body for usability
     if (this.state.showHelp) {
       document.body.className = 'no-scroll';
@@ -96,7 +87,13 @@ class TkrbStatus extends React.Component {
             </ul>
           </nav>
         </header>
-        <ConditionalForm {...conditionalFormProps} />
+        <ConditionalForm
+          condition={this.state}
+          data={this.props.data}
+          onStatusTypeChange={this.handleStatusType}
+          onStatusModeChange={this.toggleStatusMode}
+          onConditionChange={this.handleCondition}
+        />
         <StatusGraph condition={this.state} data={this.props.data} />
         <HelpModal show={this.state.showHelp} onCloseClick={this.toggleHelp} />
       </div>

@@ -18,27 +18,22 @@ class HelpModal extends React.Component {
   }
 
   render() {
-    let help = null;
-    if (this.props.show) {
-      help = (
-        <div className={this.name}>
-          <div className={`${this.name}_body`}>
-            <div className={`${this.name}_body_inner`}>
-              <Markdown source={helpMd} />
-            </div>
-          </div>
-          <div className={`${this.name}_close`}>
-            <a onClick={this.closeHelp}>
-              <i className="fa fa-times" />ヘルプをとじる
-            </a>
-          </div>
-        </div>
-      );
-    }
-
     return (
       <TransitionGroup transitionName={`${this.name}`} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-        {help}
+        {this.props.show ? (
+          <div className={this.name}>
+            <div className={`${this.name}_body`}>
+              <div className={`${this.name}_body_inner`}>
+                <Markdown source={helpMd} />
+              </div>
+            </div>
+            <div className={`${this.name}_close`}>
+              <a onClick={this.closeHelp}>
+                <i className="fa fa-times" />ヘルプをとじる
+              </a>
+            </div>
+          </div>
+        ) : null}
       </TransitionGroup>
     );
   }

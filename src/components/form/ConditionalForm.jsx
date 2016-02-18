@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 // import _includes from 'lodash/collection/includes';
 import config from '../../config';
 import FormTab from './FormTab';
@@ -13,16 +12,17 @@ class ConditionalForm extends React.Component {
   constructor(props) {
     super(props);
 
+    this.initialSuggestedNames = {
+      index: null,
+      names: [],
+    };
+
     // set state
     this.state = {
-      suggestedNames: {
-        index: null,
-        names: [],
-      },
+      suggestedNames: this.initialSuggestedNames,
     };
 
     // bind 'this' to the methods
-    this._checkboxFilter = this._checkboxFilter.bind(this);
     this.setStatusType = this.setStatusType.bind(this);
     this.setStatusMode = this.setStatusMode.bind(this);
     this.setTypeFilter = this.setTypeFilter.bind(this);
@@ -38,7 +38,7 @@ class ConditionalForm extends React.Component {
 
   // gathers the checked checkboxes's value
   _checkboxFilter(cond) {
-    const chbxs = ReactDOM.findDOMNode(this).querySelectorAll(`[name='${cond}']`);
+    const chbxs = this._form.querySelectorAll(`[name='${cond}']`);
     const arr = [];
 
     Array.prototype.forEach.call(chbxs, (chbx) => {
@@ -85,10 +85,7 @@ class ConditionalForm extends React.Component {
   setNamesFilter() {
     // creates an array of the inputted names
     const input = this._namesInput.value;
-    let names = [];
-    if (input.length) {
-      names = input.split(',');
-    }
+    const names = input.length ? input.split(',') : [];
 
     this.props.onConditionChange({names});
 
@@ -99,35 +96,29 @@ class ConditionalForm extends React.Component {
   // checks all items in a checkbox group
   selectAll(e) {
     e.preventDefault();
-    const tmp = {};
-    tmp[e.target.value] = config.labels[e.target.value];
+    const tmp = {
+      [e.target.value]: config.labels[e.target.value],
+    };
     this.props.onConditionChange(tmp);
   }
 
   // unchecks all items in a checkbox group
   selectNone(e) {
     e.preventDefault();
-    const tmp = {};
-    tmp[e.target.value] = [];
+    const tmp = {
+      [e.target.value]: [],
+    };
     this.props.onConditionChange(tmp);
   }
 
   // handles the active tab change
   changeActiveTab() {
-    this.setState({
-      suggestedNames: {
-        index: null,
-        names: [],
-      },
-    });
+    this.setState({ suggestedNames: this.initialSuggestedNames });
   }
 
   // suggests the name completion
   suggestNames(inputs) {
-    const suggestedNames = {
-      index: null,
-      names: [],
-    };
+    const suggestedNames = Object.assign({}, this.initialSuggestedNames);
 
     // returns the suggestion only for the first incomplete name in the inputs
     inputs.some((input, index) => {
@@ -166,12 +157,7 @@ class ConditionalForm extends React.Component {
 
     this.props.onConditionChange({names});
 
-    this.setState({
-      suggestedNames: {
-        index: null,
-        names: [],
-      },
-    });
+    this.setState({ suggestedNames: this.initialSuggestedNames });
   }
 
   render() {
@@ -271,7 +257,7 @@ class ConditionalForm extends React.Component {
     }
 
     return (
-      <form className="ConditionalForm">
+      <form className="ConditionalForm" ref={(c) => this._form = c}>
         <h2>表示条件を変更</h2>
         <FormTab onChangeTab={this.changeActiveTab}>
           <div tabName="status" heading="表示ステータス">
