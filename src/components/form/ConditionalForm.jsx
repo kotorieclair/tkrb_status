@@ -1,7 +1,7 @@
 import React from 'react';
 // import _includes from 'lodash/collection/includes';
 import config from '../../config';
-// import filters from '../../helpers/filters';
+import filters from '../../helpers/filters';
 import FormTab from './FormTab';
 import FormCheckRadio from './FormCheckRadio';
 
@@ -33,18 +33,17 @@ class ConditionalForm extends React.Component {
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
     this.changeActiveTab = this.changeActiveTab.bind(this);
-    this.suggestNames = this.suggestNames.bind(this);
     this.addSuggestedName = this.addSuggestedName.bind(this);
   }
 
   // gathers the checked checkboxes's value
-  _checkboxFilter(cond) {
+  _checkboxFilter(cond, fn) {
     const chbxs = this._form.querySelectorAll(`[name='${cond}']`);
     const arr = [];
 
     Array.prototype.forEach.call(chbxs, (chbx) => {
       if (chbx.checked) {
-        arr.push(chbx.value);
+        arr.push(fn(chbx.value));
       }
     });
 
@@ -63,20 +62,17 @@ class ConditionalForm extends React.Component {
 
   // notifies the type change to the parent
   setTypeFilter() {
-    const type = this._checkboxFilter('type');
-    this.props.onConditionChange({type});
+    this.props.onConditionChange({ type: this._checkboxFilter('type') });
   }
 
   // notifies the family change to the parent
   setFamilyFilter() {
-    const family = this._checkboxFilter('family');
-    this.props.onConditionChange({family});
+    this.props.onConditionChange({ family: this._checkboxFilter('family') });
   }
 
   // notifies the rare change to the parent
   setRareFilter() {
-    let rare = this._checkboxFilter('rare');
-    rare = rare.map((_rare) => {
+    const rare = this._checkboxFilter('rare', (_rare) => {
       return parseInt(_rare, 10);
     });
     this.props.onConditionChange({rare});
@@ -97,19 +93,13 @@ class ConditionalForm extends React.Component {
   // checks all items in a checkbox group
   selectAll(e) {
     e.preventDefault();
-    const tmp = {
-      [e.target.value]: config.labels[e.target.value],
-    };
-    this.props.onConditionChange(tmp);
+    this.props.onConditionChange({ [e.target.value]: config.labels[e.target.value] });
   }
 
   // unchecks all items in a checkbox group
   selectNone(e) {
     e.preventDefault();
-    const tmp = {
-      [e.target.value]: [],
-    };
-    this.props.onConditionChange(tmp);
+    this.props.onConditionChange({ [e.target.value]: [] });
   }
 
   // handles the active tab change
@@ -129,7 +119,7 @@ class ConditionalForm extends React.Component {
 
       const filteredNames = this.props.data.filter((item) => {
         // don't include the name which is already in the inputs
-        if (this.props.condition.name.indexOf(item.name) === -1) {
+        if (!filters.name(item.name, this.props.condition)) {
           if (item.name.includes(input)) {
             return true;
           }
@@ -192,7 +182,7 @@ class ConditionalForm extends React.Component {
               <h3>刀種</h3>
               {labels.type.map((type) => {
                 return (
-                  <FormCheckRadio key={type} type="checkbox" name="type" value={type} checked={condition.type.indexOf(type) !== -1} onChange={this.setTypeFilter}>
+                  <FormCheckRadio key={type} type="checkbox" name="type" value={type} checked={filters.type(type, condition)} onChange={this.setTypeFilter}>
                     {type}
                   </FormCheckRadio>
                 );
@@ -208,7 +198,7 @@ class ConditionalForm extends React.Component {
               <h3>刀派</h3>
               {labels.family.map((family) => {
                 return (
-                  <FormCheckRadio key={family} type="checkbox" name="family" value={family} checked={condition.family.indexOf(family) !== -1} onChange={this.setFamilyFilter}>
+                  <FormCheckRadio key={family} type="checkbox" name="family" value={family} checked={filters.family(family, condition)} onChange={this.setFamilyFilter}>
                     {family}
                   </FormCheckRadio>
                 );
@@ -224,7 +214,7 @@ class ConditionalForm extends React.Component {
               <h3>レアリティ</h3>
               {labels.rare.map((rare) => {
                 return (
-                  <FormCheckRadio key={rare} type="checkbox" name="rare" value={rare} checked={condition.rare.indexOf(rare) !== -1} onChange={this.setRareFilter}>
+                  <FormCheckRadio key={rare} type="checkbox" name="rare" value={rare} checked={filters.rare(rare, condition)} onChange={this.setRareFilter}>
                     レア{rare}
                   </FormCheckRadio>
                 );
