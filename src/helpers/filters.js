@@ -5,10 +5,7 @@ const _getItemAndCondition = (_item, _condition, key) => {
 };
 
 const _defaultFilter = (item, condition) => {
-  if (condition.indexOf(item) === -1) {
-    return false;
-  }
-  return true;
+  return condition.indexOf(item) !== -1;
 };
 
 export default {
