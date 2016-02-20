@@ -1,6 +1,7 @@
 import React from 'react';
 // import _includes from 'lodash/collection/includes';
 import config from '../../config';
+// import filters from '../../helpers/filters';
 import FormTab from './FormTab';
 import FormCheckRadio from './FormCheckRadio';
 
@@ -161,100 +162,9 @@ class ConditionalForm extends React.Component {
   }
 
   render() {
-    const statusType = Object.keys(config.labels.statusType);
-    const statusTypeInput = statusType.map((item) => {
-      const props = {
-        key: item,
-        type: 'radio',
-        name: 'statusType',
-        value: item,
-        checked: this.props.condition.statusType === item,
-        onChange: this.setStatusType,
-      };
-      return (
-        <FormCheckRadio {...props}>
-          {config.labels.statusType[item]}
-        </FormCheckRadio>
-      );
-    });
-
-    const _props = {
-      type: 'radio',
-      name: 'statusMode',
-      checked: this.props.condition.isOldStatus,
-      onChange: this.setStatusMode,
-    };
-    const statusModeInput = (
-      <FormCheckRadio {..._props}>
-        旧ステータス表示
-      </FormCheckRadio>
-    );
-
-    const typeInput = config.labels.type.map((item) => {
-      const props = {
-        key: item,
-        type: 'checkbox',
-        name: 'type',
-        value: item,
-        checked: this.props.condition.type.indexOf(item) !== -1 ? true : false,
-        onChange: this.setTypeFilter,
-      };
-      return (
-        <FormCheckRadio {...props}>
-          {item}
-        </FormCheckRadio>
-      );
-    });
-
-    const familyInput = config.labels.family.map((item) => {
-      const props = {
-        key: item,
-        type: 'checkbox',
-        name: 'family',
-        value: item,
-        checked: this.props.condition.family.indexOf(item) !== -1 ? true : false,
-        // checked: _includes(this.props.condition.family, item),
-        onChange: this.setFamilyFilter,
-      };
-      return (
-        <FormCheckRadio {...props}>
-          {item}
-        </FormCheckRadio>
-      );
-    });
-
-    const rareInput = config.labels.rare.map((item) => {
-      const props = {
-        key: item,
-        type: 'checkbox',
-        name: 'rare',
-        value: item,
-        checked: this.props.condition.rare.indexOf(item) !== -1 ? true : false,
-        // checked: _includes(this.props.condition.rare, item),
-        onChange: this.setRareFilter,
-      };
-      return (
-        <FormCheckRadio {...props}>
-          レア{item}
-        </FormCheckRadio>
-      );
-    });
-
-    let suggestedNames = this.state.suggestedNames.names.map((item) => {
-      return (
-        <li key={item.name} data-name={item.name} onClick={this.addSuggestedName}>
-          {item.name}
-        </li>
-      );
-    });
-
-    if (suggestedNames.length) {
-      suggestedNames = React.createElement(
-        'ul',
-        { className: 'names-suggested' },
-        suggestedNames
-      );
-    }
+    const { condition } = this.props;
+    const { labels } = config;
+    const { names: suggestedNames } = this.state.suggestedNames;
 
     return (
       <form className="ConditionalForm" ref={(c) => this._form = c}>
@@ -262,17 +172,31 @@ class ConditionalForm extends React.Component {
         <FormTab onChangeTab={this.changeActiveTab}>
           <div tabName="status" heading="表示ステータス">
             <div className="input-group cols">
-              {statusTypeInput}
+              {Object.keys(labels.statusType).map((statusType) => {
+                return (
+                  <FormCheckRadio key={statusType} type="radio" name="statusType" value={statusType} checked={condition.statusType === statusType} onChange={this.setStatusType}>
+                    {labels.statusType[statusType]}
+                  </FormCheckRadio>
+                );
+              })}
             </div>
             <div className="input-group cols">
-              {statusModeInput}
+              <FormCheckRadio type="radio" name="statusMode" checked={condition.isOldStatus} onChange={this.setStatusMode}>
+                旧ステータス表示
+              </FormCheckRadio>
             </div>
           </div>
 
           <div tabName="narrowing" heading="条件で絞り込み">
             <div className="input-group rows">
               <h3>刀種</h3>
-              {typeInput}
+              {labels.type.map((type) => {
+                return (
+                  <FormCheckRadio key={type} type="checkbox" name="type" value={type} checked={condition.type.indexOf(type) !== -1} onChange={this.setTypeFilter}>
+                    {type}
+                  </FormCheckRadio>
+                );
+              })}
               <button value="type" className="btn-all" onClick={this.selectAll}>
                 全選択
               </button>
@@ -282,7 +206,13 @@ class ConditionalForm extends React.Component {
             </div>
             <div className="input-group rows">
               <h3>刀派</h3>
-              {familyInput}
+              {labels.family.map((family) => {
+                return (
+                  <FormCheckRadio key={family} type="checkbox" name="family" value={family} checked={condition.family.indexOf(family) !== -1} onChange={this.setFamilyFilter}>
+                    {family}
+                  </FormCheckRadio>
+                );
+              })}
               <button value="family" className="btn-all" onClick={this.selectAll}>
                 全選択
               </button>
@@ -292,7 +222,13 @@ class ConditionalForm extends React.Component {
             </div>
             <div className="input-group rows">
               <h3>レアリティ</h3>
-              {rareInput}
+              {labels.rare.map((rare) => {
+                return (
+                  <FormCheckRadio key={rare} type="checkbox" name="rare" value={rare} checked={condition.rare.indexOf(rare) !== -1} onChange={this.setRareFilter}>
+                    レア{rare}
+                  </FormCheckRadio>
+                );
+              })}
               <button value="rare" className="btn-all" onClick={this.selectAll}>
                 全選択
               </button>
@@ -306,10 +242,21 @@ class ConditionalForm extends React.Component {
             <input
               type="text"
               ref={(c) => this._namesInput = c}
-              value={this.props.condition.names.join(',')}
+              value={condition.names.join(',')}
               placeholder="半角カンマ区切り（空白なし）"
               onChange={this.setNamesFilter} />
-            {suggestedNames}
+            {suggestedNames.length ? (
+              <ul className="names-suggested">
+                {suggestedNames.map((item) => {
+                  const name = item.name;
+                  return (
+                    <li key={name} data-name={name} onClick={this.addSuggestedName}>
+                      {name}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
             <button value="names" className="btn-none" onClick={this.selectNone}>
               解除
             </button>

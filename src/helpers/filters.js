@@ -1,5 +1,7 @@
+
 export default {
   type: (item, condition) => {
+    // const item = _item.type ? _item.type : _item;
     if (condition.type.indexOf(item.type) === -1) {
       return false;
     }
