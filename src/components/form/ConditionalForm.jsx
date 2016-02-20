@@ -29,7 +29,7 @@ class ConditionalForm extends React.Component {
     this.setTypeFilter = this.setTypeFilter.bind(this);
     this.setFamilyFilter = this.setFamilyFilter.bind(this);
     this.setRareFilter = this.setRareFilter.bind(this);
-    this.setNamesFilter = this.setNamesFilter.bind(this);
+    this.setNameFilter = this.setNameFilter.bind(this);
     this.selectAll = this.selectAll.bind(this);
     this.selectNone = this.selectNone.bind(this);
     this.changeActiveTab = this.changeActiveTab.bind(this);
@@ -83,12 +83,12 @@ class ConditionalForm extends React.Component {
   }
 
   // notifies the names change to the parent
-  setNamesFilter() {
+  setNameFilter() {
     // creates an array of the inputted names
-    const input = this._namesInput.value;
+    const input = this._nameInput.value;
     const names = input.length ? input.split(',') : [];
 
-    this.props.onConditionChange({names});
+    this.props.onConditionChange({ name: names });
 
     // suggests the name completion
     this.suggestNames(names);
@@ -129,7 +129,7 @@ class ConditionalForm extends React.Component {
 
       const filteredNames = this.props.data.filter((item) => {
         // don't include the name which is already in the inputs
-        if (this.props.condition.names.indexOf(item.name) === -1) {
+        if (this.props.condition.name.indexOf(item.name) === -1) {
           if (item.name.includes(input)) {
             return true;
           }
@@ -152,11 +152,11 @@ class ConditionalForm extends React.Component {
   addSuggestedName(e) {
     const name = e.currentTarget.getAttribute('data-name');
 
-    const _names = this.props.condition.names;
+    const _names = this.props.condition.name;
     const index = this.state.suggestedNames.index;
     const names = _names.slice(0, index).concat(name, _names.slice(index + 1));
 
-    this.props.onConditionChange({names});
+    this.props.onConditionChange({ name: names });
 
     this.setState({ suggestedNames: this.initialSuggestedNames });
   }
@@ -238,13 +238,13 @@ class ConditionalForm extends React.Component {
             </div>
           </div>
 
-          <div tabName="names" heading="刀剣名指定">
+          <div tabName="name" heading="刀剣名指定">
             <input
               type="text"
-              ref={(c) => this._namesInput = c}
-              value={condition.names.join(',')}
+              ref={(c) => this._nameInput = c}
+              value={condition.name.join(',')}
               placeholder="半角カンマ区切り（空白なし）"
-              onChange={this.setNamesFilter} />
+              onChange={this.setNameFilter} />
             {suggestedNames.length ? (
               <ul className="names-suggested">
                 {suggestedNames.map((item) => {
@@ -257,7 +257,7 @@ class ConditionalForm extends React.Component {
                 })}
               </ul>
             ) : null}
-            <button value="names" className="btn-none" onClick={this.selectNone}>
+            <button value="name" className="btn-none" onClick={this.selectNone}>
               解除
             </button>
           </div>

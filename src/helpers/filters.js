@@ -1,38 +1,35 @@
+const _getItemAndCondition = (_item, _condition, key) => {
+  const item = _item[key] ? _item[key] : _item;
+  const condition = _condition[key] ? _condition[key] : _condition;
+  return { item, condition };
+};
+
+const _defaultFilter = (item, condition) => {
+  if (condition.indexOf(item) === -1) {
+    return false;
+  }
+  return true;
+};
 
 export default {
-  type: (item, condition) => {
-    // const item = _item.type ? _item.type : _item;
-    if (condition.type.indexOf(item.type) === -1) {
-      return false;
-    }
-    return true;
+  type: (_item, _condition) => {
+    const { item, condition } = _getItemAndCondition(_item, _condition, 'type');
+    return _defaultFilter(item, condition);
   },
 
-  family: (item, condition) => {
-    if (item.family.includes('虎徹')) {
-      item.family = '虎徹';
-    }
-    if (item.family === '-') {
-      item.family = 'その他';
-    }
-
-    if (condition.family.indexOf(item.family) === -1) {
-      return false;
-    }
-    return true;
+  family: (_item, _condition) => {
+    const { item, condition } = _getItemAndCondition(_item, _condition, 'family');
+    const family = item.includes('虎徹') && '虎徹' || item === '-' && 'その他' || item;
+    return _defaultFilter(family, condition);
   },
 
-  rare: (item, condition) => {
-    if (condition.rare.indexOf(item.rare) === -1) {
-      return false;
-    }
-    return true;
+  rare: (_item, _condition) => {
+    const { item, condition } = _getItemAndCondition(_item, _condition, 'rare');
+    return _defaultFilter(item, condition);
   },
 
-  name: (item, condition) => {
-    if (condition.names.indexOf(item.name) === -1) {
-      return false;
-    }
-    return true;
+  name: (_item, _condition) => {
+    const { item, condition } = _getItemAndCondition(_item, _condition, 'name');
+    return _defaultFilter(item, condition);
   },
 };

@@ -6,11 +6,11 @@ import GraphBack from './GraphBack';
 import oldStatus from '../../data/status_old';
 const TransitionGroup = React.addons.CSSTransitionGroup;
 
-const name = 'StatusGraph';
+const cName = 'StatusGraph';
 
 const StatusGraph = (props) => {
   const { condition, data } = props;
-  const { isOldStatus, names, statusType, status } = condition;
+  const { isOldStatus, name, statusType, status } = condition;
 
   // create a graph for each character
   const graphs = data.map((_item) => {
@@ -18,7 +18,7 @@ const StatusGraph = (props) => {
     const item = isOldStatus && oldStatus.filter((old) => old.id === _item.id)[0] || _item;
 
     // filter
-    if (names.length) {
+    if (name.length) {
       if (!filters.name(item, condition)) {
         return false;
       }
@@ -34,20 +34,20 @@ const StatusGraph = (props) => {
     }, 0);
 
     return (
-      <div className={`${name}_item ${name}_item-bars${status.length}`} key={item.id}>
-        <div className={`${name}_bars`}>
+      <div className={`${cName}_item ${cName}_item-bars${status.length}`} key={item.id}>
+        <div className={`${cName}_bars`}>
           {status.map((key) => {
             return <StatusBar key={key} val={item[statusType][key]} name={key} item={item} />;
           })}
         </div>
-        <div className={`${name}_info`}>
-          <p className={`${name}_info_name`}>
+        <div className={`${cName}_info`}>
+          <p className={`${cName}_info_name`}>
             <a href={item.url1} target="_new">{item.name}</a>
           </p>
-          <p className={`${name}_info_id`}>
+          <p className={`${cName}_info_id`}>
             No. {item.id}
           </p>
-          <p className={`${name}_info_total`}>
+          <p className={`${cName}_info_total`}>
             合計：{total}
           </p>
         </div>
@@ -56,9 +56,9 @@ const StatusGraph = (props) => {
   });
 
   return (
-    <div className={name}>
-      <div className={`${name}_body`}>
-        <TransitionGroup transitionName={name} transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+    <div className={cName}>
+      <div className={`${cName}_body`}>
+        <TransitionGroup transitionName={cName} transitionAppear={true} transitionAppearTimeout={500} transitionEnterTimeout={500} transitionLeaveTimeout={500}>
           {graphs}
         </TransitionGroup>
       </div>

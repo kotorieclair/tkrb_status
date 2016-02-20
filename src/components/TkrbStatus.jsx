@@ -19,7 +19,7 @@ class TkrbStatus extends React.Component {
       type: config.labels.type,
       family: config.labels.family,
       rare: config.labels.rare,
-      names: config.labels.names,
+      name: config.labels.name,
       status: Object.keys(config.labels.status),
       isOldStatus: false,
     };
