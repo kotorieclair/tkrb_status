@@ -1620,7 +1620,7 @@
 
 	var _ConditionalForm2 = _interopRequireDefault(_ConditionalForm);
 
-	var _StatusGraph = __webpack_require__(10);
+	var _StatusGraph = __webpack_require__(11);
 
 	var _StatusGraph2 = _interopRequireDefault(_StatusGraph);
 
@@ -1657,7 +1657,7 @@
 	      type: _config2.default.labels.type,
 	      family: _config2.default.labels.family,
 	      rare: _config2.default.labels.rare,
-	      names: _config2.default.labels.names,
+	      name: _config2.default.labels.name,
 	      status: Object.keys(_config2.default.labels.status),
 	      isOldStatus: false
 	    };
@@ -1830,7 +1830,7 @@
 				4,
 				5
 			],
-			"names": []
+			"name": []
 		}
 	};
 
@@ -1844,6 +1844,8 @@
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
@@ -1854,11 +1856,15 @@
 
 	var _config2 = _interopRequireDefault(_config);
 
-	var _FormTab = __webpack_require__(8);
+	var _filters = __webpack_require__(8);
+
+	var _filters2 = _interopRequireDefault(_filters);
+
+	var _FormTab = __webpack_require__(9);
 
 	var _FormTab2 = _interopRequireDefault(_FormTab);
 
-	var _FormCheckRadio = __webpack_require__(9);
+	var _FormCheckRadio = __webpack_require__(10);
 
 	var _FormCheckRadio2 = _interopRequireDefault(_FormCheckRadio);
 
@@ -1871,8 +1877,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import _includes from 'lodash/collection/includes';
-
 
 	/**
 	 * ConditionalForm component
@@ -1903,11 +1907,10 @@
 	    _this.setTypeFilter = _this.setTypeFilter.bind(_this);
 	    _this.setFamilyFilter = _this.setFamilyFilter.bind(_this);
 	    _this.setRareFilter = _this.setRareFilter.bind(_this);
-	    _this.setNamesFilter = _this.setNamesFilter.bind(_this);
+	    _this.setNameFilter = _this.setNameFilter.bind(_this);
 	    _this.selectAll = _this.selectAll.bind(_this);
 	    _this.selectNone = _this.selectNone.bind(_this);
 	    _this.changeActiveTab = _this.changeActiveTab.bind(_this);
-	    _this.suggestNames = _this.suggestNames.bind(_this);
 	    _this.addSuggestedName = _this.addSuggestedName.bind(_this);
 	    return _this;
 	  }
@@ -1918,12 +1921,16 @@
 	  _createClass(ConditionalForm, [{
 	    key: '_checkboxFilter',
 	    value: function _checkboxFilter(cond) {
+	      var fn = arguments.length <= 1 || arguments[1] === undefined ? function (item) {
+	        return item;
+	      } : arguments[1];
+
 	      var chbxs = this._form.querySelectorAll('[name=\'' + cond + '\']');
 	      var arr = [];
 
 	      Array.prototype.forEach.call(chbxs, function (chbx) {
 	        if (chbx.checked) {
-	          arr.push(chbx.value);
+	          arr.push(fn(chbx.value));
 	        }
 	      });
 
@@ -1951,8 +1958,7 @@
 	  }, {
 	    key: 'setTypeFilter',
 	    value: function setTypeFilter() {
-	      var type = this._checkboxFilter('type');
-	      this.props.onConditionChange({ type: type });
+	      this.props.onConditionChange({ type: this._checkboxFilter('type') });
 	    }
 
 	    // notifies the family change to the parent
@@ -1960,8 +1966,7 @@
 	  }, {
 	    key: 'setFamilyFilter',
 	    value: function setFamilyFilter() {
-	      var family = this._checkboxFilter('family');
-	      this.props.onConditionChange({ family: family });
+	      this.props.onConditionChange({ family: this._checkboxFilter('family') });
 	    }
 
 	    // notifies the rare change to the parent
@@ -1969,8 +1974,7 @@
 	  }, {
 	    key: 'setRareFilter',
 	    value: function setRareFilter() {
-	      var rare = this._checkboxFilter('rare');
-	      rare = rare.map(function (_rare) {
+	      var rare = this._checkboxFilter('rare', function (_rare) {
 	        return parseInt(_rare, 10);
 	      });
 	      this.props.onConditionChange({ rare: rare });
@@ -1979,13 +1983,13 @@
 	    // notifies the names change to the parent
 
 	  }, {
-	    key: 'setNamesFilter',
-	    value: function setNamesFilter() {
+	    key: 'setNameFilter',
+	    value: function setNameFilter() {
 	      // creates an array of the inputted names
-	      var input = this._namesInput.value;
+	      var input = this._nameInput.value;
 	      var names = input.length ? input.split(',') : [];
 
-	      this.props.onConditionChange({ names: names });
+	      this.props.onConditionChange({ name: names });
 
 	      // suggests the name completion
 	      this.suggestNames(names);
@@ -1997,8 +2001,7 @@
 	    key: 'selectAll',
 	    value: function selectAll(e) {
 	      e.preventDefault();
-	      var tmp = _defineProperty({}, e.target.value, _config2.default.labels[e.target.value]);
-	      this.props.onConditionChange(tmp);
+	      this.props.onConditionChange(_defineProperty({}, e.target.value, _config2.default.labels[e.target.value]));
 	    }
 
 	    // unchecks all items in a checkbox group
@@ -2007,8 +2010,7 @@
 	    key: 'selectNone',
 	    value: function selectNone(e) {
 	      e.preventDefault();
-	      var tmp = _defineProperty({}, e.target.value, []);
-	      this.props.onConditionChange(tmp);
+	      this.props.onConditionChange(_defineProperty({}, e.target.value, []));
 	    }
 
 	    // handles the active tab change
@@ -2026,7 +2028,7 @@
 	    value: function suggestNames(inputs) {
 	      var _this2 = this;
 
-	      var suggestedNames = Object.assign({}, this.initialSuggestedNames);
+	      var suggestedNames = _extends({}, this.initialSuggestedNames);
 
 	      // returns the suggestion only for the first incomplete name in the inputs
 	      inputs.some(function (input, index) {
@@ -2036,8 +2038,8 @@
 
 	        var filteredNames = _this2.props.data.filter(function (item) {
 	          // don't include the name which is already in the inputs
-	          if (_this2.props.condition.names.indexOf(item.name) === -1) {
-	            if (item.name.includes(input)) {
+	          if (!_filters2.default.name(item.name, _this2.props.condition)) {
+	            if (item.name.match(input)) {
 	              return true;
 	            }
 	          }
@@ -2062,11 +2064,11 @@
 	    value: function addSuggestedName(e) {
 	      var name = e.currentTarget.getAttribute('data-name');
 
-	      var _names = this.props.condition.names;
+	      var _names = this.props.condition.name;
 	      var index = this.state.suggestedNames.index;
 	      var names = _names.slice(0, index).concat(name, _names.slice(index + 1));
 
-	      this.props.onConditionChange({ names: names });
+	      this.props.onConditionChange({ name: names });
 
 	      this.setState({ suggestedNames: this.initialSuggestedNames });
 	    }
@@ -2075,97 +2077,10 @@
 	    value: function render() {
 	      var _this3 = this;
 
-	      var statusType = Object.keys(_config2.default.labels.statusType);
-	      var statusTypeInput = statusType.map(function (item) {
-	        var props = {
-	          key: item,
-	          type: 'radio',
-	          name: 'statusType',
-	          value: item,
-	          checked: _this3.props.condition.statusType === item,
-	          onChange: _this3.setStatusType
-	        };
-	        return _react2.default.createElement(
-	          _FormCheckRadio2.default,
-	          props,
-	          _config2.default.labels.statusType[item]
-	        );
-	      });
+	      var condition = this.props.condition;
+	      var labels = _config2.default.labels;
+	      var suggestedNames = this.state.suggestedNames.names;
 
-	      var _props = {
-	        type: 'radio',
-	        name: 'statusMode',
-	        checked: this.props.condition.isOldStatus,
-	        onChange: this.setStatusMode
-	      };
-	      var statusModeInput = _react2.default.createElement(
-	        _FormCheckRadio2.default,
-	        _props,
-	        '旧ステータス表示'
-	      );
-
-	      var typeInput = _config2.default.labels.type.map(function (item) {
-	        var props = {
-	          key: item,
-	          type: 'checkbox',
-	          name: 'type',
-	          value: item,
-	          checked: _this3.props.condition.type.indexOf(item) !== -1 ? true : false,
-	          onChange: _this3.setTypeFilter
-	        };
-	        return _react2.default.createElement(
-	          _FormCheckRadio2.default,
-	          props,
-	          item
-	        );
-	      });
-
-	      var familyInput = _config2.default.labels.family.map(function (item) {
-	        var props = {
-	          key: item,
-	          type: 'checkbox',
-	          name: 'family',
-	          value: item,
-	          checked: _this3.props.condition.family.indexOf(item) !== -1 ? true : false,
-	          // checked: _includes(this.props.condition.family, item),
-	          onChange: _this3.setFamilyFilter
-	        };
-	        return _react2.default.createElement(
-	          _FormCheckRadio2.default,
-	          props,
-	          item
-	        );
-	      });
-
-	      var rareInput = _config2.default.labels.rare.map(function (item) {
-	        var props = {
-	          key: item,
-	          type: 'checkbox',
-	          name: 'rare',
-	          value: item,
-	          checked: _this3.props.condition.rare.indexOf(item) !== -1 ? true : false,
-	          // checked: _includes(this.props.condition.rare, item),
-	          onChange: _this3.setRareFilter
-	        };
-	        return _react2.default.createElement(
-	          _FormCheckRadio2.default,
-	          props,
-	          'レア',
-	          item
-	        );
-	      });
-
-	      var suggestedNames = this.state.suggestedNames.names.map(function (item) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: item.name, 'data-name': item.name, onClick: _this3.addSuggestedName },
-	          item.name
-	        );
-	      });
-
-	      if (suggestedNames.length) {
-	        suggestedNames = _react2.default.createElement('ul', { className: 'names-suggested' }, suggestedNames);
-	      }
 
 	      return _react2.default.createElement(
 	        'form',
@@ -2186,12 +2101,22 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'input-group cols' },
-	              statusTypeInput
+	              Object.keys(labels.statusType).map(function (statusType) {
+	                return _react2.default.createElement(
+	                  _FormCheckRadio2.default,
+	                  { key: statusType, type: 'radio', name: 'statusType', value: statusType, checked: condition.statusType === statusType, onChange: _this3.setStatusType },
+	                  labels.statusType[statusType]
+	                );
+	              })
 	            ),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'input-group cols' },
-	              statusModeInput
+	              _react2.default.createElement(
+	                _FormCheckRadio2.default,
+	                { type: 'radio', name: 'statusMode', checked: condition.isOldStatus, onChange: this.setStatusMode },
+	                '旧ステータス表示'
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -2205,7 +2130,13 @@
 	                null,
 	                '刀種'
 	              ),
-	              typeInput,
+	              labels.type.map(function (type) {
+	                return _react2.default.createElement(
+	                  _FormCheckRadio2.default,
+	                  { key: type, type: 'checkbox', name: 'type', value: type, checked: _filters2.default.type(type, condition), onChange: _this3.setTypeFilter },
+	                  type
+	                );
+	              }),
 	              _react2.default.createElement(
 	                'button',
 	                { value: 'type', className: 'btn-all', onClick: this.selectAll },
@@ -2225,7 +2156,13 @@
 	                null,
 	                '刀派'
 	              ),
-	              familyInput,
+	              labels.family.map(function (family) {
+	                return _react2.default.createElement(
+	                  _FormCheckRadio2.default,
+	                  { key: family, type: 'checkbox', name: 'family', value: family, checked: _filters2.default.family(family, condition), onChange: _this3.setFamilyFilter },
+	                  family
+	                );
+	              }),
 	              _react2.default.createElement(
 	                'button',
 	                { value: 'family', className: 'btn-all', onClick: this.selectAll },
@@ -2245,7 +2182,14 @@
 	                null,
 	                'レアリティ'
 	              ),
-	              rareInput,
+	              labels.rare.map(function (rare) {
+	                return _react2.default.createElement(
+	                  _FormCheckRadio2.default,
+	                  { key: rare, type: 'checkbox', name: 'rare', value: rare, checked: _filters2.default.rare(rare, condition), onChange: _this3.setRareFilter },
+	                  'レア',
+	                  rare
+	                );
+	              }),
 	              _react2.default.createElement(
 	                'button',
 	                { value: 'rare', className: 'btn-all', onClick: this.selectAll },
@@ -2260,19 +2204,30 @@
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { tabName: 'names', heading: '刀剣名指定' },
+	            { tabName: 'name', heading: '刀剣名指定' },
 	            _react2.default.createElement('input', {
 	              type: 'text',
 	              ref: function ref(c) {
-	                return _this3._namesInput = c;
+	                return _this3._nameInput = c;
 	              },
-	              value: this.props.condition.names.join(','),
+	              value: condition.name.join(','),
 	              placeholder: '半角カンマ区切り（空白なし）',
-	              onChange: this.setNamesFilter }),
-	            suggestedNames,
+	              onChange: this.setNameFilter }),
+	            suggestedNames.length ? _react2.default.createElement(
+	              'ul',
+	              { className: 'names-suggested' },
+	              suggestedNames.map(function (item) {
+	                var name = item.name;
+	                return _react2.default.createElement(
+	                  'li',
+	                  { key: name, 'data-name': name, onClick: _this3.addSuggestedName },
+	                  name
+	                );
+	              })
+	            ) : null,
 	            _react2.default.createElement(
 	              'button',
-	              { value: 'names', className: 'btn-none', onClick: this.selectNone },
+	              { value: 'name', className: 'btn-none', onClick: this.selectNone },
 	              '解除'
 	            )
 	          )
@@ -2288,6 +2243,64 @@
 
 /***/ },
 /* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var _getItemAndCondition = function _getItemAndCondition(_item, _condition, key) {
+	  var item = _item[key] ? _item[key] : _item;
+	  var condition = _condition[key] ? _condition[key] : _condition;
+	  return { item: item, condition: condition };
+	};
+
+	var _defaultFilter = function _defaultFilter(item, condition) {
+	  return condition.indexOf(item) !== -1;
+	};
+
+	exports.default = {
+	  type: function type(_item, _condition) {
+	    var _getItemAndCondition2 = _getItemAndCondition(_item, _condition, 'type');
+
+	    var item = _getItemAndCondition2.item;
+	    var condition = _getItemAndCondition2.condition;
+
+	    return _defaultFilter(item, condition);
+	  },
+
+	  family: function family(_item, _condition) {
+	    var _getItemAndCondition3 = _getItemAndCondition(_item, _condition, 'family');
+
+	    var item = _getItemAndCondition3.item;
+	    var condition = _getItemAndCondition3.condition;
+
+	    var family = item.match(/虎徹/) && '虎徹' || item === '-' && 'その他' || item;
+	    return _defaultFilter(family, condition);
+	  },
+
+	  rare: function rare(_item, _condition) {
+	    var _getItemAndCondition4 = _getItemAndCondition(_item, _condition, 'rare');
+
+	    var item = _getItemAndCondition4.item;
+	    var condition = _getItemAndCondition4.condition;
+
+	    return _defaultFilter(item, condition);
+	  },
+
+	  name: function name(_item, _condition) {
+	    var _getItemAndCondition5 = _getItemAndCondition(_item, _condition, 'name');
+
+	    var item = _getItemAndCondition5.item;
+	    var condition = _getItemAndCondition5.condition;
+
+	    return _defaultFilter(item, condition);
+	  }
+	};
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2381,7 +2394,7 @@
 	exports.default = FormTab;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2455,7 +2468,7 @@
 	exports.default = FormCheckRadio;
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2468,7 +2481,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _filters = __webpack_require__(11);
+	var _filters = __webpack_require__(8);
 
 	var _filters2 = _interopRequireDefault(_filters);
 
@@ -2486,17 +2499,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import _includes from 'lodash/collection/includes';
-
 	var TransitionGroup = _react2.default.addons.CSSTransitionGroup;
 
-	var name = 'StatusGraph';
+	var cName = 'StatusGraph';
 
 	var StatusGraph = function StatusGraph(props) {
 	  var condition = props.condition;
 	  var data = props.data;
 	  var isOldStatus = condition.isOldStatus;
-	  var names = condition.names;
+	  var name = condition.name;
 	  var statusType = condition.statusType;
 	  var status = condition.status;
 
@@ -2509,7 +2520,7 @@
 	    })[0] || _item;
 
 	    // filter
-	    if (names.length) {
+	    if (name.length) {
 	      if (!_filters2.default.name(item, condition)) {
 	        return false;
 	      }
@@ -2526,20 +2537,20 @@
 
 	    return _react2.default.createElement(
 	      'div',
-	      { className: name + '_item ' + name + '_item-bars' + status.length, key: item.id },
+	      { className: cName + '_item ' + cName + '_item-bars' + status.length, key: item.id },
 	      _react2.default.createElement(
 	        'div',
-	        { className: name + '_bars' },
+	        { className: cName + '_bars' },
 	        status.map(function (key) {
 	          return _react2.default.createElement(_StatusBar2.default, { key: key, val: item[statusType][key], name: key, item: item });
 	        })
 	      ),
 	      _react2.default.createElement(
 	        'div',
-	        { className: name + '_info' },
+	        { className: cName + '_info' },
 	        _react2.default.createElement(
 	          'p',
-	          { className: name + '_info_name' },
+	          { className: cName + '_info_name' },
 	          _react2.default.createElement(
 	            'a',
 	            { href: item.url1, target: '_new' },
@@ -2548,13 +2559,13 @@
 	        ),
 	        _react2.default.createElement(
 	          'p',
-	          { className: name + '_info_id' },
+	          { className: cName + '_info_id' },
 	          'No. ',
 	          item.id
 	        ),
 	        _react2.default.createElement(
 	          'p',
-	          { className: name + '_info_total' },
+	          { className: cName + '_info_total' },
 	          '合計：',
 	          total
 	        )
@@ -2564,13 +2575,13 @@
 
 	  return _react2.default.createElement(
 	    'div',
-	    { className: name },
+	    { className: cName },
 	    _react2.default.createElement(
 	      'div',
-	      { className: name + '_body' },
+	      { className: cName + '_body' },
 	      _react2.default.createElement(
 	        TransitionGroup,
-	        { transitionName: name, transitionAppear: true, transitionAppearTimeout: 500, transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
+	        { transitionName: cName, transitionAppear: true, transitionAppearTimeout: 500, transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
 	        graphs
 	      )
 	    ),
@@ -2579,52 +2590,6 @@
 	};
 
 	exports.default = StatusGraph;
-
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  type: function type(item, condition) {
-	    if (condition.type.indexOf(item.type) === -1) {
-	      return false;
-	    }
-	    return true;
-	  },
-
-	  family: function family(item, condition) {
-	    if (item.family.includes('虎徹')) {
-	      item.family = '虎徹';
-	    }
-	    if (item.family === '-') {
-	      item.family = 'その他';
-	    }
-
-	    if (condition.family.indexOf(item.family) === -1) {
-	      return false;
-	    }
-	    return true;
-	  },
-
-	  rare: function rare(item, condition) {
-	    if (condition.rare.indexOf(item.rare) === -1) {
-	      return false;
-	    }
-	    return true;
-	  },
-
-	  name: function name(item, condition) {
-	    if (condition.names.indexOf(item.name) === -1) {
-	      return false;
-	    }
-	    return true;
-	  }
-	};
 
 /***/ },
 /* 12 */
@@ -2679,7 +2644,6 @@
 	var GraphBack = function GraphBack() {
 	  // create background lines
 	  var lines = [];
-
 	  for (var i = 100; i > 0; i -= 5) {
 	    lines.push(i);
 	  }

@@ -16,7 +16,7 @@ export default {
 
   family: (_item, _condition) => {
     const { item, condition } = _getItemAndCondition(_item, _condition, 'family');
-    const family = item.includes('虎徹') && '虎徹' || item === '-' && 'その他' || item;
+    const family = item.match(/虎徹/) && '虎徹' || item === '-' && 'その他' || item;
     return _defaultFilter(family, condition);
   },
 

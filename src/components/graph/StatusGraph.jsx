@@ -1,5 +1,4 @@
 import React from 'react';
-// import _includes from 'lodash/collection/includes';
 import filters from '../../helpers/filters';
 import StatusBar from './StatusBar';
 import GraphBack from './GraphBack';

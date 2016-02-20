@@ -1,5 +1,4 @@
 import React from 'react';
-// import _includes from 'lodash/collection/includes';
 import config from '../../config';
 import filters from '../../helpers/filters';
 import FormTab from './FormTab';
@@ -37,7 +36,7 @@ class ConditionalForm extends React.Component {
   }
 
   // gathers the checked checkboxes's value
-  _checkboxFilter(cond, fn) {
+  _checkboxFilter(cond, fn = (item) => item) {
     const chbxs = this._form.querySelectorAll(`[name='${cond}']`);
     const arr = [];
 
@@ -109,7 +108,7 @@ class ConditionalForm extends React.Component {
 
   // suggests the name completion
   suggestNames(inputs) {
-    const suggestedNames = Object.assign({}, this.initialSuggestedNames);
+    const suggestedNames = {...this.initialSuggestedNames};
 
     // returns the suggestion only for the first incomplete name in the inputs
     inputs.some((input, index) => {
@@ -120,7 +119,7 @@ class ConditionalForm extends React.Component {
       const filteredNames = this.props.data.filter((item) => {
         // don't include the name which is already in the inputs
         if (!filters.name(item.name, this.props.condition)) {
-          if (item.name.includes(input)) {
+          if (item.name.match(input)) {
             return true;
           }
         }
