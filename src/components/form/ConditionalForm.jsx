@@ -12,6 +12,8 @@ class ConditionalForm extends React.Component {
   constructor(props) {
     super(props);
 
+    this.name = 'ConditionalForm';
+
     this.initialSuggestedNames = {
       index: null,
       names: [],
@@ -157,11 +159,11 @@ class ConditionalForm extends React.Component {
     const { names: suggestedNames } = this.state.suggestedNames;
 
     return (
-      <form className="ConditionalForm" ref={(c) => this._form = c}>
+      <form className={this.name} ref={(c) => this._form = c}>
         <h2>表示条件を変更</h2>
         <FormTab onChangeTab={this.changeActiveTab}>
           <div tabName="status" heading="表示ステータス">
-            <div className="input-group cols">
+            <div className={`${this.name}_inputs ${this.name}_inputs-col`}>
               {Object.keys(labels.statusType).map((statusType) => {
                 return (
                   <FormCheckRadio key={statusType} type="radio" name="statusType" value={statusType} checked={condition.statusType === statusType} onChange={this.setStatusType}>
@@ -170,7 +172,7 @@ class ConditionalForm extends React.Component {
                 );
               })}
             </div>
-            <div className="input-group cols">
+            <div className={`${this.name}_inputs ${this.name}_inputs-col`}>
               <FormCheckRadio type="radio" name="statusMode" checked={condition.isOldStatus} onChange={this.setStatusMode}>
                 旧ステータス表示
               </FormCheckRadio>
@@ -178,7 +180,7 @@ class ConditionalForm extends React.Component {
           </div>
 
           <div tabName="narrowing" heading="条件で絞り込み">
-            <div className="input-group rows">
+            <div className={`${this.name}_inputs ${this.name}_inputs-row`}>
               <h3>刀種</h3>
               {labels.type.map((type) => {
                 return (
@@ -194,7 +196,7 @@ class ConditionalForm extends React.Component {
                 全解除
               </button>
             </div>
-            <div className="input-group rows">
+            <div className={`${this.name}_inputs ${this.name}_inputs-row`}>
               <h3>刀派</h3>
               {labels.family.map((family) => {
                 return (
@@ -210,7 +212,7 @@ class ConditionalForm extends React.Component {
                 全解除
               </button>
             </div>
-            <div className="input-group rows">
+            <div className={`${this.name}_inputs ${this.name}_inputs-row`}>
               <h3>レアリティ</h3>
               {labels.rare.map((rare) => {
                 return (
@@ -236,7 +238,7 @@ class ConditionalForm extends React.Component {
               placeholder="半角カンマ区切り（空白なし）"
               onChange={this.setNameFilter} />
             {suggestedNames.length ? (
-              <ul className="names-suggested">
+              <ul className={`${this.name}_suggestion`}>
                 {suggestedNames.map((name) => {
                   return (
                     <li key={name} data-name={name} onClick={this.addSuggestedName}>

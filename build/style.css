@@ -169,115 +169,23 @@ header nav li a .fa {
 .ConditionalForm h2::after {
   content: '：';
 }
-.ConditionalForm .input-group.rows {
+.ConditionalForm_inputs-row {
   margin-top: 1em;
 }
-.ConditionalForm .input-group.rows:first-child {
+.ConditionalForm_inputs-row:first-child {
   margin-top: 0;
 }
-.ConditionalForm .input-group.cols {
+.ConditionalForm_inputs-col {
   display: inline-block;
   margin-left: 1.5em;
 }
-.ConditionalForm .input-group.cols:first-child {
+.ConditionalForm_inputs-col:first-child {
   margin-left: 0;
 }
 .ConditionalForm h3 {
   color: #fff;
   display: inline-block;
   margin-right: 1em;
-}
-.ConditionalForm label {
-  display: inline-block;
-  margin-right: 1px;
-}
-.ConditionalForm label:hover {
-  cursor: pointer;
-}
-.ConditionalForm label:first-of-type > span {
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
-}
-.ConditionalForm label:last-of-type > span {
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-}
-.ConditionalForm input[type="checkbox"],
-.ConditionalForm input[type="radio"] {
-  display: none;
-}
-.ConditionalForm input[type="checkbox"] + span,
-.ConditionalForm input[type="radio"] + span {
-  background-color: #e0e8ed;
-  border-color: #e0e8ed;
-  border-style: solid;
-  border-width: 1px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  color: #2688ab;
-  display: block;
-  padding: 0.6em;
-  position: relative;
-  -webkit-transition: all 0.2s ease;
-  -moz-transition: all 0.2s ease;
-  -o-transition: all 0.2s ease;
-  -ms-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-.ConditionalForm input[type="checkbox"] + span:hover,
-.ConditionalForm input[type="radio"] + span:hover {
-  background-color: #fff;
-}
-.ConditionalForm input[type="checkbox"] + span:hover .fa,
-.ConditionalForm input[type="radio"] + span:hover .fa {
-  color: #207290;
-  opacity: 0.2;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-  filter: alpha(opacity=20);
-}
-.ConditionalForm input[type="checkbox"] + span .fa,
-.ConditionalForm input[type="radio"] + span .fa {
-  bottom: 0;
-  display: block;
-  left: 0;
-  line-height: 2.2em;
-  margin-right: 0;
-  opacity: 0;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0;
-  -webkit-transition: all 0.2s ease;
-  -moz-transition: all 0.2s ease;
-  -o-transition: all 0.2s ease;
-  -ms-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-.ConditionalForm input[type="checkbox"] + span .fa::before,
-.ConditionalForm input[type="radio"] + span .fa::before {
-  font-size: 30px;
-  font-size: 3rem;
-}
-.ConditionalForm input[type="checkbox"] + span .fa + span,
-.ConditionalForm input[type="radio"] + span .fa + span {
-  position: relative;
-  z-index: 2;
-}
-.ConditionalForm input[type="checkbox"]:checked + span,
-.ConditionalForm input[type="radio"]:checked + span {
-  background-color: #207290;
-  border-color: #207290;
-  color: #fff;
-}
-.ConditionalForm input[type="checkbox"]:checked + span .fa,
-.ConditionalForm input[type="radio"]:checked + span .fa {
-  color: #fff;
-  opacity: 0.3;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-  filter: alpha(opacity=30);
 }
 .ConditionalForm input[type="text"] {
   background-color: #e0e8ed;
@@ -332,7 +240,7 @@ header nav li a .fa {
 .ConditionalForm button.btn-none:hover {
   background-color: #cc3240;
 }
-.ConditionalForm .names-suggested {
+.ConditionalForm_suggestion {
   background-color: #e0e8ed;
   border: 1px solid #e0e8ed;
   -webkit-border-radius: 3px;
@@ -348,7 +256,7 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.ConditionalForm .names-suggested li {
+.ConditionalForm_suggestion li {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   border-top: 1px dotted rgba(0,0,0,0.3);
@@ -357,7 +265,7 @@ header nav li a .fa {
   padding: 0.3em;
   width: 400px;
 }
-.ConditionalForm .names-suggested li:hover {
+.ConditionalForm_suggestion li:hover {
   background-color: rgba(32,114,144,0.3);
   cursor: pointer;
   -webkit-transition: all 0.2s ease;
@@ -366,8 +274,91 @@ header nav li a .fa {
   -ms-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.ConditionalForm .names-suggested li:first-child {
+.ConditionalForm_suggestion li:first-child {
   border-top: none;
+}
+.FormCheckRadio {
+  display: inline-block;
+  margin-right: 1px;
+}
+.FormCheckRadio:hover {
+  cursor: pointer;
+}
+.FormCheckRadio:first-of-type .FormCheckRadio_text {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.FormCheckRadio:last-of-type .FormCheckRadio_text {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.FormCheckRadio_input {
+  display: none;
+}
+.FormCheckRadio_input:checked + .FormCheckRadio_text {
+  background-color: #207290;
+  border-color: #207290;
+  color: #fff;
+}
+.FormCheckRadio_input:checked + .FormCheckRadio_text .fa {
+  color: #fff;
+  opacity: 0.3;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  filter: alpha(opacity=30);
+}
+.FormCheckRadio_text {
+  background-color: #e0e8ed;
+  border-color: #e0e8ed;
+  border-style: solid;
+  border-width: 1px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #2688ab;
+  display: block;
+  padding: 0.6em;
+  position: relative;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.FormCheckRadio_text .fa {
+  bottom: 0;
+  display: block;
+  left: 0;
+  line-height: 2.2em;
+  margin-right: 0;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.FormCheckRadio_text .fa::before {
+  font-size: 30px;
+  font-size: 3rem;
+}
+.FormCheckRadio_text .fa + span {
+  position: relative;
+  z-index: 2;
+}
+.FormCheckRadio_text:hover {
+  background-color: #fff;
+}
+.FormCheckRadio_text:hover .fa {
+  color: #207290;
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
 }
 .FormTab {
   display: inline-block;

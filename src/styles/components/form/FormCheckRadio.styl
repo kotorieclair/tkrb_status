@@ -1,0 +1,150 @@
+// -----------------------------
+// components/form/FormCheckRadio
+// -----------------------------
+
+.FormCheckRadio
+  display: inline-block
+  margin-right: 1px
+
+  &:hover
+    cursor: pointer
+
+  &:first-of-type
+    .FormCheckRadio_text
+      border-bottom-left-radius: $border-radius
+      border-top-left-radius: $border-radius
+
+  &:last-of-type
+    .FormCheckRadio_text
+      border-bottom-right-radius: $border-radius
+      border-top-right-radius: $border-radius
+
+  // -----------------------------
+  // the hidden input
+  // -----------------------------
+  &_input
+    display: none
+
+    &:checked + .FormCheckRadio_text
+      background-color: $btn-color-on
+      border-color: @background-color
+      color: #fff
+
+      .fa
+        color: #fff
+        opacity: 0.3
+
+  // -----------------------------
+  // button part
+  // -----------------------------
+  &_text
+    background-color: $btn-color-off
+    border-color: @background-color
+    border-style: solid
+    border-width: 1px
+    box-sizing: border-box
+    color: lighten($btn-color-on, 10%)
+    display: block
+    padding: $form-item-padding
+    position: relative
+    transition: $transition-form
+
+    .fa
+      bottom: 0
+      display: block
+      left: 0
+      line-height: $form-item-padding * 2 + 1em
+      margin-right: 0
+      opacity: 0
+      position: absolute
+      right: 0
+      text-align: center
+      top: 0
+      transition: $transition-form
+
+      &::before
+        font-size: 3rem
+
+      & + span
+        position: relative
+        z-index: 2
+
+    &:hover
+      background-color: $btn-color-hover
+
+      .fa
+        color: $btn-color-on
+        opacity: 0.2
+
+
+  // label
+  //   display: inline-block
+  //   margin-right: 1px
+  //
+  //   &:hover
+  //     cursor: pointer
+  //
+  //   &:first-of-type
+  //     & > span
+  //       border-bottom-left-radius: $border-radius
+  //       border-top-left-radius: $border-radius
+  //
+  //   &:last-of-type
+  //     & > span
+  //       border-bottom-right-radius: $border-radius
+  //       border-top-right-radius: $border-radius
+  //
+  // input[type="checkbox"],
+  // input[type="radio"]
+  //   display: none
+  //
+  //   & + span
+  //     background-color: $btn-color-off
+  //     border-color: @background-color
+  //     border-style: solid
+  //     border-width: 1px
+  //     box-sizing: border-box
+  //     color: lighten($btn-color-on, 10%)
+  //     display: block
+  //     padding: $form-item-padding
+  //     position: relative
+  //     transition: $transition-form
+  //
+  //     &:hover
+  //       background-color: $btn-color-hover
+  //
+  //       .fa
+  //         color: $btn-color-on
+  //         opacity: 0.2
+  //
+  //     .fa
+  //       bottom: 0
+  //       display: block
+  //       left: 0
+  //       line-height: $form-item-padding * 2 + 1em
+  //       margin-right: 0
+  //       opacity: 0
+  //       position: absolute
+  //       right: 0
+  //       text-align: center
+  //       top: 0
+  //       transition: $transition-form
+  //
+  //       &::before
+  //         font-size: 3rem
+  //
+  //       & + span
+  //         position: relative
+  //         z-index: 2
+  //
+  //   &:checked + span
+  //     background-color: $btn-color-on
+  //     border-color: @background-color
+  //     color: #fff
+  //
+  //     .fa
+  //       color: #fff
+  //       opacity: 0.3
+  //
+  //
+  // &_text

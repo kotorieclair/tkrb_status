@@ -4,6 +4,8 @@ class FormCheckRadio extends React.Component {
   constructor(props) {
     super(props);
 
+    this.name = 'FormCheckRadio';
+
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -14,9 +16,9 @@ class FormCheckRadio extends React.Component {
   render() {
     const {change, children, className, ...others} = this.props;
     return (
-      <label className={className}>
-        <input {...others} onChange={this.handleChange} />
-        <span>
+      <label className={`${this.name}${className ? ' ' + className : ''}`}>
+        <input {...others} className={`${this.name}_input`} onChange={this.handleChange} />
+        <span className={`${this.name}_text`}>
           <i className="fa fa-check"></i>
           {children}
         </span>
