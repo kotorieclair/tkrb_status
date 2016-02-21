@@ -116,11 +116,12 @@ class ConditionalForm extends React.Component {
         return false;
       }
 
-      const filteredNames = this.props.data.filter((item) => {
-        // don't include the name which is already in the inputs
+      const filteredNames = [];
+      this.props.data.forEach((item) => {
+        // don't include the name already in the inputs
         if (!filters.name(item.name, this.props.condition)) {
           if (item.name.match(input)) {
-            return true;
+            filteredNames.push(item.name);
           }
         }
       });
@@ -236,8 +237,7 @@ class ConditionalForm extends React.Component {
               onChange={this.setNameFilter} />
             {suggestedNames.length ? (
               <ul className="names-suggested">
-                {suggestedNames.map((item) => {
-                  const name = item.name;
+                {suggestedNames.map((name) => {
                   return (
                     <li key={name} data-name={name} onClick={this.addSuggestedName}>
                       {name}

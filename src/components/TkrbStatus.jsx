@@ -19,7 +19,7 @@ class TkrbStatus extends React.Component {
       type: config.labels.type,
       family: config.labels.family,
       rare: config.labels.rare,
-      name: config.labels.name,
+      name: [],
       status: Object.keys(config.labels.status),
       isOldStatus: false,
     };
@@ -31,11 +31,14 @@ class TkrbStatus extends React.Component {
     this.toggleHelp = this.toggleHelp.bind(this);
   }
 
+  componentDidUpdate() {
+    // adds a class to the body for usability
+    document.body.className = this.state.showHelp ? 'noscroll' : '';
+  }
+
   // handles a status type change notification
   handleStatusType(type) {
-    this.setState({
-      statusType: type,
-    });
+    this.setState({ statusType: type });
   }
 
   // handles a condition change notification
@@ -45,9 +48,7 @@ class TkrbStatus extends React.Component {
 
   // handles a status mode change notification
   toggleStatusMode() {
-    this.setState({
-      isOldStatus: !this.state.isOldStatus,
-    });
+    this.setState({ isOldStatus: !this.state.isOldStatus });
   }
 
   // handles a help display state change notification
@@ -55,19 +56,11 @@ class TkrbStatus extends React.Component {
     if (e) {
       e.preventDefault();
     }
-    this.setState({
-      showHelp: !this.state.showHelp,
-    });
+
+    this.setState({ showHelp: !this.state.showHelp });
   }
 
   render() {
-    // adds a class to the body for usability
-    if (this.state.showHelp) {
-      document.body.className = 'no-scroll';
-    } else {
-      document.body.className = '';
-    }
-
     return (
       <div>
         <header>
