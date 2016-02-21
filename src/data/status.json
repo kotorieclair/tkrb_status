@@ -4,13 +4,13 @@
     "name": "三日月宗近",
     "url1": "http://wikiwiki.jp/toulove/?%BB%B0%C6%FC%B7%EE%BD%A1%B6%E1",
     "url2": "http://wikiwiki.jp/toulove/?%BB%B0%C6%FC%B7%EE%BD%A1%B6%E1%20%C6%C3",
-    "rare": 5,
     "type": "太刀",
     "family": "三条",
-    "slot": 3,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 5,
+      "slot": 3,
       "life": 50,
       "attack": 50,
       "defence": 52,
@@ -21,6 +21,8 @@
       "hide": 29
     },
     "rankupMax": {
+      "rare": 5,
+      "slot": 3,
       "life": 63,
       "attack": 72,
       "defence": 72,
@@ -36,13 +38,13 @@
     "name": "小狐丸",
     "url1": "http://wikiwiki.jp/toulove/?%BE%AE%B8%D1%B4%DD",
     "url2": "http://wikiwiki.jp/toulove/?%BE%AE%B8%D1%B4%DD%20%C6%C3",
-    "rare": 3,
     "type": "太刀",
     "family": "三条",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 44,
       "attack": 47,
       "defence": 48,
@@ -53,6 +55,8 @@
       "hide": 24
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 58,
       "attack": 68,
       "defence": 69,
@@ -68,13 +72,13 @@
     "name": "石切丸",
     "url1": "http://wikiwiki.jp/toulove/?%C0%D0%C0%DA%B4%DD",
     "url2": "http://wikiwiki.jp/toulove/?%C0%D0%C0%DA%B4%DD%20%C6%C3",
-    "rare": 3,
     "type": "大太刀",
     "family": "三条",
-    "slot": 2,
     "rankup": 25,
     "wideness": "広",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 60,
       "attack": 60,
       "defence": 52,
@@ -85,6 +89,8 @@
       "hide": 20
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 72,
       "attack": 85,
       "defence": 68,
@@ -100,13 +106,13 @@
     "name": "岩融",
     "url1": "http://wikiwiki.jp/toulove/?%B4%E4%CD%BB",
     "url2": "http://wikiwiki.jp/toulove/?%B4%E4%CD%BB%20%C6%C3",
-    "rare": 3,
     "type": "薙刀",
     "family": "三条",
-    "slot": 2,
     "rankup": 25,
     "wideness": "横",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 49,
       "attack": 48,
       "defence": 40,
@@ -117,6 +123,8 @@
       "hide": 30
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 60,
       "attack": 68,
       "defence": 51,
@@ -132,13 +140,13 @@
     "name": "今剣",
     "url1": "http://wikiwiki.jp/toulove/?%BA%A3%B7%F5",
     "url2": "http://wikiwiki.jp/toulove/?%BA%A3%B7%F5%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "三条",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 26,
       "attack": 13,
       "defence": 26,
@@ -149,6 +157,8 @@
       "hide": 36
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 33,
       "attack": 26,
       "defence": 38,
@@ -164,13 +174,13 @@
     "name": "にっかり青江",
     "url1": "http://wikiwiki.jp/toulove/?%A4%CB%A4%C3%A4%AB%A4%EA%C0%C4%B9%BE",
     "url2": "http://wikiwiki.jp/toulove/?%A4%CB%A4%C3%A4%AB%A4%EA%C0%C4%B9%BE%20%C6%C3",
-    "rare": 2,
     "type": "脇差",
     "family": "青江",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 30,
       "attack": 26,
       "defence": 28,
@@ -181,6 +191,8 @@
       "hide": 39
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 39,
       "attack": 44,
       "defence": 46,
@@ -196,13 +208,13 @@
     "name": "鳴狐",
     "url1": "http://wikiwiki.jp/toulove/?%CC%C4%B8%D1",
     "url2": "http://wikiwiki.jp/toulove/?%CC%C4%B8%D1%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "粟田口",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 38,
       "attack": 38,
       "defence": 37,
@@ -213,6 +225,8 @@
       "hide": 36
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 48,
       "attack": 58,
       "defence": 50,
@@ -228,13 +242,13 @@
     "name": "一期一振",
     "url1": "http://wikiwiki.jp/toulove/?%B0%EC%B4%FC%B0%EC%BF%B6",
     "url2": "http://wikiwiki.jp/toulove/?%B0%EC%B4%FC%B0%EC%BF%B6%20%C6%C3",
-    "rare": 4,
     "type": "太刀",
     "family": "粟田口",
-    "slot": 3,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 4,
+      "slot": 3,
       "life": 48,
       "attack": 49,
       "defence": 52,
@@ -245,6 +259,8 @@
       "hide": 25
     },
     "rankupMax": {
+      "rare": 4,
+      "slot": 3,
       "life": 61,
       "attack": 70,
       "defence": 72,
@@ -260,13 +276,13 @@
     "name": "鯰尾藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%F2%D0%C8%F8%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%F2%D0%C8%F8%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 2,
     "type": "脇差",
     "family": "粟田口",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 27,
       "attack": 27,
       "defence": 27,
@@ -277,6 +293,8 @@
       "hide": 41
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 35,
       "attack": 45,
       "defence": 45,
@@ -292,13 +310,13 @@
     "name": "骨喰藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%B9%FC%B6%F4%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%B9%FC%B6%F4%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 2,
     "type": "脇差",
     "family": "粟田口",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 32,
       "attack": 28,
       "defence": 29,
@@ -309,6 +327,8 @@
       "hide": 38
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 41,
       "attack": 47,
       "defence": 48,
@@ -324,13 +344,13 @@
     "name": "平野藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%CA%BF%CC%EE%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%CA%BF%CC%EE%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "粟田口",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 28,
       "attack": 17,
       "defence": 29,
@@ -341,6 +361,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 34,
       "attack": 32,
       "defence": 45,
@@ -356,13 +378,13 @@
     "name": "厚藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%B8%FC%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%B8%FC%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "粟田口",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 29,
       "attack": 18,
       "defence": 28,
@@ -373,6 +395,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 36,
       "attack": 32,
       "defence": 42,
@@ -384,17 +408,51 @@
     }
   },
   {
+    "id": 35,
+    "name": "後藤藤四郎",
+    "url1": "http://wikiwiki.jp/toulove/?%B8%E5%C6%A3%C6%A3%BB%CD%CF%BA",
+    "url2": "http://wikiwiki.jp/toulove/?%B8%E5%C6%A3%C6%A3%BB%CD%CF%BA%20%C6%C3",
+    "type": "短刀",
+    "family": "粟田口",
+    "rankup": 20,
+    "wideness": "狭",
+    "initial": {
+      "rare": 1,
+      "slot": 1,
+      "life": 28,
+      "attack": 19,
+      "defence": 29,
+      "speed": 23,
+      "push": 22,
+      "critical": 37,
+      "search": 35,
+      "hide": 35
+    },
+    "rankupMax": {
+      "rare": 1,
+      "slot": 1,
+      "life": 37,
+      "attack": 35,
+      "defence": 44,
+      "speed": 49,
+      "push": 38,
+      "critical": 37,
+      "search": 51,
+      "hide": 38
+    }
+  },
+  {
     "id": 39,
     "name": "前田藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%C1%B0%C5%C4%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%C1%B0%C5%C4%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "粟田口",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 29,
       "attack": 18,
       "defence": 28,
@@ -405,6 +463,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 36,
       "attack": 31,
       "defence": 41,
@@ -420,13 +480,13 @@
     "name": "秋田藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%BD%A9%C5%C4%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%BD%A9%C5%C4%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "粟田口",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 27,
       "attack": 15,
       "defence": 29,
@@ -437,6 +497,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 33,
       "attack": 30,
       "defence": 42,
@@ -452,13 +514,13 @@
     "name": "博多藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%C7%EE%C2%BF%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%C7%EE%C2%BF%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "粟田口",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 29,
       "attack": 15,
       "defence": 23,
@@ -469,6 +531,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 35,
       "attack": 30,
       "defence": 38,
@@ -484,13 +548,13 @@
     "name": "乱藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%CD%F0%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%CD%F0%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "粟田口",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 28,
       "attack": 18,
       "defence": 25,
@@ -501,6 +565,8 @@
       "hide": 35
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 35,
       "attack": 31,
       "defence": 40,
@@ -516,13 +582,13 @@
     "name": "五虎退",
     "url1": "http://wikiwiki.jp/toulove/?%B8%DE%B8%D7%C2%E0",
     "url2": "http://wikiwiki.jp/toulove/?%B8%DE%B8%D7%C2%E0%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "粟田口",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 27,
       "attack": 15,
       "defence": 27,
@@ -533,6 +599,8 @@
       "hide": 35
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 33,
       "attack": 27,
       "defence": 39,
@@ -548,13 +616,13 @@
     "name": "薬研藤四郎",
     "url1": "http://wikiwiki.jp/toulove/?%CC%F4%B8%A6%C6%A3%BB%CD%CF%BA",
     "url2": "http://wikiwiki.jp/toulove/?%CC%F4%B8%A6%C6%A3%BB%CD%CF%BA%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "粟田口",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 27,
       "attack": 14,
       "defence": 29,
@@ -565,6 +633,8 @@
       "hide": 35
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 34,
       "attack": 28,
       "defence": 42,
@@ -580,13 +650,13 @@
     "name": "鶯丸",
     "url1": "http://wikiwiki.jp/toulove/?%F2%F4%B4%DD",
     "url2": "http://wikiwiki.jp/toulove/?%F2%F4%B4%DD%20%C6%C3",
-    "rare": 4,
     "type": "太刀",
     "family": "古備前",
-    "slot": 3,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 4,
+      "slot": 3,
       "life": 50,
       "attack": 51,
       "defence": 48,
@@ -597,6 +667,8 @@
       "hide": 27
     },
     "rankupMax": {
+      "rare": 4,
+      "slot": 3,
       "life": 64,
       "attack": 71,
       "defence": 69,
@@ -612,13 +684,13 @@
     "name": "明石国行",
     "url1": "http://wikiwiki.jp/toulove/?%CC%C0%C0%D0%B9%F1%B9%D4",
     "url2": "http://wikiwiki.jp/toulove/?%CC%C0%C0%D0%B9%F1%B9%D4%20%C6%C3",
-    "rare": 3,
     "type": "太刀",
     "family": "来",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 42,
       "attack": 43,
       "defence": 47,
@@ -629,6 +701,8 @@
       "hide": 30
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 56,
       "attack": 63,
       "defence": 67,
@@ -644,13 +718,13 @@
     "name": "蛍丸",
     "url1": "http://wikiwiki.jp/toulove/?%B7%D6%B4%DD",
     "url2": "http://wikiwiki.jp/toulove/?%B7%D6%B4%DD%20%C6%C3",
-    "rare": 4,
     "type": "大太刀",
     "family": "来",
-    "slot": 3,
     "rankup": 25,
     "wideness": "広",
     "initial": {
+      "rare": 4,
+      "slot": 3,
       "life": 60,
       "attack": 57,
       "defence": 57,
@@ -661,6 +735,8 @@
       "hide": 25
     },
     "rankupMax": {
+      "rare": 4,
+      "slot": 3,
       "life": 73,
       "attack": 81,
       "defence": 74,
@@ -676,13 +752,13 @@
     "name": "愛染国俊",
     "url1": "http://wikiwiki.jp/toulove/?%B0%A6%C0%F7%B9%F1%BD%D3",
     "url2": "http://wikiwiki.jp/toulove/?%B0%A6%C0%F7%B9%F1%BD%D3%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "来",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 29,
       "attack": 13,
       "defence": 24,
@@ -693,6 +769,8 @@
       "hide": 35
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 35,
       "attack": 27,
       "defence": 38,
@@ -708,13 +786,13 @@
     "name": "蜻蛉切",
     "url1": "http://wikiwiki.jp/toulove/?%E9%F1%E9%D9%C0%DA",
     "url2": "http://wikiwiki.jp/toulove/?%E9%F1%E9%D9%C0%DA%20%C6%C3",
-    "rare": 3,
     "type": "槍",
     "family": "村正",
-    "slot": 2,
     "rankup": 25,
     "wideness": "縦",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 62,
       "attack": 56,
       "defence": 53,
@@ -725,6 +803,8 @@
       "hide": 28
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 73,
       "attack": 76,
       "defence": 63,
@@ -736,17 +816,51 @@
     }
   },
   {
+    "id": 67,
+    "name": "物吉貞宗",
+    "url1": "http://wikiwiki.jp/toulove/?%CA%AA%B5%C8%C4%E7%BD%A1",
+    "url2": "http://wikiwiki.jp/toulove/?%CA%AA%B5%C8%C4%E7%BD%A1%20%C6%C3",
+    "type": "脇差",
+    "family": "貞宗",
+    "rankup": 20,
+    "wideness": "狭",
+    "initial": {
+      "rare": 2,
+      "slot": 2,
+      "life": 34,
+      "attack": 27,
+      "defence": 28,
+      "speed": 38,
+      "push": 38,
+      "critical": 50,
+      "search": 38,
+      "hide": 25
+    },
+    "rankupMax": {
+      "rare": 2,
+      "slot": 2,
+      "life": 48,
+      "attack": 41,
+      "defence": 60,
+      "speed": 53,
+      "push": 53,
+      "critical": 50,
+      "search": 51,
+      "hide": 30
+    }
+  },
+  {
     "id": 73,
     "name": "燭台切光忠",
     "url1": "http://wikiwiki.jp/toulove/?%BF%A4%C2%E6%C0%DA%B8%F7%C3%E9",
     "url2": "http://wikiwiki.jp/toulove/?%BF%A4%C2%E6%C0%DA%B8%F7%C3%E9%20%C6%C3",
-    "rare": 3,
     "type": "太刀",
     "family": "長船",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 52,
       "attack": 51,
       "defence": 51,
@@ -757,6 +871,8 @@
       "hide": 24
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 65,
       "attack": 73,
       "defence": 72,
@@ -772,13 +888,13 @@
     "name": "江雪左文字",
     "url1": "http://wikiwiki.jp/toulove/?%B9%BE%C0%E3%BA%B8%CA%B8%BB%FA",
     "url2": "http://wikiwiki.jp/toulove/?%B9%BE%C0%E3%BA%B8%CA%B8%BB%FA%20%C6%C3",
-    "rare": 4,
     "type": "太刀",
     "family": "左文字",
-    "slot": 3,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 4,
+      "slot": 3,
       "life": 51,
       "attack": 51,
       "defence": 49,
@@ -789,6 +905,8 @@
       "hide": 26
     },
     "rankupMax": {
+      "rare": 4,
+      "slot": 3,
       "life": 65,
       "attack": 72,
       "defence": 70,
@@ -804,13 +922,13 @@
     "name": "宗三左文字",
     "url1": "http://wikiwiki.jp/toulove/?%BD%A1%BB%B0%BA%B8%CA%B8%BB%FA",
     "url2": "http://wikiwiki.jp/toulove/?%BD%A1%BB%B0%BA%B8%CA%B8%BB%FA%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "左文字",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 32,
       "attack": 34,
       "defence": 34,
@@ -821,6 +939,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 42,
       "attack": 53,
       "defence": 47,
@@ -836,13 +956,13 @@
     "name": "小夜左文字",
     "url1": "http://wikiwiki.jp/toulove/?%BE%AE%CC%EB%BA%B8%CA%B8%BB%FA",
     "url2": "http://wikiwiki.jp/toulove/?%BE%AE%CC%EB%BA%B8%CA%B8%BB%FA%20%C6%C3",
-    "rare": 1,
     "type": "短刀",
     "family": "左文字",
-    "slot": 1,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 1,
+      "slot": 1,
       "life": 32,
       "attack": 20,
       "defence": 29,
@@ -853,6 +973,8 @@
       "hide": 35
     },
     "rankupMax": {
+      "rare": 1,
+      "slot": 1,
       "life": 39,
       "attack": 33,
       "defence": 44,
@@ -868,13 +990,13 @@
     "name": "加州清光",
     "url1": "http://wikiwiki.jp/toulove/?%B2%C3%BD%A3%C0%B6%B8%F7",
     "url2": "http://wikiwiki.jp/toulove/?%B2%C3%BD%A3%C0%B6%B8%F7%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "-",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 33,
       "attack": 34,
       "defence": 36,
@@ -885,6 +1007,8 @@
       "hide": 37
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 43,
       "attack": 55,
       "defence": 50,
@@ -900,13 +1024,13 @@
     "name": "大和守安定",
     "url1": "http://wikiwiki.jp/toulove/?%C2%E7%CF%C2%BC%E9%B0%C2%C4%EA",
     "url2": "http://wikiwiki.jp/toulove/?%C2%E7%CF%C2%BC%E9%B0%C2%C4%EA%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "-",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 37,
       "attack": 37,
       "defence": 34,
@@ -917,6 +1041,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 47,
       "attack": 56,
       "defence": 50,
@@ -932,13 +1058,13 @@
     "name": "歌仙兼定",
     "url1": "http://wikiwiki.jp/toulove/?%B2%CE%C0%E7%B7%F3%C4%EA",
     "url2": "http://wikiwiki.jp/toulove/?%B2%CE%C0%E7%B7%F3%C4%EA%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "兼定",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 35,
       "attack": 39,
       "defence": 35,
@@ -949,6 +1075,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 46,
       "attack": 59,
       "defence": 50,
@@ -964,13 +1092,13 @@
     "name": "和泉守兼定",
     "url1": "http://wikiwiki.jp/toulove/?%CF%C2%C0%F4%BC%E9%B7%F3%C4%EA",
     "url2": "http://wikiwiki.jp/toulove/?%CF%C2%C0%F4%BC%E9%B7%F3%C4%EA%20%C6%C3",
-    "rare": 3,
     "type": "打刀",
     "family": "兼定",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 50,
       "attack": 49,
       "defence": 48,
@@ -981,6 +1109,8 @@
       "hide": 25
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 64,
       "attack": 70,
       "defence": 69,
@@ -996,13 +1126,13 @@
     "name": "陸奥守吉行",
     "url1": "http://wikiwiki.jp/toulove/?%CE%A6%B1%FC%BC%E9%B5%C8%B9%D4",
     "url2": "http://wikiwiki.jp/toulove/?%CE%A6%B1%FC%BC%E9%B5%C8%B9%D4%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "-",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 36,
       "attack": 40,
       "defence": 34,
@@ -1013,6 +1143,8 @@
       "hide": 35
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 47,
       "attack": 61,
       "defence": 47,
@@ -1028,13 +1160,13 @@
     "name": "山姥切国広",
     "url1": "http://wikiwiki.jp/toulove/?%BB%B3%B1%B8%C0%DA%B9%F1%B9%AD",
     "url2": "http://wikiwiki.jp/toulove/?%BB%B3%B1%B8%C0%DA%B9%F1%B9%AD%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "堀川",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 34,
       "attack": 36,
       "defence": 36,
@@ -1045,6 +1177,8 @@
       "hide": 36
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 44,
       "attack": 58,
       "defence": 49,
@@ -1060,13 +1194,13 @@
     "name": "山伏国広",
     "url1": "http://wikiwiki.jp/toulove/?%BB%B3%C9%FA%B9%F1%B9%AD",
     "url2": "http://wikiwiki.jp/toulove/?%BB%B3%C9%FA%B9%F1%B9%AD%20%C6%C3",
-    "rare": 3,
     "type": "太刀",
     "family": "堀川",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 51,
       "attack": 51,
       "defence": 45,
@@ -1077,6 +1211,8 @@
       "hide": 24
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 64,
       "attack": 72,
       "defence": 66,
@@ -1092,13 +1228,13 @@
     "name": "堀川国広",
     "url1": "http://wikiwiki.jp/toulove/?%CB%D9%C0%EE%B9%F1%B9%AD",
     "url2": "http://wikiwiki.jp/toulove/?%CB%D9%C0%EE%B9%F1%B9%AD%20%C6%C3",
-    "rare": 2,
     "type": "脇差",
     "family": "堀川",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 29,
       "attack": 28,
       "defence": 26,
@@ -1109,6 +1245,8 @@
       "hide": 41
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 37,
       "attack": 47,
       "defence": 43,
@@ -1124,13 +1262,13 @@
     "name": "蜂須賀虎徹",
     "url1": "http://wikiwiki.jp/toulove/?%CB%AA%BF%DC%B2%EC%B8%D7%C5%B0",
     "url2": "http://wikiwiki.jp/toulove/?%CB%AA%BF%DC%B2%EC%B8%D7%C5%B0%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "虎徹",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 39,
       "attack": 38,
       "defence": 38,
@@ -1141,6 +1279,8 @@
       "hide": 35
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 51,
       "attack": 60,
       "defence": 53,
@@ -1156,13 +1296,13 @@
     "name": "浦島虎徹",
     "url1": "http://wikiwiki.jp/toulove/?%B1%BA%C5%E7%B8%D7%C5%B0",
     "url2": "http://wikiwiki.jp/toulove/?%B1%BA%C5%E7%B8%D7%C5%B0%20%C6%C3",
-    "rare": 2,
     "type": "脇差",
     "family": "虎徹",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 34,
       "attack": 25,
       "defence": 30,
@@ -1173,6 +1313,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 45,
       "attack": 44,
       "defence": 50,
@@ -1188,13 +1330,13 @@
     "name": "長曽祢虎徹",
     "url1": "http://wikiwiki.jp/toulove/?%C4%B9%C1%BE%C7%AA%B8%D7%C5%B0",
     "url2": "http://wikiwiki.jp/toulove/?%C4%B9%C1%BE%C7%AA%B8%D7%C5%B0%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
-    "family": "虎徹…?",
-    "slot": 2,
+    "family": "虎徹…？",
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 45,
       "attack": 43,
       "defence": 38,
@@ -1205,6 +1347,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 57,
       "attack": 68,
       "defence": 53,
@@ -1216,17 +1360,85 @@
     }
   },
   {
+    "id": 107,
+    "name": "髭切",
+    "url1": "http://wikiwiki.jp/toulove/?%C9%A6%C0%DA",
+    "url2": "http://wikiwiki.jp/toulove/?%C9%A6%C0%DA%20%C6%C3",
+    "type": "太刀",
+    "family": "-",
+    "rankup": 25,
+    "wideness": "狭",
+    "initial": {
+      "rare": 2,
+      "slot": 2,
+      "life": 48,
+      "attack": 48,
+      "defence": 45,
+      "speed": 30,
+      "push": 38,
+      "critical": 32,
+      "search": 28,
+      "hide": 23
+    },
+    "rankupMax": {
+      "rare": 4,
+      "slot": 3,
+      "life": 56,
+      "attack": 70,
+      "defence": 70,
+      "speed": 38,
+      "push": 55,
+      "critical": 38,
+      "search": 43,
+      "hide": 26
+    }
+  },
+  {
+    "id": 112,
+    "name": "膝丸",
+    "url1": "http://wikiwiki.jp/toulove/?%C9%A8%B4%DD",
+    "url2": "http://wikiwiki.jp/toulove/?%C9%A8%B4%DD%20%C6%C3",
+    "type": "太刀",
+    "family": "-",
+    "rankup": 25,
+    "wideness": "狭",
+    "initial": {
+      "rare": 2,
+      "slot": 2,
+      "life": 48,
+      "attack": 47,
+      "defence": 45,
+      "speed": 33,
+      "push": 38,
+      "critical": 32,
+      "search": 23,
+      "hide": 30
+    },
+    "rankupMax": {
+      "rare": 4,
+      "slot": 3,
+      "life": 56,
+      "attack": 69,
+      "defence": 69,
+      "speed": 51,
+      "push": 54,
+      "critical": 36,
+      "search": 29,
+      "hide": 37
+    }
+  },
+  {
     "id": 116,
     "name": "大倶利伽羅",
     "url1": "http://wikiwiki.jp/toulove/?%C2%E7%B6%E6%CD%F8%B2%C0%CD%E5",
     "url2": "http://wikiwiki.jp/toulove/?%C2%E7%B6%E6%CD%F8%B2%C0%CD%E5%20%C6%C3",
-    "rare": 3,
     "type": "打刀",
     "family": "-",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 48,
       "attack": 48,
       "defence": 52,
@@ -1237,6 +1449,8 @@
       "hide": 27
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 59,
       "attack": 69,
       "defence": 69,
@@ -1252,13 +1466,13 @@
     "name": "へし切長谷部",
     "url1": "http://wikiwiki.jp/toulove/?%A4%D8%A4%B7%C0%DA%C4%B9%C3%AB%C9%F4",
     "url2": "http://wikiwiki.jp/toulove/?%A4%D8%A4%B7%C0%DA%C4%B9%C3%AB%C9%F4%20%C6%C3",
-    "rare": 2,
     "type": "打刀",
     "family": "-",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 2,
+      "slot": 2,
       "life": 41,
       "attack": 42,
       "defence": 35,
@@ -1269,6 +1483,8 @@
       "hide": 34
     },
     "rankupMax": {
+      "rare": 2,
+      "slot": 2,
       "life": 51,
       "attack": 61,
       "defence": 48,
@@ -1280,17 +1496,51 @@
     }
   },
   {
+    "id": 120,
+    "name": "不動行光",
+    "url1": "http://wikiwiki.jp/toulove/?%C9%D4%C6%B0%B9%D4%B8%F7",
+    "url2": "http://wikiwiki.jp/toulove/?%C9%D4%C6%B0%B9%D4%B8%F7%20%C6%C3",
+    "type": "短刀",
+    "family": "-",
+    "rankup": 25,
+    "wideness": "狭",
+    "initial": {
+      "rare": 1,
+      "slot": 1,
+      "life": 27,
+      "attack": 17,
+      "defence": 24,
+      "speed": 22,
+      "push": 17,
+      "critical": 42,
+      "search": 33,
+      "hide": 32
+    },
+    "rankupMax": {
+      "rare": 1,
+      "slot": 1,
+      "life": null,
+      "attack": 34,
+      "defence": 40,
+      "speed": 55,
+      "push": 33,
+      "critical": 42,
+      "search": null,
+      "hide": 37
+    }
+  },
+  {
     "id": 122,
     "name": "獅子王",
     "url1": "http://wikiwiki.jp/toulove/?%BB%E2%BB%D2%B2%A6",
     "url2": "http://wikiwiki.jp/toulove/?%BB%E2%BB%D2%B2%A6%20%C6%C3",
-    "rare": 3,
     "type": "太刀",
     "family": "-",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 45,
       "attack": 47,
       "defence": 49,
@@ -1301,6 +1551,8 @@
       "hide": 25
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 59,
       "attack": 66,
       "defence": 72,
@@ -1316,13 +1568,13 @@
     "name": "同田貫正国",
     "url1": "http://wikiwiki.jp/toulove/?%C6%B1%C5%C4%B4%D3%C0%B5%B9%F1",
     "url2": "http://wikiwiki.jp/toulove/?%C6%B1%C5%C4%B4%D3%C0%B5%B9%F1%20%C6%C3",
-    "rare": 3,
     "type": "打刀",
     "family": "-",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 46,
       "attack": 52,
       "defence": 48,
@@ -1333,6 +1585,8 @@
       "hide": 25
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 56,
       "attack": 69,
       "defence": 65,
@@ -1348,13 +1602,13 @@
     "name": "鶴丸国永",
     "url1": "http://wikiwiki.jp/toulove/?%C4%E1%B4%DD%B9%F1%B1%CA",
     "url2": "http://wikiwiki.jp/toulove/?%C4%E1%B4%DD%B9%F1%B1%CA%20%C6%C3",
-    "rare": 4,
     "type": "太刀",
     "family": "-",
-    "slot": 3,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 4,
+      "slot": 3,
       "life": 51,
       "attack": 51,
       "defence": 51,
@@ -1365,6 +1619,8 @@
       "hide": 26
     },
     "rankupMax": {
+      "rare": 4,
+      "slot": 3,
       "life": 62,
       "attack": 69,
       "defence": 69,
@@ -1380,13 +1636,13 @@
     "name": "太郎太刀",
     "url1": "http://wikiwiki.jp/toulove/?%C2%C0%CF%BA%C2%C0%C5%E1",
     "url2": "http://wikiwiki.jp/toulove/?%C2%C0%CF%BA%C2%C0%C5%E1%20%C6%C3",
-    "rare": 3,
     "type": "大太刀",
     "family": "-",
-    "slot": 2,
     "rankup": 25,
     "wideness": "広",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 62,
       "attack": 57,
       "defence": 57,
@@ -1397,6 +1653,8 @@
       "hide": 26
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 76,
       "attack": 82,
       "defence": 77,
@@ -1412,13 +1670,13 @@
     "name": "次郎太刀",
     "url1": "http://wikiwiki.jp/toulove/?%BC%A1%CF%BA%C2%C0%C5%E1",
     "url2": "http://wikiwiki.jp/toulove/?%BC%A1%CF%BA%C2%C0%C5%E1%20%C6%C3",
-    "rare": 3,
     "type": "大太刀",
     "family": "-",
-    "slot": 2,
     "rankup": 25,
     "wideness": "広",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 57,
       "attack": 60,
       "defence": 59,
@@ -1429,6 +1687,8 @@
       "hide": 30
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 72,
       "attack": 84,
       "defence": 80,
@@ -1444,13 +1704,13 @@
     "name": "日本号",
     "url1": "http://wikiwiki.jp/toulove/?%C6%FC%CB%DC%B9%E6",
     "url2": "http://wikiwiki.jp/toulove/?%C6%FC%CB%DC%B9%E6%20%C6%C3",
-    "rare": 4,
     "type": "槍",
     "family": "-",
-    "slot": 3,
     "rankup": 25,
     "wideness": "縦",
     "initial": {
+      "rare": 4,
+      "slot": 3,
       "life": 56,
       "attack": 52,
       "defence": 39,
@@ -1461,13 +1721,15 @@
       "hide": 28
     },
     "rankupMax": {
+      "rare": 4,
+      "slot": 3,
       "life": 66,
       "attack": 72,
       "defence": 50,
       "speed": 51,
       "push": 64,
       "critical": 34,
-      "search": null,
+      "search": 25,
       "hide": 33
     }
   },
@@ -1476,13 +1738,13 @@
     "name": "御手杵",
     "url1": "http://wikiwiki.jp/toulove/?%B8%E6%BC%EA%B5%CF",
     "url2": "http://wikiwiki.jp/toulove/?%B8%E6%BC%EA%B5%CF%20%C6%C3",
-    "rare": 3,
     "type": "槍",
     "family": "-",
-    "slot": 2,
     "rankup": 25,
     "wideness": "縦",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 49,
       "attack": 50,
       "defence": 40,
@@ -1493,6 +1755,8 @@
       "hide": 28
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 60,
       "attack": 69,
       "defence": 51,

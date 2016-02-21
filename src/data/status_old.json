@@ -4,13 +4,13 @@
     "name": "和泉守兼定",
     "url1": "http://wikiwiki.jp/toulove/?%CF%C2%C0%F4%BC%E9%B7%F3%C4%EA",
     "url2": "http://wikiwiki.jp/toulove/?%CF%C2%C0%F4%BC%E9%B7%F3%C4%EA%20%C6%C3",
-    "rare": 3,
     "type": "太刀",
     "family": "兼定",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 50,
       "attack": 49,
       "defence": 48,
@@ -21,6 +21,8 @@
       "hide": 25
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 64,
       "attack": 70,
       "defence": 69,
@@ -36,13 +38,13 @@
     "name": "大倶利伽羅",
     "url1": "http://wikiwiki.jp/toulove/?%C2%E7%B6%E6%CD%F8%B2%C0%CD%E5",
     "url2": "http://wikiwiki.jp/toulove/?%C2%E7%B6%E6%CD%F8%B2%C0%CD%E5%20%C6%C3",
-    "rare": 3,
     "type": "太刀",
     "family": "-",
-    "slot": 2,
     "rankup": 20,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 48,
       "attack": 48,
       "defence": 51,
@@ -53,6 +55,8 @@
       "hide": 27
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 59,
       "attack": 69,
       "defence": 68,
@@ -68,13 +72,13 @@
     "name": "同田貫正国",
     "url1": "http://wikiwiki.jp/toulove/?%C6%B1%C5%C4%B4%D3%C0%B5%B9%F1",
     "url2": "http://wikiwiki.jp/toulove/?%C6%B1%C5%C4%B4%D3%C0%B5%B9%F1%20%C6%C3",
-    "rare": 3,
     "type": "太刀",
     "family": "-",
-    "slot": 2,
     "rankup": 25,
     "wideness": "狭",
     "initial": {
+      "rare": 3,
+      "slot": 2,
       "life": 46,
       "attack": 50,
       "defence": 48,
@@ -85,6 +89,8 @@
       "hide": 25
     },
     "rankupMax": {
+      "rare": 3,
+      "slot": 2,
       "life": 56,
       "attack": 67,
       "defence": 65,

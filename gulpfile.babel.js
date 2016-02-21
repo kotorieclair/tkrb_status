@@ -155,29 +155,64 @@ gulp.task('moveMd', () =>  {
 gulp.task('fetchData', () =>  {
   let status = [];
 
-  cheerio.fetch(dataUrls.rankupMax)
+  // cheerio.fetch(dataUrls.rankupMax)
+  cheerio.fetch(dataUrls.initial)
   .then((result) => {
     result.$('.style_table tbody tr').each((index, row) =>  {
       const $td = result.$(row).children('td');
       const id = $td.eq(0).text();
 
-      if (!id) {
-        return false;
+      if (id && !isNaN(id)) {
+        const tmp = {
+          id: parseInt(id, 10),
+          name: $td.eq(2).children().text(),
+          url1: $td.eq(2).children().attr('href'),
+          url2: $td.eq(16).children().attr('href'),
+          type: $td.eq(3).text(),
+          family: $td.eq(4).text(),
+          rankup: parseInt($td.eq(15).text(), 10),
+          wideness: $td.eq(10).text(),
+          initial: {
+            rare: parseInt($td.eq(1).text(), 10),
+            slot: parseInt($td.eq(14).text(), 10),
+            life: parseInt($td.eq(5).text(), 10),
+            attack: parseInt($td.eq(6).text(), 10),
+            defence: parseInt($td.eq(7).text(), 10),
+            speed: parseInt($td.eq(8).text(), 10),
+            push: parseInt($td.eq(9).text(), 10),
+            critical: parseInt($td.eq(11).text(), 10),
+            search: parseInt($td.eq(12).text(), 10),
+            hide: parseInt($td.eq(13).text(), 10),
+          },
+          rankupMax: {},
+        };
+        status.push(tmp);
       }
+    });
 
-      const tmp = {
-        id: parseInt(id, 10),
-        name: $td.eq(16).children().text(),
-        url1: $td.eq(16).children().attr('href'),
-        url2: $td.eq(2).children().attr('href'),
-        rare: parseInt($td.eq(1).text(), 10),
-        type: $td.eq(3).text(),
-        family: $td.eq(4).text(),
-        slot: parseInt($td.eq(14).text(), 10),
-        rankup: parseInt($td.eq(15).text(), 10),
-        wideness: $td.eq(10).text(),
-        initial: {},
-        rankupMax: {
+    return cheerio.fetch(dataUrls.rankupMax);
+  })
+  .then((result) => {
+    result.$('.style_table tbody tr').each((index, row) =>  {
+      const $td = result.$(row).children('td');
+
+      const id = parseInt($td.eq(0).text(), 10);
+      const destId = _.findIndex(status, (chara) => {
+        // 膝丸
+        if (id === 110 && chara.id === 107) {
+          return true;
+        }
+        // 髭切
+        if (id === 114 && chara.id === 112) {
+          return true;
+        }
+        return chara.id === id;
+      });
+
+      if (destId > -1) {
+        Object.assign(status[destId].rankupMax, {
+          rare: parseInt($td.eq(1).text(), 10),
+          slot: parseInt($td.eq(14).text(), 10),
           life: parseInt($td.eq(5).text(), 10),
           attack: parseInt($td.eq(6).text(), 10),
           defence: parseInt($td.eq(7).text(), 10),
@@ -186,36 +221,8 @@ gulp.task('fetchData', () =>  {
           critical: parseInt($td.eq(11).text(), 10),
           search: parseInt($td.eq(12).text(), 10),
           hide: parseInt($td.eq(13).text(), 10),
-        },
-      };
-      status.push(tmp);
-    });
-
-    return cheerio.fetch(dataUrls.initial);
-  })
-  .then((result) => {
-    result.$('.style_table tbody tr').each((index, row) =>  {
-      const $td = result.$(row).children('td');
-
-      const id = parseInt($td.eq(0).text(), 10);
-      const destId = _.findIndex(status, (chara) => {
-        return chara.id === id;
-      });
-
-      if (destId < 0) {
-        return false;
+        });
       }
-
-      Object.assign(status[destId].initial, {
-        life: parseInt($td.eq(5).text(), 10),
-        attack: parseInt($td.eq(6).text(), 10),
-        defence: parseInt($td.eq(7).text(), 10),
-        speed: parseInt($td.eq(8).text(), 10),
-        push: parseInt($td.eq(9).text(), 10),
-        critical: parseInt($td.eq(11).text(), 10),
-        search: parseInt($td.eq(12).text(), 10),
-        hide: parseInt($td.eq(13).text(), 10),
-      });
     });
 
     status = _.sortBy(status, 'id');

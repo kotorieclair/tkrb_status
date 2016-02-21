@@ -22,7 +22,7 @@ const StatusGraph = (props) => {
         return false;
       }
     } else {
-      if (!filters.type(item, condition) || !filters.family(item, condition) || !filters.rare(item, condition)) {
+      if (!filters.type(item, condition) || !filters.family(item, condition) || !filters.rare(item[statusType], condition)) {
         return false;
       }
     }
