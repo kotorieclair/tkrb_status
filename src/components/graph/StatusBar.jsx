@@ -9,7 +9,7 @@ const StatusBar = (props) => {
   const height = val / config.maxStatus * 100;
 
   return (
-    <div className={`${name} ${name}-${props.name}`} style={{height: `${height}%`}} data-status={val} />
+    <div className={`${name} ${name}-${props.name}`} style={{height: `${height}%`}} data-status={props.val && val} />
   );
 };
 
