@@ -1,12 +1,14 @@
 // -----------------------------
-// usage help
+// components/help/HelpModal
 // -----------------------------
 
-// .HelpModal
 .HelpModal
+  align-items: center
   background-color: rgba(0,0,0,0.8)
   bottom: 0
+  display: flex
   color: #fff
+  flex-direction: column
   left: 0
   position: fixed
   right: 0
@@ -20,16 +22,20 @@
     &:hover
       color: rgba(#fff, 0.5)
 
-+prefix-classes('HelpModal')
-  ._body
-    bottom: 6em
-    left: 0%
+  // -----------------------------
+  // help text
+  // -----------------------------
+  &_body
+    background-color: rgba(#846878, 0.59)
+    border-radius: 3px
+    flex: 0 1 auto
     line-height: 1.8
+    margin-top: 40px
+    max-width: 700px
     overflow: auto
-    position: absolute
-    right: 0
-    top: 2em
+    padding: 10px 15px
     transition: $transition-help
+    width: 90%;
 
     &_inner
       margin: 0 auto
@@ -65,44 +71,54 @@
       li
         list-style-type: disc
 
-  ._close
-    bottom: 2em
-    left: 0
+  // -----------------------------
+  // close button
+  // -----------------------------
+  &_close
+    flex: 0 0 auto
     line-height: 4em
+    margin-bottom: 40px
+    margin-top: 10px
     text-align: center
-    position: absolute
-    right: 0
     transition: $transition-help
 
     a
+      background-color: rgba(#fff, 0.18);
+      border: 1px solid #fff
+      border-radius: 3px
+      display: inline-block
       font-size: 1.6rem
+      line-height: 1
+      padding: 10px 20px
 
-
-
+// -----------------------------
+// transition
+// -----------------------------
++prefix-classes('HelpModal')
   .-enter
     opacity: 0
 
-    ._body,
+    ._body
     ._close
       transform: translateY(-2em)
 
     &.-enter-active
       opacity: 1
 
-      ._body,
+      ._body
       ._close
         transform: translateY(0)
 
   .-leave
     opacity: 1
 
-    ._body,
+    ._body
     ._close
       transform: translateY(0)
 
     &.-leave-active
       opacity: 0
 
-      ._body,
+      ._body
       ._close
         transform: translateY(-2em)

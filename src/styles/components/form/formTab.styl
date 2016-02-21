@@ -1,13 +1,41 @@
+// -----------------------------
+// components/form/FormTab
+// -----------------------------
+
 .FormTab
   display: inline-block
 
-  .FormTab-tab
+  // -----------------------------
+  // tab wrapper
+  // -----------------------------
+  &_tab
     display: inline-block
     padding-bottom: 2px
     white-space: nowrap
 
-    &.active
-      .FormTab-heading
+    // -----------------------------
+    // tab heading
+    // -----------------------------
+    &_heading
+      border-radius: $border-radius
+      color: #fff
+      margin: 0 ($form-fieldset-padding / 2)
+      padding: ($form-fieldset-padding / 2)
+      position: relative
+      transition: $transition-form
+      z-index: 5
+
+      &:hover
+        background-color: rgba(#fff, 0.2)
+        cursor: pointer
+
+      .fa
+        margin-left: 0.5em
+        margin-right: 0
+        transition: $transition-form
+
+      // tab is open
+      &.active
         background-color: rgba(#fff, 0.3)
 
         .fa
@@ -27,29 +55,10 @@
           margin-left: -(@border-left-width)
           position: absolute
 
-      .FormTab-body
-        opacity: 1
-        z-index: 3
-
-    .FormTab-heading
-      border-radius: $border-radius
-      color: #fff
-      margin: 0 ($form-fieldset-padding / 2)
-      padding: ($form-fieldset-padding / 2)
-      position: relative
-      transition: $transition-form
-      z-index: 5
-
-      &:hover
-        background-color: rgba(#fff, 0.2)
-        cursor: pointer
-
-      .fa
-        margin-left: 0.5em
-        margin-right: 0
-        transition: $transition-form
-
-    .FormTab-body
+    // -----------------------------
+    // tab body
+    // -----------------------------
+    &_body
       background-color: rgba($form-background-color, 85%)
       border-top: 1px dotted rgba(#fff, 0.3)
       bottom: 0
@@ -66,3 +75,8 @@
 
       &:first-child
         display: block
+
+      // tab is open
+      &.active
+        opacity: 1
+        z-index: 3

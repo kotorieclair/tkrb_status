@@ -34,19 +34,19 @@ const StatusGraph = (props) => {
 
     return (
       <div className={`${cName}_item ${cName}_item-bars${status.length}`} key={item.id}>
-        <div className={`${cName}_bars`}>
+        <div className={`${cName}_item_bars`}>
           {status.map((key) => {
             return <StatusBar key={key} val={item[statusType][key]} name={key} item={item} />;
           })}
         </div>
-        <div className={`${cName}_info`}>
-          <p className={`${cName}_info_name`}>
+        <div className={`${cName}_item_info`}>
+          <p className={`${cName}_item_info_name`}>
             <a href={item.url1} target="_new">{item.name}</a>
           </p>
-          <p className={`${cName}_info_id`}>
+          <p className={`${cName}_item_info_id`}>
             No. {item.id}
           </p>
-          <p className={`${cName}_info_total`}>
+          <p className={`${cName}_item_info_total`}>
             合計：{total}
           </p>
         </div>

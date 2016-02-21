@@ -1,5 +1,5 @@
 // -----------------------------
-// background lines
+// component/graph/GraphBack
 // -----------------------------
 
 .GraphBack
@@ -11,6 +11,9 @@
   vertical-align: bottom
   z-index: 1
 
+  // -----------------------------
+  // lines
+  // -----------------------------
   &_line
     border-top: 1px solid $backline-color-main
     box-sizing: border-box
@@ -18,12 +21,6 @@
     line-height: 1
     position: relative
     width: 100%
-
-    &:nth-child(even)
-      border-top: 1px dotted $backline-color-sub
-
-      &::before
-        content: ''
 
     &::before
       content: attr(data-line)
@@ -34,3 +31,9 @@
       top: -0.5em
       width: 3em
       left: (@width + 0.5em) * -1
+
+    &:nth-child(even)
+      border-top: 1px dotted $backline-color-sub
+
+      &::before
+        content: ''

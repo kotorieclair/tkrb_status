@@ -4,6 +4,8 @@ class FormTab extends React.Component {
   constructor(props) {
     super(props);
 
+    this.name = 'FormTab';
+
     this.state = {
       activeTab: 'status',
     };
@@ -25,17 +27,17 @@ class FormTab extends React.Component {
 
   render() {
     return (
-      <div className="FormTab">
+      <div className={this.name}>
         {this.props.children.map((child) => {
           const { tabName, heading, children } = child.props;
-          const isActive = tabName === this.state.activeTab ? ' active' : '';
+          const activeClass = tabName === this.state.activeTab ? ' active' : '';
 
           return (
-            <fieldset className={`FormTab-tab${isActive}`} key={tabName} data-tab={tabName}>
-              <legend className="FormTab-heading" onClick={this.changeTab}>
+            <fieldset className={`${this.name}_tab`} key={tabName} data-tab={tabName}>
+              <legend className={`${this.name}_tab_heading${activeClass}`} onClick={this.changeTab}>
                 {heading}<i className="fa fa-caret-down" />
               </legend>
-              <div className="FormTab-body">
+              <div className={`${this.name}_tab_body${activeClass}`}>
                 {children}
               </div>
             </fieldset>
