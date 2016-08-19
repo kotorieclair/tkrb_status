@@ -1,6 +1,6 @@
 const _getItemAndCondition = (_item, _condition, key) => {
-  const item = _item[key] ? _item[key] : _item;
-  const condition = _condition[key] ? _condition[key] : _condition;
+  const item = _item[key] || _item;
+  const condition = _condition[key] || _condition;
   return { item, condition };
 };
 
