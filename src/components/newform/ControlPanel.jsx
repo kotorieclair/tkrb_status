@@ -20,6 +20,12 @@ class ControlPanel extends React.Component {
     };
   }
 
+  setCurrentPane(paneId) {
+    this.setState({
+      currentPane: paneId,
+    });
+  }
+
   render() {
     return(
       <div className={this.name}>
@@ -28,10 +34,14 @@ class ControlPanel extends React.Component {
         </div>
         <div className={`${this.name}_body`}>
           <div className={`${this.name}_bodyLeft`}>
-            left
+            <ul>
+              <li onclick={this.setCurrentPane} data-target-pane="menu1">menu1</li>
+              <li onclick={this.setCurrentPane} data-target-pane="menu2">menu2</li>
+            </ul>
           </div>
           <div className={`${this.name}_bodyRight`}>
-            right
+            <div className={`${this.name}_pane${currentPane === 'menu1' ? `${this.name}_pane-open` : ''}`}>menu1 pane</div>
+            <div className={`${this.name}_pane${currentPane === 'menu2' ? `${this.name}_pane-open` : ''}`}>menu2 pane</div>
           </div>
         </div>
       </div>
