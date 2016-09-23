@@ -1,5 +1,7 @@
 import React from 'react';
 import config from '../../config';
+import ConditionsPane from './ConditionsPane';
+import NamesPane from './NamesPane';
 // import filters from '../../helpers/filters';
 // import FormTab from './FormTab';
 // import FormCheckRadio from './FormCheckRadio';
@@ -15,12 +17,14 @@ class ControlPanel extends React.Component {
     this.name = 'ControlPanel';
 
     this.state = {
-      isOpen: false,
       currentPane: null,
     };
+
+    this.setCurrentPane = this.setCurrentPane.bind(this);
   }
 
-  setCurrentPane(paneId) {
+  setCurrentPane(e) {
+    const paneId = e.target.dataset.targetPane;
     this.setState({
       currentPane: paneId,
     });
@@ -35,13 +39,17 @@ class ControlPanel extends React.Component {
         <div className={`${this.name}_body`}>
           <div className={`${this.name}_bodyLeft`}>
             <ul>
-              <li onclick={this.setCurrentPane} data-target-pane="menu1">menu1</li>
-              <li onclick={this.setCurrentPane} data-target-pane="menu2">menu2</li>
+              <li onClick={this.setCurrentPane} data-target-pane="menu1">menu1</li>
+              <li onClick={this.setCurrentPane} data-target-pane="menu2">menu2</li>
             </ul>
           </div>
           <div className={`${this.name}_bodyRight`}>
-            <div className={`${this.name}_pane${currentPane === 'menu1' ? `${this.name}_pane-open` : ''}`}>menu1 pane</div>
-            <div className={`${this.name}_pane${currentPane === 'menu2' ? `${this.name}_pane-open` : ''}`}>menu2 pane</div>
+            <div className={`${this.name}_pane${this.state.currentPane === 'menu1' ? `${this.name}_pane-open` : ''}`}>
+              <ConditionsPane condition={this.props.condition} />
+            </div>
+            <div className={`${this.name}_pane${this.state.currentPane === 'menu2' ? `${this.name}_pane-open` : ''}`}>
+              <NamesPane />
+            </div>
           </div>
         </div>
       </div>
